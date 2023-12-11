@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playpen+Sans&display=swap');
+
+*>body>* {
+  font-family: 'Playpen Sans', sans-serif;
+}
+
+*>.logo {
+  font-family: "Raleway";
+}
+
+.webkit-scroll-bar {
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.webkit-scroll-bar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.webkit-scroll-bar::-webkit-scrollbar-thumb {
+  width: 5px;
+  background-color: #53575a;
+}
+
+.webkit-scroll-bar::-webkit-scrollbar-track {
+  background-color: rgb(189, 189, 189);
+}
+
+.background-image-Makanan {
+  background-image: url(/images/Kategori/Makanan.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.background-image-Minuman {
+  background-image: url(/images/Kategori/Minuman.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.background-image-Cemilan {
+  background-image: url(/images/Kategori/Cemilan.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.input-quantity::-webkit-outer-spin-button,
+.input-quantity::-webkit-inner-spin-button {
+  display: none;
+}
