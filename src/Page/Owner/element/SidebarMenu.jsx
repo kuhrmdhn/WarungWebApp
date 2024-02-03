@@ -1,0 +1,10 @@
+function SidebarMenu({ link, icon, text, target, onClick }) {
+    return (
+        <a href={link} target={target} onClick={onClick} rel="noreferrer" title={text} className="w-full h-10 sm:pl-1 lg:pl-2 text-2xs lg:text-sm flex justify-center md:justify-start sm:gap-4 items-center rounded-xl hover:text-owner-primary hover:scale-95 duration-200 cursor-pointer">
+            {icon}
+            <h1 className="hidden sm:block">{text}</h1>
+        </a>
+    )
+}
+
+export default SidebarMenu

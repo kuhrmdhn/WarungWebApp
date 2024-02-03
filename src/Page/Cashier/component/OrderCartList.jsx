@@ -1,24 +1,31 @@
+import { useGetApiStore } from "../../../../Zustand/Api/ApiStore"
+import PageError from "../../../atom/PageError"
 import OrderCard from "../element/OrderCard"
 
-function OrderCartList({ orderData }) {
+function OrderCartList() {
+  const orderData = useGetApiStore(state => state.orderData)
+
   return (
-    <div className="h-2/3 w-full px-2 webkit-scroll-bar">
+    <div className="h-full w-full px-2 overflow-y-auto overflow-x-hidden">
       {
-        orderData.map((data) => (
-          <OrderCard
-            key={data.id}
-            id={data.id}
-            code={data.code}
-            name={data.name}
-            price={data.price}
-            image={data.image}
-            isReady={data.isReady}
-            stock={data.stock}
-            sold={data.sold}
-            category={data.category}
-            quantity={data.quantity}
-          />
-        ))
+        orderData.length === 0 ?
+          <PageError.EmptyProduct details={"Keranjang Kosong!"} />
+          :
+          orderData.map((data) => (
+            <OrderCard
+              key={data.id}
+              id={data.id}
+              code={data.code}
+              name={data.name}
+              price={data.price}
+              image={data.image}
+              isReady={data.isReady}
+              stock={data.stock}
+              sold={data.sold}
+              category={data.category}
+              quantity={data.quantity}
+            />
+          ))
       }
     </div>
   )

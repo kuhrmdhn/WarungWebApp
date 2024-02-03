@@ -1,11 +1,11 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import './App.css'
-import CashierApp from './Page/Cashier/layout/CashierApp'
-import OwnerApp from './Page/Owner/Layout/OwnerApp'
+import CashierApp from './page/Cashier/pages/CashierApp'
+import OwnerApp from './page/Owner/pages/OwnerApp'
 
 const route = createBrowserRouter([
   {
-    path: "/",
+    path: "/cashier",
     element: <CashierApp />
   },
   {
@@ -17,7 +17,7 @@ const route = createBrowserRouter([
 function App() {
   return (
     <>
-      <RouterProvider router={route}/>
+      <RouterProvider router={route} />
     </>
   )
 }

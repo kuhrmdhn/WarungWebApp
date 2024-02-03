@@ -1,4 +1,4 @@
-import ProductCard from "../../../atom/ProductCard"
+import ProductCard from "./ProductCard"
 import defaultCardImage from "/images/assets/default.webp"
 
 function PreviewProductCard({ image, name, price }) {
