@@ -1,6 +1,7 @@
 import axios from "axios";
 import { create } from "zustand";
 
+<<<<<<< HEAD
 export const getAuthorizeData = await axios
   .get(`${import.meta.env.VITE_BASE_URL}/authorize`)
   .then((response) => {
@@ -39,18 +40,37 @@ export const useFormStore = create((set) => ({
   newProductData: initialProductData,
   authorizeData,
   authorizeAccount,
+=======
+export const useForm = create((set) => ({
+  editProductForm: false,
+  initialProductData: {
+    name: "",
+    image: "",
+    price: 0,
+    isReady: true,
+    category: { id: 1, name: "" },
+  },
+  addProductForm: false,
+>>>>>>> 62532792277426f90780886ce8ac75b26faa8cea
   setEditProductForm: () =>
     set((state) => ({
       editProductForm: !state.editProductForm,
     })),
+<<<<<<< HEAD
   setProductData: (data) =>
     set((state) => ({
       productData: (state.productData = data),
+=======
+  setInitialProductData: (data) =>
+    set((state) => ({
+      initialProductData: (state.initialProductData = data),
+>>>>>>> 62532792277426f90780886ce8ac75b26faa8cea
     })),
   setAddProductForm: () =>
     set((state) => ({
       addProductForm: !state.addProductForm,
     })),
+<<<<<<< HEAD
   setNewProductData: (newData) => {
     set((state) => ({
       newProductData: (state.newProductData = newData),
@@ -91,5 +111,11 @@ export const useFormStore = create((set) => ({
     set((state) => ({
       authorizeAccount: (state.newProductData = data),
     }));
+=======
+  updateProductData: (newData) => {
+    axios.put(`${import.meta.env.VITE_BASE_URL}/products/${newData.id}`, newData)
+    .then(response => console.log(response.data))
+    .catch(error => console.log(error))
+>>>>>>> 62532792277426f90780886ce8ac75b26faa8cea
   }
 }));

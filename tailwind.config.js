@@ -4,6 +4,7 @@ export default {
   theme: {
     extend: {
       screens: {
+<<<<<<< HEAD
         xs: "320px",
       },
       fontSize: {
@@ -33,6 +34,23 @@ export default {
         montserrat: "Montserrat, sans-serif",
         playpen: "Playpen Sans, sans-serif",
       },
+=======
+        xs: "326px",
+      },
+      fontSize: {
+        xxs: "10px"
+      },
+      width: {
+        86: "17rem"
+      },
+      keyframes: {
+        "shake" : {
+          "0%, 100%" : {transform : "rotate(0)"},
+          "30%": {transform: "rotate(13deg)"},
+          "60%": {transform: "rotate(-13deg)"}
+        }
+      }
+>>>>>>> 62532792277426f90780886ce8ac75b26faa8cea
     },
   },
   plugins: [],
