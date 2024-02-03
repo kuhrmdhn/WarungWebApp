@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { useGetApiStore } from "../../../../Zustand/Api/ApiStore"
 
 function OwnerHeader() {
@@ -32,16 +31,6 @@ function OwnerHeader() {
                 </div>
             </section>
         </header>
-=======
-import Header from "../../../atom/Header"
-
-function OwnerHeader() {
-    return (
-        <Header>
-            <Header.Navigation />
-            <Header.OwnerSearchBar />
-        </Header>
->>>>>>> 62532792277426f90780886ce8ac75b26faa8cea
     )
 }
 

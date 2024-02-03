@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { Badge, IconButton } from '@mui/material'
 import FilterProduct from '../../../atom/FilterProduct'
 import Logo from '../../../atom/Logo'
@@ -32,20 +31,3 @@ function CashierHeader() {
 }
 
 export default CashierHeader
-=======
-import Header from '../../../atom/Header'
-
-function CashierHeader() {
-  return (
-    <Header>
-        <Header.Navigation/>
-        <section className='w-full h-full flex flex-col md:flex-row items-center justify-center'>
-        <Header.CashierLogo/>
-        <Header.CashierSearchBar/>
-        </section>
-    </Header>
-  )
-}
-
-export default CashierHeader
->>>>>>> 62532792277426f90780886ce8ac75b26faa8cea

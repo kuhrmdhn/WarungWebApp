@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import ProductCard from "../../../atom/ProductCard"
 
 function CashierProductCard({ id, code, name, price, image, isReady, stock, sold, category, quantity = 1 }) {
@@ -15,34 +14,10 @@ function CashierProductCard({ id, code, name, price, image, isReady, stock, sold
     category,
     quantity,
     totalPrice: price * quantity
-=======
-import { useGetApiStore } from "../../../../Zustand/Api/ApiStore"
-import ProductCard from "../../../atom/ProductCard"
-
-function CashierProductCard({ id, code, name, price, image, isReady, stock, sold, category, quantity = 1 }) {
-  const [orderData, addNewOrderData, updateOrderData] = useGetApiStore(state => [state.orderData, state.addNewOrderData, state.updateOrderData])
-  const itemToOrderCart = { id, code, name, price, image, isReady, stock, sold, category, quantity, totalPrice: price * quantity }
-
-  async function addToOrderCart(item) {
-    const index = orderData.findIndex(data => data.id === item.id)
-    if (index === -1) {
-      addNewOrderData(item)
-    } else {
-      const newQuantity = orderData[index].quantity + 1
-      const updateData = {
-        ...orderData[index],
-
-        quantity: newQuantity,
-        totalPrice: orderData[index].price * newQuantity
-      }
-      updateOrderData(orderData[index].id, updateData)
-    }
->>>>>>> 62532792277426f90780886ce8ac75b26faa8cea
   }
 
   return (
     <ProductCard>
-<<<<<<< HEAD
       <section className="relative">
         {
           isSoldOut ?
@@ -60,16 +35,8 @@ function CashierProductCard({ id, code, name, price, image, isReady, stock, sold
             </div>
         }
       </section>
-=======
-      <ProductCard.Image image={image} name={name} />
-      <ProductCard.Footer name={name} price={price} button={<ProductCard.CashierButton onAddToOrderCart={() => addToOrderCart(itemToOrderCart)} />} />
->>>>>>> 62532792277426f90780886ce8ac75b26faa8cea
     </ProductCard>
   )
 }
 
-<<<<<<< HEAD
 export default CashierProductCard
-=======
-export default CashierProductCard
->>>>>>> 62532792277426f90780886ce8ac75b26faa8cea

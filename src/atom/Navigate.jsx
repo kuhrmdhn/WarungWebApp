@@ -22,7 +22,6 @@ function Navigate({ children }) {
                 <div className="h-14 w-full flex justify-center items-center gap-9">
                     <h2 className="text-sm sm:text-base md:text-xl">Pilih Kategori</h2>
                     <IconButton color="warning" sx={{position: "absolute", top: "12px", right: "12px", fontSize: "16px"}} type="button" aria-label="close button" onClick={() => setIsNavigateShow(prev => !prev)}>
-                        {/* <FontAwesomeIcon icon={faX} /> */}
                         <Close/>
                     </IconButton>
                 </div>
