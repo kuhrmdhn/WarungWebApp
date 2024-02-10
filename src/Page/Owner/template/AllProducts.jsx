@@ -4,9 +4,12 @@ import ResetSoldDataButton from "../element/ResetSoldDataButton"
 import ProductCardSkeleton from "../../../molecul/ProductCardSkeleton"
 import SectionTitle from "../../../atom/SectionTitle"
 import OptionButton from "../element/OptionButton"
+import { useSearchKeyword } from "../../../../Zustand/SearchBar/SearchBarStore"
 const OwnerProductList = lazy(() => import("../component/OwnerProductList"))
 
 function AllProducts() {
+  const setSearchKeyword = useSearchKeyword(state => state.setSearchKeyword)
+
   return (
     <section id="allProducts" className="w-full min-h-screen h-fit mt-16 pt-6 pl-1 xs:pl-2 lg:pl-10 flex flex-col items-center">
       <SectionTitle>
@@ -21,7 +24,7 @@ function AllProducts() {
             <ResetSoldDataButton />
           </div>
           <div className="h-10 w-full sm:w-1/2 lg:w-1/3 flex justify-center items-center mt-2">
-            <SearchBar />
+            <SearchBar setKeyword={setSearchKeyword} />
             <OptionButton/>
           </div>
         </section>

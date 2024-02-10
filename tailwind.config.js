@@ -8,7 +8,7 @@ export default {
       },
       fontSize: {
         "2xs": "10px",
-        "3xs": "8px"
+        "3xs": "8px",
       },
       width: {
         86: "17rem",
@@ -24,6 +24,8 @@ export default {
         "cashier-primary": "#1E293B",
         "owner-primary": "#7C41F5",
         "owner-secondary": "#F5C525",
+        "chef-primary": "#1F1F1F",
+        "chef-purple": "#6200EE",
         "green-reset-button": "#009E73",
         "blue-choose-button": "#0091EA",
         "red-reset-all-button": "#CC0000",

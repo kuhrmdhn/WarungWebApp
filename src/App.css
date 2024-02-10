@@ -22,3 +22,17 @@ body {
 .webkit-scroll-bar::-webkit-scrollbar-thumb {
   width: 0px;
 }
+
+.overflow-y-small {
+  overflow-y: auto;
+}
+
+.overflow-y-small::-webkit-scrollbar {
+  width: 5px;
+  background: #1f1f1f;
+}
+
+.overflow-y-small::-webkit-scrollbar-thumb {
+  width: 4px;
+  background: #6200EE;
+}
