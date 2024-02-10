@@ -30,12 +30,20 @@ const orderData = await axios
   })
   .catch((error) => console.log(error));
 
+const orderGroupData = await axios
+  .get(`${import.meta.env.VITE_BASE_URL}/pesanans`)
+  .then((response) => {
+    return response.data;
+  })
+  .catch((error) => console.log(error));
+
 // Store
 export const useGetApiStore = create((set) => ({
   authorizeData,
-  productData: productData,
-  categoryData: categoryData,
-  orderData: orderData,
+  productData,
+  categoryData,
+  orderData,
+  orderGroupData,
   setAuthorizeData: (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -109,5 +117,8 @@ export const useGetApiStore = create((set) => ({
       `${import.meta.env.VITE_BASE_URL}/products/${data.id}`,
       resetData
     );
+  },
+  setOrderGroupData: (orderGroupData) => {
+    set(() => ({ orderGroupData }));
   },
 }));
