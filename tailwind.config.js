@@ -35,6 +35,9 @@ export default {
         montserrat: "Montserrat, sans-serif",
         playpen: "Playpen Sans, sans-serif",
       },
+      backdropBlur: {
+        xs: "2px"
+      }
     },
   },
   plugins: [],
