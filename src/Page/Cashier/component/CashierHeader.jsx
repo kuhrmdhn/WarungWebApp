@@ -25,7 +25,7 @@ function CashierHeader() {
           </IconButton>
         </div>
       </section>
-      <section className='w-11/12 sm:w-full lg:w-5/6 h-1/2 lg:h-16'>
+      <section className='w-11/12 sm:w-full lg:w-5/6 h-1/2 lg:h-14 flex items-center sm:items-end'>
         <FilterProduct />
       </section>
     </header>

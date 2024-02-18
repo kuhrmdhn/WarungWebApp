@@ -12,7 +12,7 @@ function CashierProductList() {
   if (searchKeyword !== "") {
     filteredProductData = productData.filter((data) => data.name.toLowerCase().includes(searchKeyword.toLowerCase()))
   } else {
-    if (navigate === "") {
+    if (navigate === "Semua") {
       filteredProductData = productData
     } else {
       filteredProductData = productData.filter((data) => data.category === navigate)
