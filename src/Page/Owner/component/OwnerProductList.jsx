@@ -12,7 +12,7 @@ function OwnerProductList() {
     if (searchKeyword !== "") {
         productLists = productDataSlice.filter((data) => data.name.toLowerCase().includes(searchKeyword.toLowerCase()))
     } else {
-        if (navigate === "") {
+        if (navigate === "Semua") {
             productLists = productDataSlice
         } else {
             productLists = productDataSlice.filter((data) => data.category === navigate)

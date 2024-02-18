@@ -54,30 +54,27 @@ function OrderCart() {
     }
 
     return (
-        cartOrderShow &&
-        <section className=" h-full w-full flex justify-center items-center fixed top-0 left-0 z-10 backdrop-blur-sm">
-            <div className="w-full sm:w-2/3 lg:w-1/3 h-full flex flex-col justify-between bg-white relative">
-                <div className="h-14 w-full flex items-center pl-1">
-                    <IconButton onClick={setCartOrderShow}>
-                        <ArrowBack />
-                    </IconButton>
-                </div>
-                <div className="w-full h-5/6">
-                    <Suspense fallback={<OrderCardSkeleton />}>
-                        <OrderCartList />
-                    </Suspense>
-                </div>
-                <div className="h-24 w-full flex justify-around items-center bg-white text-cashier-primary border-t-2 px-3">
-                    <div className="w-1/4 flex gap-1">
-                        <FormatRupiah value={totalPrice} />
-                    </div>
-                    <button onClick={() => payOrder(orderData)} className="w-1/2 h-12 flex justify-center items-center gap-3 bg-cashier-primary text-white text-sm rounded-md hover:bg-slate-300 hover:text-cashier-primary duration-300" type="button" title="Bayar Pesanan" >
-                        Bayar Sekarang
-                        <AccountBalanceWallet />
-                    </button>
-                </div>
+        <div className={`h-full ${cartOrderShow ? "w-full sm:w-2/3 lg:w-1/3" : "w-0"} duration-300 fixed z-20 top-0 right-0 flex flex-col justify-between bg-white`}>
+            <div className="h-14 w-full flex items-center pl-1">
+                <IconButton onClick={setCartOrderShow}>
+                    <ArrowBack />
+                </IconButton>
             </div>
-        </section>
+            <div className="w-full h-5/6">
+                <Suspense fallback={<OrderCardSkeleton />}>
+                    <OrderCartList />
+                </Suspense>
+            </div>
+            <div className="h-24 w-full flex justify-around items-center bg-white text-cashier-primary border-t-2 px-3">
+                <div className="w-1/4 flex gap-1">
+                    <FormatRupiah value={totalPrice} />
+                </div>
+                <button onClick={() => payOrder(orderData)} className="w-1/2 h-12 flex justify-center items-center gap-3 bg-cashier-primary text-white text-sm rounded-md hover:bg-slate-300 hover:text-cashier-primary duration-300" type="button" title="Bayar Pesanan" >
+                    Bayar Sekarang
+                    <AccountBalanceWallet />
+                </button>
+            </div>
+        </div>
     )
 }
 
