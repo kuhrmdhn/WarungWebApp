@@ -95,18 +95,6 @@ function ResetSoldDataButton() {
         <section className="w-full h-8 sm:h-16 flex justify-start items-center gap-3 text-white" >
             <div className="flex gap-3 text-3xs sm:text-2xs md:text-xs h-7 sm:h-9">
                 {
-                    onChecked &&
-                    <Button
-                        onClick={resetChoosingCard}
-                        color="success"
-                        variant="contained"
-                        title="Reset Data Yang Dipilih"
-                        sx={{fontSize: "inherit", height: "inherit"}}
-                    >
-                        Reset
-                    </Button>
-                }
-                {
                     buttonData.map((data) => (
                         <Button
                             key={data.id}
@@ -119,6 +107,18 @@ function ResetSoldDataButton() {
                             {data.text}
                         </Button>
                     ))
+                }
+                {
+                    onChecked &&
+                    <Button
+                        onClick={resetChoosingCard}
+                        color="success"
+                        variant="contained"
+                        title="Reset Data Yang Dipilih"
+                        sx={{ fontSize: "inherit", height: "inherit" }}
+                    >
+                        Reset
+                    </Button>
                 }
             </div>
         </section>

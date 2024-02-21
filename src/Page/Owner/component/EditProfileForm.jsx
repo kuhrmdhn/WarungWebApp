@@ -3,11 +3,13 @@ import SectionTitle from "../../../atom/SectionTitle"
 import { getAuthorizeData, useFormStore } from "../../../../Zustand/Form/FormStore"
 import { useState } from "react"
 import { useOwnerFeature } from "../../../../Zustand/OwnerFeature/OwnerFeatureStore"
+import Swal from "sweetalert2"
 
 function EditProfileForm() {
     const [editPassword, setEditPassword] = useState(false)
     const [isNewPasswordConfirmed, setIsNewPasswordConfirmed] = useState(false)
     const [isCurrentPasswordConfirmed, setIsCurrentPasswordConfirmed] = useState(false)
+    const [isChangedInput, setIsChangedInput] = useState(false)
     const setEditProfile = useOwnerFeature(state => state.setEditProfile)
     const [authorizeData, handleOnChange, updateAccountData, authorizeAccount, setAuthorizeAccount] = useFormStore(state => [
         state.authorizeData,
@@ -31,7 +33,7 @@ function EditProfileForm() {
             value: name,
             label: "Nama",
             type: "text",
-            onChange: (e) => handleOnChange(e, "authorizeData")
+            state: "authorizeData"
         },
         {
             id: 2,
@@ -39,7 +41,7 @@ function EditProfileForm() {
             value: image,
             label: "Foto Profil",
             type: "text",
-            onChange: (e) => handleOnChange(e, "authorizeData")
+            state: "authorizeData"
         },
         {
             id: 3,
@@ -47,7 +49,7 @@ function EditProfileForm() {
             value: username,
             label: "Username",
             type: "text",
-            onChange: (e) => handleOnChange(e, "authorizeAccount")
+            state: "authorizeAccount"
         },
         {
             id: 4,
@@ -56,7 +58,7 @@ function EditProfileForm() {
             label: "Password",
             type: "password",
             handleError: isCurrentPasswordConfirmed,
-            onChange: (e) => handleOnChange(e, "authorizeAccount")
+            state: "authorizeAccount"
         }
     ]
 
@@ -68,7 +70,7 @@ function EditProfileForm() {
             label: "Password Baru",
             type: "password",
             handleError: isNewPasswordConfirmed,
-            onChange: (e) => handleOnChange(e, "authorizeAccount")
+            state: "authorizeAccount"
         },
         {
             id: 6,
@@ -77,10 +79,14 @@ function EditProfileForm() {
             label: "Konfirmasi Password",
             type: "password",
             handleError: isNewPasswordConfirmed,
-            onChange: (e) => handleOnChange(e, "authorizeAccount")
+            state: "authorizeAccount"
         }
     ]
 
+    function handleChangeInput(e, state) {
+        handleOnChange(e, state)
+        setIsChangedInput(true)
+    }
     function handleSubmit(e) {
         e.preventDefault()
         if (password !== getAuthorizeData.password) {
@@ -93,8 +99,17 @@ function EditProfileForm() {
         }
         setIsCurrentPasswordConfirmed(false)
         setIsNewPasswordConfirmed(false)
-
         updateAccountData({ username, password: newPassword ? newPassword : getAuthorizeData.password, name, image })
+
+        Swal.fire({
+            text: "Profil Disimpan!",
+            toast: true,
+            timer: 1400,
+            timerProgressBar: true,
+            position: "top-right",
+            showConfirmButton: false
+        })
+        setTimeout(() => window.location.reload(),1700)
     }
     function handleCloseProfile() {
         setEditProfile()
@@ -114,7 +129,7 @@ function EditProfileForm() {
                                     value={data.value}
                                     label={data.label}
                                     type={data.type}
-                                    onChange={data.onChange}
+                                    onChange={(e) => handleChangeInput(e, data.state)}
                                     error={data.handleError}
                                 />
                             ))
@@ -130,7 +145,7 @@ function EditProfileForm() {
                                     value={data.value}
                                     label={data.label}
                                     type={data.type}
-                                    onChange={data.onChange}
+                                    onChange={(e) => handleChangeInput(e, data.state)}
                                     error={data.handleError}
                                 />
                             ))
@@ -138,7 +153,10 @@ function EditProfileForm() {
                     </div>
                     <div className="w-full flex justify-end gap-3 mt-5">
                         <Button onClick={handleCloseProfile} variant="contained" color="error" type="submit">Batal</Button>
-                        <Button variant="contained" type="submit">Simpan</Button>
+                        {
+                            isChangedInput &&
+                            <Button variant="contained" type="submit">Simpan</Button>
+                        }
                     </div>
                 </FormControl>
             </form>
