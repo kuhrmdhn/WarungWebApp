@@ -100,14 +100,14 @@ function EditProductForm() {
             .then((response) => {
                 if (response.isConfirmed) {
                     deleteProduct(product)
-                    Swal.fire({icon: "question", text: "Edit Produk Lain?", confirmButtonText: "Ya", showConfirmButton: true, cancelButtonText: "Tidak", showCancelButton: "true"})
-                    .then((status) => {
-                        if(status.isDismissed) {
-                            window.location.reload()
-                        } else {
-                            closeForm()
-                        }
-                    })
+                    Swal.fire({ icon: "question", text: "Edit Produk Lain?", confirmButtonText: "Ya", showConfirmButton: true, cancelButtonText: "Tidak", showCancelButton: "true" })
+                        .then((status) => {
+                            if (status.isDismissed) {
+                                window.location.reload()
+                            } else {
+                                closeForm()
+                            }
+                        })
                 } else {
                     return
                 }
@@ -126,21 +126,24 @@ function EditProductForm() {
             name: productData.name,
             price: parseFloat(productData.price),
             image: productData.image,
-            isReady: JSON.parse(productData.isReady),
+            isReady: productData.stock == 0 ? false : true,
             stock: JSON.parse(productData.stock),
             sold: parseFloat(productData.sold),
             category: productData.category
         }
-        updateProductData(editedData)
-        Swal.fire({ icon: "success", text: "Update Data Sukses, Muat Ulang Halaman?", showCancelButton: true, cancelButtonText: "Edit Produk Lagi" })
-            .then((status) => {
-                if(status.isConfirmed) {
-                    window.location.reload()
-                } else {
-                    closeForm()
-                    return
-                }
-            })
+        if (productData.isReady === true && productData.stock === 0) {
+            Swal.fire({ icon: "warning", text: "Stok Tidak Boleh Kosong/Nol", toast: true, position: "top-right", showConfirmButton: false, timer: 3000, timerProgressBar: true })
+        } else {
+            Swal.fire({ icon: "success", text: "Update Data Sukses, Muat Ulang Halaman?", showCancelButton: true, cancelButtonText: "Edit Produk Lagi" })
+                .then((status) => {
+                    if (status.isConfirmed) {
+                        updateProductData(editedData)
+                        window.location.reload()
+                    } else {
+                        closeForm()
+                    }
+                })
+        }
     }
 
     return (

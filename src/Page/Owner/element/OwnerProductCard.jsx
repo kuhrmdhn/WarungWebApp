@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { useOwnerFeature } from "../../../../Zustand/OwnerFeature/OwnerFeatureStore"
 import ProductCard from "../../../atom/ProductCard"
 
@@ -11,12 +10,10 @@ function OwnerProductCard({ id, code, name, price, image, isReady, stock, sold, 
     state.onChecked
   ])
   const productData = { id, code, name, price, image, isReady, stock, sold, category }
-  const isSoldOut = stock === 0 || !isReady
 
   function handleOnChange(e) {
     if (e.target.checked) {
       addCheckedList(productData)
-
     } else {
       checkedList.splice(checkedList.indexOf(productData), 1)
       const removedItem = checkedList
@@ -25,7 +22,7 @@ function OwnerProductCard({ id, code, name, price, image, isReady, stock, sold, 
   }
 
   return (
-    <section className="w-36 sm:w-44 lg:w-56 h-64 sm:h-80 lg:h-96 bg-white relative border border-gray-700 duration-200 rounded-md">
+    <section className="w-44 lg:w-56 h-80 lg:h-96 bg-white relative border border-gray-700 duration-200 rounded-md">
       <div className="relative">
         {
           onChecked &&
@@ -34,7 +31,7 @@ function OwnerProductCard({ id, code, name, price, image, isReady, stock, sold, 
           </section>
         }
         {
-          isSoldOut ?
+          !isReady ?
             <section className="relative">
               <picture className="w-full h-fit flex justify-center items-center absolute top-0 backdrop-grayscale">
                 <img className="w-full aspect-square" src="/images/assets/sold-out-banner.webp" alt="Sold Out Icon" />
