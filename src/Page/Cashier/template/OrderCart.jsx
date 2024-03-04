@@ -36,7 +36,7 @@ function OrderCart() {
                 price: data.price,
                 image: data.image,
                 isReady: data.isReady,
-                stock: data.stock,
+                stock: data.stock - data.quantity,
                 sold: data.sold + data.quantity,
                 category: data.category
             }
