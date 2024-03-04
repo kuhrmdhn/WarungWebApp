@@ -19,7 +19,7 @@ function OwnerProductList() {
         }
     }
     return (
-        <section className="w-full min-h-screen h-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-1 sm:gap-4 md:px-4">
+        <section className="w-full min-h-screen h-full grid justify-items-center grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-y-3 sm:gap-4 md:px-4">
             {
                 productLists.map((data) => (
                     <OwnerProductCard

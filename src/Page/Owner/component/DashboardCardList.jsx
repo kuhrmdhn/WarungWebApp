@@ -3,6 +3,7 @@ import { useGetApiStore } from "../../../../Zustand/Api/ApiStore"
 import { FormatRupiah } from "@arismun/format-rupiah"
 import DashboardCard from "../../../atom/DashboardCard"
 import SectionTitle from "../../../atom/SectionTitle"
+import { Box, Tabs } from "@mui/material"
 
 function DashboardCardList() {
   const [productData, categoryData] = useGetApiStore(state => [state.productData, state.categoryData])
@@ -38,11 +39,11 @@ function DashboardCardList() {
     }
   ]
   return (
-    <section className="w-full h-32 lg:h-max flex flex-col">
+    <section className="w-full h-36 lg:h-40 flex flex-col">
       <SectionTitle>
         <SectionTitle.SubTitle subTitle={"Ringkasan"} />
       </SectionTitle>
-      <div className="w-full h-full lg:h-24 xl:h-28 webkit-scroll-bar lg:mt-5 lg:px-5 flex justify-between gap-5 lg:gap-0 items-center">
+      <Tabs sx={{ height: "150px", paddingTop: "12px"}} variant="scrollable" allowScrollButtonsMobile scrollButtons="false">
         {
           cardData.map((data) => (
             <DashboardCard
@@ -53,7 +54,7 @@ function DashboardCardList() {
             />
           ))
         }
-      </div>
+      </Tabs>
     </section>
   )
 }
