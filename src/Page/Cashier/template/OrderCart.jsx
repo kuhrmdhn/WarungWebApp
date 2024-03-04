@@ -16,7 +16,7 @@ function OrderCart() {
     const getTotalPriceData = orderData.map(data => data.totalPrice)
     const totalPrice = getTotalPriceData.reduce((acc, prev) => acc + prev, 0)
 
-    function payOrder(dataToPost) {
+    async function payOrder(dataToPost) {
         if (dataToPost.length === 0) {
             Swal.fire({
                 title: "Keranjang Pesanan Masih Kosong!",
@@ -42,15 +42,27 @@ function OrderCart() {
             }
             updateProductData(newData)
         });
-        payOrderCart({ data: dataToPost })
-        Swal.fire({
-            title: "Pembayaran Sukses!",
-            icon: "success",
-            timer: 3000,
-            showConfirmButton: false,
-            toast: true,
-            position: "top-right"
+        const { value: name } = await Swal.fire({
+            inputLabel: "Nama Pemesan",
+            input: "text",
+            inputValidator: (value) => {
+                if (!value) {
+                    return "Wajib di isi"
+                }
+            },
+            showCloseButton: true  
         })
+        if(name) {
+            Swal.fire({
+                icon: "success",
+                text: "Pembayaran Berhasil!",
+                toast: true,
+                timer: 1200,
+                showConfirmButton: false,
+                position: "top-right"
+            })
+            payOrderCart({ buyer: name, data: dataToPost })
+        }
     }
 
     return (
