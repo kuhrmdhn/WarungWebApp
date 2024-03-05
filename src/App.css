@@ -29,7 +29,6 @@ body {
 
 .overflow-y-small::-webkit-scrollbar {
   width: 5px;
-  background: #1f1f1f;
 }
 
 .overflow-y-small::-webkit-scrollbar-thumb {
