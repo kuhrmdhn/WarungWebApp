@@ -7,12 +7,13 @@ import { useCartOrder } from "../../../../Zustand/CartOrder/CartOrderStore"
 import { useGetApiStore } from "../../../../Zustand/Api/ApiStore"
 import { useFormStore } from "../../../../Zustand/Form/FormStore"
 import OrderCardSkeleton from "../../../molecul/OrderCardSkeleton"
+import axios from "axios"
 const OrderCartList = lazy(() => import("../component/OrderCartList"))
 
 function OrderCart() {
     const [cartOrderShow, setCartOrderShow] = useCartOrder(state => [state.cartOrderShow, state.setCartOrderShow])
     const updateProductData = useFormStore(state => state.updateProductData)
-    const [orderData, payOrderCart] = useGetApiStore(state => [state.orderData, state.payOrderCart])
+    const [setProductData, orderData, payOrderCart] = useGetApiStore(state => [state.setProductData, state.orderData, state.payOrderCart])
     const getTotalPriceData = orderData.map(data => data.totalPrice)
     const totalPrice = getTotalPriceData.reduce((acc, prev) => acc + prev, 0)
 
@@ -63,6 +64,8 @@ function OrderCart() {
             })
             payOrderCart({ buyer: name, data: dataToPost })
         }
+        axios.get(`${import.meta.env.VITE_BASE_URL}/products`)
+        .then(res => setProductData(res.data))
     }
 
     return (

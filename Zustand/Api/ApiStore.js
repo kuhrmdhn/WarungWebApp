@@ -52,6 +52,9 @@ export const useGetApiStore = create((set) => ({
       authorizeData: { ...state.authorizeData, [name]: value },
     }));
   },
+  setProductData: (productData) => {
+    set(() => ({ productData }));
+  },
   setOrderData: (orderData) => set(() => ({ orderData })),
   addNewOrderData: async (data) => {
     try {
