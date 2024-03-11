@@ -1,7 +1,7 @@
 import { Suspense, lazy } from "react"
 import SearchBar from "../../../atom/SearchBar"
 import ResetSoldDataButton from "../element/ResetSoldDataButton"
-import ProductCardSkeleton from "../../../molecul/ProductCardSkeleton"
+import ProductCardSkeleton from "../../../skeleton/ProductCardSkeleton"
 import SectionTitle from "../../../atom/SectionTitle"
 import { useSearchKeyword } from "../../../../Zustand/SearchBar/SearchBarStore"
 import FilterProduct from "../../../atom/FilterProduct"

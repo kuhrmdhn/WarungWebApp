@@ -18,15 +18,16 @@ function CashierProductList() {
       filteredProductData = productData.filter((data) => data.category === navigate)
     }
   }
+  
   return (
     <>
       {
         filteredProductData.length === 0 ?
           <section className="h-full w-full">
-            <PageError.EmptyProduct details={"Produk Tidak Ditemukan"}/>
+            <PageError.EmptyProduct details={"Produk Tidak Ditemukan"} />
           </section>
           :
-          <section className="w-full h-full grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 webkit-scroll-bar gap-5 lg:gap-2 sm:gap-4 md:px-4 py-5 lg:py-0 bg-white">
+          <section className="w-full h-full grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-y-3">
             {
               filteredProductData.map((data) => (
                 <CashierProductCard

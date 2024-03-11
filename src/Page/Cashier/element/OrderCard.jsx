@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { FormatRupiah } from "@arismun/format-rupiah"
 import { useGetApiStore } from "../../../../Zustand/Api/ApiStore"
 import Swal from "sweetalert2"
@@ -5,7 +6,7 @@ import { ControlPoint, HighlightOff, RemoveCircle } from "@mui/icons-material"
 
 function OrderCard({ id, code, name, price, image, isReady, stock, sold, category, quantity }) {
     const [updateOrderData, removeOrderItem] = useGetApiStore(state => [state.updateOrderData, state.removeOrderItem])
-    const orderItem = { id, code, name, price, image, isReady, stock, sold, category, quantity: 1}
+    const orderItem = { id, code, name, price, image, isReady, stock, sold, category, quantity: 1 }
 
     function incrementQuantity() {
         const maxQuantity = {
@@ -26,7 +27,7 @@ function OrderCard({ id, code, name, price, image, isReady, stock, sold, categor
         } else {
             const updatedIncrementQuantity = {
                 ...orderItem,
-                quantity: quantity + 1, 
+                quantity: quantity + 1,
                 totalPrice: price * (quantity + 1)
             }
             updateOrderData(id, updatedIncrementQuantity)
@@ -34,11 +35,11 @@ function OrderCard({ id, code, name, price, image, isReady, stock, sold, categor
     }
     function decrementQuantity() {
         const updatedDecrementQuantity = {
-         ...orderItem,
+            ...orderItem,
             quantity: quantity - 1,
             totalPrice: price * (quantity - 1)
         }
-        if(updatedDecrementQuantity.quantity === 0) {
+        if (updatedDecrementQuantity.quantity === 0) {
             removeOrderItem(updatedDecrementQuantity.id)
         } else {
             updateOrderData(id, updatedDecrementQuantity)
@@ -46,7 +47,7 @@ function OrderCard({ id, code, name, price, image, isReady, stock, sold, categor
     }
     function handleInputQuantity(e) {
         let value = e.target.value
-        if(parseInt(value) > stock) {
+        if (parseInt(value) > stock) {
             value = stock
             Swal.fire({
                 icon: "error",
@@ -69,11 +70,11 @@ function OrderCard({ id, code, name, price, image, isReady, stock, sold, categor
         <section className="w-full h-20 flex items-center border border-gray-400 bg-white my-2">
             <div className="w-1/3 h-full relative flex justify-evenly items-center">
                 <button onClick={decrementQuantity} className="w-1/3 text-red-500 text-xl" aria-label="decrement quantity" type="button" name="quantity minus button">
-                    <RemoveCircle/>
+                    <RemoveCircle />
                 </button>
-                <input onChange={(e) =>handleInputQuantity(e)} value={quantity ?? 0} className="w-1/3 input-number border-b border-gray-700 text-center" type="number" name="quantity input" id="inputQuantity"/>
+                <input onChange={(e) => handleInputQuantity(e)} value={quantity ?? 0} className="w-1/3 input-number border-b border-gray-700 text-center" type="number" name="quantity input" id="inputQuantity" />
                 <button onClick={incrementQuantity} className="w-1/3 text-green-500 text-xl" aria-label="increment quantity" type="button" name="quantity plus button">
-                    <ControlPoint/>
+                    <ControlPoint />
                 </button>
             </div>
             <div className="w-1/2 h-full flex flex-col justify-around items-center">
@@ -82,11 +83,24 @@ function OrderCard({ id, code, name, price, image, isReady, stock, sold, categor
             </div>
             <div className="w-1/4 h-full flex justify-center items-center">
                 <button onClick={() => removeOrderItem(id)} className="text-red-500 text-xl" aria-label="remove order item" type="button" name="remove order list button">
-                    <HighlightOff/>
+                    <HighlightOff />
                 </button>
             </div>
         </section>
     )
+}
+
+OrderCard.propTypes = {
+    id: PropTypes.number.isRequired,
+    code: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    image: PropTypes.string.isRequired,
+    isReady: PropTypes.bool.isRequired,
+    stock: PropTypes.number.isRequired,
+    sold: PropTypes.number.isRequired,
+    category: PropTypes.string.isRequired,
+    quantity: PropTypes.number.isRequired
 }
 
 export default OrderCard
