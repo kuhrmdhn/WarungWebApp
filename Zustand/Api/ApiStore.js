@@ -124,4 +124,30 @@ export const useGetApiStore = create((set) => ({
   setOrderGroupData: (orderGroupData) => {
     set(() => ({ orderGroupData }));
   },
+  fetchApi: async () => {
+    const authorizeData = await axios
+      .get(`${import.meta.env.VITE_BASE_URL}/authorize`)
+      .then((response) => response.data);
+    const productData = await axios
+      .get(`${import.meta.env.VITE_BASE_URL}/products`)
+      .then((response) => response.data);
+    const categoryData = await axios
+      .get(`${import.meta.env.VITE_BASE_URL}/categories`)
+      .then((response) => response.data);
+    const orderData = await axios
+      .get(`${import.meta.env.VITE_BASE_URL}/keranjangs`)
+      .then((response) => response.data);
+    const orderGroupData = await axios
+      .get(`${import.meta.env.VITE_BASE_URL}/pesanans`)
+      .then((response) => response.data);
+
+ set((state) => ({
+        ...state,
+        authorizeData,
+        productData,
+        categoryData,
+        orderData,
+        orderGroupData
+      }));
+  },
 }));

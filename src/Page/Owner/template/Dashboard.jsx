@@ -1,6 +1,6 @@
 import { Suspense, lazy } from "react"
 import OwnerHeader from "../component/OwnerHeader"
-import DashboardCardSkeleton from "../../../molecul/DashboardCardSkeleton"
+import DashboardCardSkeleton from "../../../skeleton/DashboardCardSkeleton"
 import ReportChart from "../element/ReportChart";
 import PopularProduct from "../component/PopularProduct";
 import SectionTitle from "../../../atom/SectionTitle"

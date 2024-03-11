@@ -1,24 +1,28 @@
 import { Suspense, lazy } from "react"
 import Swal from "sweetalert2"
-import { IconButton } from "@mui/material"
-import { AccountBalanceWallet, ArrowBack } from "@mui/icons-material"
+import { Box, Button, Drawer, IconButton } from "@mui/material"
+import { Close } from "@mui/icons-material"
 import { FormatRupiah } from "@arismun/format-rupiah"
 import { useCartOrder } from "../../../../Zustand/CartOrder/CartOrderStore"
 import { useGetApiStore } from "../../../../Zustand/Api/ApiStore"
 import { useFormStore } from "../../../../Zustand/Form/FormStore"
-import OrderCardSkeleton from "../../../molecul/OrderCardSkeleton"
-import axios from "axios"
+import OrderCardSkeleton from "../../../skeleton/OrderCardSkeleton"
 const OrderCartList = lazy(() => import("../component/OrderCartList"))
 
 function OrderCart() {
-    const [cartOrderShow, setCartOrderShow] = useCartOrder(state => [state.cartOrderShow, state.setCartOrderShow])
     const updateProductData = useFormStore(state => state.updateProductData)
-    const [setProductData, orderData, payOrderCart] = useGetApiStore(state => [state.setProductData, state.orderData, state.payOrderCart])
+    const [cartOrderShow, setCartOrderShow] = useCartOrder(state => [state.cartOrderShow, state.setCartOrderShow])
+    const [orderData, payOrderCart, fetchApi] = useGetApiStore(state => [state.orderData, state.payOrderCart, state.fetchApi])
+    
     const getTotalPriceData = orderData.map(data => data.totalPrice)
     const totalPrice = getTotalPriceData.reduce((acc, prev) => acc + prev, 0)
 
-    async function payOrder(dataToPost) {
-        if (dataToPost.length === 0) {
+    function closeOrderCart() {
+        setCartOrderShow(false)
+    }
+
+    async function payOrder() {
+        if (orderData.length === 0) {
             Swal.fire({
                 title: "Keranjang Pesanan Masih Kosong!",
                 icon: "error",
@@ -29,7 +33,8 @@ function OrderCart() {
             })
             return
         }
-        dataToPost.forEach(data => {
+        closeOrderCart()
+        orderData.forEach(data => {
             const newData = {
                 id: data.id,
                 code: data.code,
@@ -51,9 +56,9 @@ function OrderCart() {
                     return "Wajib di isi"
                 }
             },
-            showCloseButton: true  
+            showCloseButton: true
         })
-        if(name) {
+        if (name) {
             Swal.fire({
                 icon: "success",
                 text: "Pembayaran Berhasil!",
@@ -62,34 +67,30 @@ function OrderCart() {
                 showConfirmButton: false,
                 position: "top-right"
             })
-            payOrderCart({ buyer: name, data: dataToPost })
+            payOrderCart({ buyer: name, data: orderData })
         }
-        axios.get(`${import.meta.env.VITE_BASE_URL}/products`)
-        .then(res => setProductData(res.data))
+        fetchApi()
     }
 
     return (
-        <div className={`h-full ${cartOrderShow ? "w-full sm:w-2/3 lg:w-1/3" : "w-0"} duration-300 fixed z-20 top-0 right-0 flex flex-col justify-between bg-white`}>
-            <div className="h-14 w-full flex items-center pl-1">
-                <IconButton onClick={setCartOrderShow}>
-                    <ArrowBack />
-                </IconButton>
-            </div>
-            <div className="w-full h-5/6">
-                <Suspense fallback={<OrderCardSkeleton />}>
+        <Drawer open={cartOrderShow} onClose={closeOrderCart} anchor="right">
+            <Box className="w-[34vw] h-full bg-white">
+                <header className="h-12 w-full pl-2 pt-2">
+                    <IconButton onClick={closeOrderCart} color="primary">
+                        <Close />
+                    </IconButton>
+                </header>
+                <Suspense fallback={<OrderCardSkeleton/>}>
                     <OrderCartList />
                 </Suspense>
-            </div>
-            <div className="h-24 w-full flex justify-around items-center bg-white text-cashier-primary border-t-2 px-3">
-                <div className="w-1/4 flex gap-1">
+                <section className="h-1/6 w-full flex flex-col justify-evenly px-5 border-t">
                     <FormatRupiah value={totalPrice} />
-                </div>
-                <button onClick={() => payOrder(orderData)} className="w-1/2 h-12 flex justify-center items-center gap-3 bg-cashier-primary text-white text-sm rounded-md hover:bg-slate-300 hover:text-cashier-primary duration-300" type="button" title="Bayar Pesanan" >
-                    Bayar Sekarang
-                    <AccountBalanceWallet />
-                </button>
-            </div>
-        </div>
+                    <Button onClick={payOrder} color="primary" variant="contained" fullWidth>
+                        Bayar
+                    </Button>
+                </section>
+            </Box>
+        </Drawer>
     )
 }
 

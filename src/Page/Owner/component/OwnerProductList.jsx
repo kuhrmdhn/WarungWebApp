@@ -5,19 +5,19 @@ import OwnerProductCard from "../element/OwnerProductCard"
 
 function OwnerProductList() {
     const productData = useGetApiStore(state => state.productData)
-    const productDataSlice = productData.slice()
     const searchKeyword = useSearchKeyword(state => state.searchKeyword)
     const navigate = useNavigateProduct(state => state.navigate)
     let productLists;
     if (searchKeyword !== "") {
-        productLists = productDataSlice.filter((data) => data.name.toLowerCase().includes(searchKeyword.toLowerCase()))
+        productLists = productData.filter((data) => data.name.toLowerCase().includes(searchKeyword.toLowerCase()))
     } else {
         if (navigate === "Semua") {
-            productLists = productDataSlice
+            productLists = productData
         } else {
-            productLists = productDataSlice.filter((data) => data.category === navigate)
+            productLists = productData.filter((data) => data.category === navigate)
         }
     }
+    
     return (
         <section className="w-full min-h-screen h-full grid justify-items-center grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-y-3 sm:gap-4 md:px-4">
             {
