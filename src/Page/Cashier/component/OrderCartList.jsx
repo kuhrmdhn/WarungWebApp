@@ -6,7 +6,7 @@ function OrderCartList() {
   const orderData = useGetApiStore(state => state.orderData)
 
   return (
-    <div className="h-full w-full px-2 overflow-y-auto overflow-x-hidden">
+    <div className="h-3/4 w-full px-2 overflow-y-auto overflow-x-hidden">
       {
         orderData.length === 0 ?
           <PageError.EmptyProduct details={"Keranjang Kosong!"} />
