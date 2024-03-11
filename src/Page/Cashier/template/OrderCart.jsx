@@ -13,7 +13,7 @@ function OrderCart() {
     const updateProductData = useFormStore(state => state.updateProductData)
     const [cartOrderShow, setCartOrderShow] = useCartOrder(state => [state.cartOrderShow, state.setCartOrderShow])
     const [orderData, payOrderCart, fetchApi] = useGetApiStore(state => [state.orderData, state.payOrderCart, state.fetchApi])
-    
+   
     const getTotalPriceData = orderData.map(data => data.totalPrice)
     const totalPrice = getTotalPriceData.reduce((acc, prev) => acc + prev, 0)
 
