@@ -10,7 +10,7 @@ function EditProfileForm() {
     const [isNewPasswordConfirmed, setIsNewPasswordConfirmed] = useState(false)
     const [isCurrentPasswordConfirmed, setIsCurrentPasswordConfirmed] = useState(false)
     const [isChangedInput, setIsChangedInput] = useState(false)
-    const setEditProfile = useOwnerFeature(state => state.setEditProfile)
+    const [setEditProfile, setShowProfile] = useOwnerFeature(state => [state.setEditProfile, state.setShowProfile])
     const [authorizeData, handleOnChange, updateAccountData, authorizeAccount, setAuthorizeAccount] = useFormStore(state => [
         state.authorizeData,
         state.handleOnChange,
@@ -109,6 +109,7 @@ function EditProfileForm() {
             position: "top-right",
             showConfirmButton: false
         })
+        setShowProfile()
         setTimeout(() => window.location.reload(),1700)
     }
     function handleCloseProfile() {

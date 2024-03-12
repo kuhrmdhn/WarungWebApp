@@ -1,9 +1,9 @@
 import { AttachMoney, Category, Sell, ShoppingBasket } from "@mui/icons-material"
 import { useGetApiStore } from "../../../../Zustand/Api/ApiStore"
 import { FormatRupiah } from "@arismun/format-rupiah"
-import DashboardCard from "../../../atom/DashboardCard"
 import SectionTitle from "../../../atom/SectionTitle"
-import { Box, Tabs } from "@mui/material"
+import { Tabs } from "@mui/material"
+import DashboardCard from "../element/DashboardCard"
 
 function DashboardCardList() {
   const [productData, categoryData] = useGetApiStore(state => [state.productData, state.categoryData])
@@ -38,6 +38,7 @@ function DashboardCardList() {
       icon: <Sell fontSize="inherit" />
     }
   ]
+
   return (
     <section className="w-full h-36 lg:h-40 flex flex-col">
       <SectionTitle>

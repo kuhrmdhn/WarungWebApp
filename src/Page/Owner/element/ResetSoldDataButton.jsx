@@ -73,7 +73,6 @@ function ResetSoldDataButton() {
         setCheckedList([])
     }
 
-    console.log(checkedList)
     const buttonData = [
         {
             id: 1,

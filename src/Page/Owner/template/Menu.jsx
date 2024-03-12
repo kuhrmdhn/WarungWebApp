@@ -5,7 +5,7 @@ import SidebarMenu from "../element/SidebarMenu"
 import { Avatar } from "@mui/material"
 import { useOwnerFeature } from "../../../../Zustand/OwnerFeature/OwnerFeatureStore"
 
-function Sidebar() {
+function Menu() {
     const authorizeData = useGetApiStore(state => state.authorizeData)
     const setShowProfile = useOwnerFeature(state => state.setShowProfile)
     const userAvatar = authorizeData.image
@@ -70,4 +70,4 @@ function Sidebar() {
     )
 }
 
-export default Sidebar
+export default Menu

@@ -7,21 +7,21 @@ function OwnerProductList() {
     const productData = useGetApiStore(state => state.productData)
     const searchKeyword = useSearchKeyword(state => state.searchKeyword)
     const navigate = useNavigateProduct(state => state.navigate)
-    let productLists;
+    let productList;
     if (searchKeyword !== "") {
-        productLists = productData.filter((data) => data.name.toLowerCase().includes(searchKeyword.toLowerCase()))
+        productList = productData.filter((data) => data.name.toLowerCase().includes(searchKeyword.toLowerCase()))
     } else {
         if (navigate === "Semua") {
-            productLists = productData
+            productList = productData
         } else {
-            productLists = productData.filter((data) => data.category === navigate)
+            productList = productData.filter((data) => data.category === navigate)
         }
     }
     
     return (
         <section className="w-full min-h-screen h-full grid justify-items-center grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-y-3 sm:gap-4 md:px-4">
             {
-                productLists.map((data) => (
+                productList.map((data) => (
                     <OwnerProductCard
                         key={data.id}
                         id={data.id}

@@ -2,7 +2,7 @@ import Dashboard from "../template/Dashboard"
 import EditProductForm from "../template/EditProductForm"
 import AllProducts from "../template/AllProducts"
 import AddProductForm from "../template/AddProductForm"
-import Sidebar from "../template/Sidebar"
+import Menu from "../template/Menu"
 import AccountProfile from "../template/AccountProfile"
 import Login from "../template/login"
 
@@ -15,7 +15,7 @@ function OwnerApp() {
                     <Login /> :
                     <div className='h-full w-full flex flex-col-reverse sm:flex-row'>
                         <section className="w-full sm:w-1/4 lg:w-1/6 h-14 sm:h-full">
-                            <Sidebar />
+                            <Menu />
                         </section>
                         <section className="w-full sm:w-11/12 overflow-y-auto">
                             <Dashboard />

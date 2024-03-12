@@ -2,13 +2,15 @@ import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@m
 import { useState } from "react"
 import Swal from "sweetalert2"
 import { useFormStore } from "../../../../Zustand/Form/FormStore"
-import PreviewProductCard from "../../../atom/PreviewProductCard"
 import SectionTitle from "../../../atom/SectionTitle"
 import { initialProductData } from "../../../../Zustand/Form/FormStore"
+import { useGetApiStore } from "../../../../Zustand/Api/ApiStore"
+import PreviewProductCard from "../element/PreviewProductCard"
 
 function AddProductForm() {
     const [inputImageType, setInputImageType] = useState()
     const [cancelButton, setCancelButton] = useState(false)
+    const fetchApi = useGetApiStore(state => state.fetchApi)
     const [newProductData, handleOnChange, addNewProduct, setNewProductData] = useFormStore(state =>
         [
             state.newProductData,
@@ -109,24 +111,15 @@ function AddProductForm() {
         Swal.fire({
             icon: "success",
             text: "Produk Berhasil Ditambahkan",
-            showConfirmButton: true,
-            showCancelButton: true,
-            cancelButtonText: "Tambah Produk Lagi"
+            toast: true,
+            position: "top-right",
+            timer: 3000,
+            showConfirmButton: false,
+            timerProgressBar: true
         })
-            .then(async (status) => {
-                const date = new Date()
-                const year = parseInt(date.getFullYear())
-                const randomNum = parseInt((Math.random() * 1000).toFixed())
-                const idGenerate = year + randomNum
-                const id = idGenerate
-                await addNewProduct({ ...newProductData, sold: 0, id, code: `K-${id}` })
-
-                if (status.isConfirmed) {
-                    window.location.reload()
-                } else {
-                    resetInputValue()
-                }
-            })
+        addNewProduct(newProductData)
+        fetchApi()
+        resetInputValue()
     }
 
     function onChange(e) {

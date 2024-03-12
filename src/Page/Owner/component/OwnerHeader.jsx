@@ -19,6 +19,7 @@ function OwnerHeader() {
             time = "Malam"
             break;
     }
+
     return (
         <header className="h-20 sm:h-24 lg:h-32 w-full flex rounded-b-md justify-center items-center pt-3 mb-3 font-raleway">
             <section className="w-5/6 h-full flex justify-between items-center">
@@ -27,7 +28,7 @@ function OwnerHeader() {
                 </figure>
                 <div className="h-2/3 w-2/3 flex flex-col">
                     <h1 className="text-xs sm:text-sm lg:text-xl font-bold">Selamat {time}, {authorizeData.username} 👋</h1>
-                    <p className="text-2xs lg:text-sm">Lihat Kemajuan Bisnis Anda Disini</p>
+                    <p className="text-2xs lg:text-sm">Lihat Kemajuan Bisnis Anda</p>
                 </div>
             </section>
         </header>
