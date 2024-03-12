@@ -9,8 +9,8 @@ function ProfileCard() {
     const [image, name, username] = [authorizeData.image, getAuthorizeData.name, getAuthorizeData.username]
 
     return (
-        <section className="h-96 w-full flex flex-col justify-between items-center">
-            <img className="aspect-square h-64 rounded-full" src={image} alt={name} />
+        <section className="h-fit w-full flex flex-col justify-between items-center">
+            <img className="aspect-square h-44 rounded-full mb-5" src={image} alt={name} />
             <div className="h-24 w-full flex justify-around items-start">
                 <section>
                     <h1 className="text-xl font-semibold">{username}</h1>

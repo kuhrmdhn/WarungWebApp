@@ -38,9 +38,9 @@ function ReportChart() {
                     <span className="w-16 h-4 sm:w-20 lg:w-28 text-3xs sm:text-2xs md:text-base">
                         <FormControl sx={{ width: "inherit", height: "inherit", background: "inherit", fontSize: "inherit" }}>
                             <Select variant="standard" color="primary" sx={{ fontSize: "inherit" }} onChange={handleChangeCategory} value={selectProductCategory}>
-                                <MenuItem value="Makanan">Makanan</MenuItem>
-                                <MenuItem value="Minuman">Minuman</MenuItem>
-                                <MenuItem value="Cemilan">Cemilan</MenuItem>
+                                <MenuItem sx={{fontSize: "inherit"}} value="Makanan">Makanan</MenuItem>
+                                <MenuItem sx={{fontSize: "inherit"}} value="Minuman">Minuman</MenuItem>
+                                <MenuItem sx={{fontSize: "inherit"}} value="Cemilan">Cemilan</MenuItem>
                             </Select>
                         </FormControl>
                     </span>
