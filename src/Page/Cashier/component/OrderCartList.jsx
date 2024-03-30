@@ -1,5 +1,5 @@
 import { useGetApiStore } from "../../../../Zustand/Api/ApiStore"
-import PageError from "../../../atom/PageError"
+import EmptyProduct from "../../../atom/EmptyProduct"
 import OrderCard from "../element/OrderCard"
 
 function OrderCartList() {
@@ -9,7 +9,7 @@ function OrderCartList() {
     <div className="h-3/4 w-full px-2 overflow-y-auto overflow-x-hidden">
       {
         orderData.length === 0 ?
-          <PageError.EmptyProduct details={"Keranjang Kosong!"} />
+          <EmptyProduct details={"Keranjang Kosong!"} />
           :
           orderData.map((data) => (
             <OrderCard

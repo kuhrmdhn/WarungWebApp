@@ -1,16 +1,10 @@
+import PropTypes from "prop-types"
+
 function Logo({ children }) {
     return (
         <section>
             {children}
         </section>
-    )
-}
-
-function LogoImage() {
-    return (
-        <div className="w-16 h-16 flex justify-center items-center border-2 border-cashier-primary">
-            <img className="w-full aspect-square" src="/images/assets/WarungWeb.webp" alt="" />
-        </div>
     )
 }
 
@@ -30,7 +24,10 @@ function LogoBlack() {
     )
 }
 
-Logo.LogoImage = LogoImage
 Logo.LogoWhite = LogoWhite
 Logo.LogoBlack = LogoBlack
 export default Logo
+
+Logo.propTypes = {
+    children: PropTypes.element
+}

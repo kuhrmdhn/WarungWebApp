@@ -1,10 +1,4 @@
-function PageError({ children }) {
-    return (
-        <section>
-            {children}
-        </section>
-    )
-}
+import PropTypes from "prop-types"
 
 function EmptyProduct({ details }) {
     return (
@@ -15,5 +9,8 @@ function EmptyProduct({ details }) {
     )
 }
 
-PageError.EmptyProduct = EmptyProduct
-export default PageError
+export default EmptyProduct
+
+EmptyProduct.propTypes = {
+    details: PropTypes.string.isRequired
+}

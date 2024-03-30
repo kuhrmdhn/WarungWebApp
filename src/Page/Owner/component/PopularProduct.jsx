@@ -1,7 +1,7 @@
 import { FormatRupiah } from "@arismun/format-rupiah"
 import { useGetApiStore } from "../../../../Zustand/Api/ApiStore"
-import PageError from "../../../atom/PageError"
 import SectionTitle from "../../../atom/SectionTitle"
+import EmptyProduct from "../../../atom/EmptyProduct"
 
 function PopularProduct() {
     const productData = useGetApiStore(state => state.productData)
@@ -31,7 +31,7 @@ function PopularProduct() {
                             <tbody className="h-5/6 w-full">
                                 <tr>
                                     <td colSpan={4}>
-                                        <PageError.EmptyProduct details={"Belum ada produk"} />
+                                        <EmptyProduct details={"Belum ada produk"} />
                                     </td>
                                 </tr>
                             </tbody>

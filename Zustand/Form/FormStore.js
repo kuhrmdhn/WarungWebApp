@@ -1,12 +1,8 @@
 import axios from "axios";
 import { create } from "zustand";
+import { authorizeData } from "../Api/ApiStore";
 
-export const getAuthorizeData = await axios
-  .get(`${import.meta.env.VITE_BASE_URL}/authorize`)
-  .then((response) => {
-    return response.data;
-  })
-  .catch((error) => console.log(error));
+
 
 export const initialProductData = {
   id: 0,
@@ -20,13 +16,13 @@ export const initialProductData = {
   category: "",
 };
 
-export const authorizeData = {
-  name: getAuthorizeData.name,
-  image: getAuthorizeData.image,
+export const authorizeProfile = {
+  name: authorizeData.name,
+  image: authorizeData.image,
 };
 
 export const authorizeAccount = {
-  username: getAuthorizeData.username,
+  username: authorizeData.username,
   password: "",
   newPassword: "",
   confirmPassword: "",
@@ -37,7 +33,7 @@ export const useFormStore = create((set) => ({
   addProductForm: false,
   productData: initialProductData,
   newProductData: initialProductData,
-  authorizeData,
+  authorizeProfile,
   authorizeAccount,
   setEditProductForm: () =>
     set((state) => ({
