@@ -1,7 +1,7 @@
 import { useGetApiStore } from "../../../../Zustand/Api/ApiStore"
 import { useNavigateProduct } from "../../../../Zustand/Navigate/NavigateStore"
 import { useSearchKeyword } from "../../../../Zustand/SearchBar/SearchBarStore"
-import PageError from "../../../atom/PageError"
+import EmptyProduct from "../../../atom/EmptyProduct"
 import CashierProductCard from "../element/CashierProductCard"
 
 function CashierProductList() {
@@ -18,13 +18,13 @@ function CashierProductList() {
       filteredProductData = productData.filter((data) => data.category === navigate)
     }
   }
-  
+
   return (
     <>
       {
         filteredProductData.length === 0 ?
           <section className="h-full w-full">
-            <PageError.EmptyProduct details={"Produk Tidak Ditemukan"} />
+            <EmptyProduct details={"Produk Tidak Ditemukan"} />
           </section>
           :
           <section className="w-full h-full grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-y-3">

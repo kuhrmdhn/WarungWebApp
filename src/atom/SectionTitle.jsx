@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import { ArrowRight } from "@mui/icons-material"
 
 function SectionTitle({ children }) {
@@ -6,6 +7,10 @@ function SectionTitle({ children }) {
       {children}
     </header>
   )
+}
+
+SectionTitle.propTypes = {
+  children: PropTypes.element
 }
 
 function Title({ title, sizes }) {
@@ -23,6 +28,11 @@ function Title({ title, sizes }) {
   )
 }
 
+Title.propTypes = {
+  title: PropTypes.string.isRequired,
+  sizes: PropTypes.string.isRequired
+}
+
 function SubTitle({ subTitle }) {
   return (
     <div className="w-full h-12 flex justify-start items-center lg:text-end text-owner-primary font-semibold text-xs lg:text-base">
@@ -30,6 +40,10 @@ function SubTitle({ subTitle }) {
       <h3 className="text-black">{subTitle}</h3>
     </div>
   )
+}
+
+SubTitle.propTypes = {
+  subTitle: PropTypes.string.isRequired
 }
 
 SectionTitle.Title = Title

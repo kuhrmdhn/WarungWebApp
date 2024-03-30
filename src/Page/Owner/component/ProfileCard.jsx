@@ -1,12 +1,11 @@
 import { Edit } from "@mui/icons-material"
-import { useFormStore, getAuthorizeData } from "../../../../Zustand/Form/FormStore"
+import { authorizeProfile } from "../../../../Zustand/Form/FormStore"
 import { useOwnerFeature } from "../../../../Zustand/OwnerFeature/OwnerFeatureStore"
 import { IconButton } from "@mui/material"
 
 function ProfileCard() {
-    const authorizeData = useFormStore(state => state.authorizeData)
     const [editProfile, setEditProfile] = useOwnerFeature(state => [state.editProfile, state.setEditProfile])
-    const [image, name, username] = [authorizeData.image, getAuthorizeData.name, getAuthorizeData.username]
+    const [image, name, username] = [authorizeProfile.image, authorizeProfile.name, authorizeProfile.username]
 
     return (
         <section className="h-fit w-full flex flex-col justify-between items-center">

@@ -1,9 +1,10 @@
 import { Button, FormControl, TextField } from "@mui/material"
 import SectionTitle from "../../../atom/SectionTitle"
-import { getAuthorizeData, useFormStore } from "../../../../Zustand/Form/FormStore"
+import { useFormStore } from "../../../../Zustand/Form/FormStore"
 import { useState } from "react"
 import { useOwnerFeature } from "../../../../Zustand/OwnerFeature/OwnerFeatureStore"
 import Swal from "sweetalert2"
+import { authorizeData } from "../../../../Zustand/Api/ApiStore"
 
 function EditProfileForm() {
     const [editPassword, setEditPassword] = useState(false)
@@ -11,8 +12,8 @@ function EditProfileForm() {
     const [isCurrentPasswordConfirmed, setIsCurrentPasswordConfirmed] = useState(false)
     const [isChangedInput, setIsChangedInput] = useState(false)
     const [setEditProfile, setShowProfile] = useOwnerFeature(state => [state.setEditProfile, state.setShowProfile])
-    const [authorizeData, handleOnChange, updateAccountData, authorizeAccount, setAuthorizeAccount] = useFormStore(state => [
-        state.authorizeData,
+    const [authorizeProfile, handleOnChange, updateAccountData, authorizeAccount, setAuthorizeAccount] = useFormStore(state => [
+        state.authorizeProfile,
         state.handleOnChange,
         state.updateAccountData,
         state.authorizeAccount,
@@ -24,7 +25,7 @@ function EditProfileForm() {
         authorizeAccount.newPassword,
         authorizeAccount.confirmPassword
     ]
-    const [name, image] = [authorizeData.name, authorizeData.image]
+    const [name, image] = [authorizeProfile.name, authorizeProfile.image]
 
     const inputData = [
         {
@@ -33,7 +34,7 @@ function EditProfileForm() {
             value: name,
             label: "Nama",
             type: "text",
-            state: "authorizeData"
+            state: "authorizeProfile"
         },
         {
             id: 2,
@@ -41,7 +42,7 @@ function EditProfileForm() {
             value: image,
             label: "Foto Profil",
             type: "text",
-            state: "authorizeData"
+            state: "authorizeProfile"
         },
         {
             id: 3,
@@ -89,7 +90,7 @@ function EditProfileForm() {
     }
     function handleSubmit(e) {
         e.preventDefault()
-        if (password !== getAuthorizeData.password) {
+        if (password !== authorizeAccount.password) {
             setIsCurrentPasswordConfirmed(true)
             return
         }
@@ -99,7 +100,7 @@ function EditProfileForm() {
         }
         setIsCurrentPasswordConfirmed(false)
         setIsNewPasswordConfirmed(false)
-        updateAccountData({ username, password: newPassword ? newPassword : getAuthorizeData.password, name, image })
+        updateAccountData({ username, password: newPassword ? newPassword : authorizeData.password, name, image })
 
         Swal.fire({
             text: "Profil Disimpan!",

@@ -2,7 +2,7 @@ import axios from "axios";
 import { create } from "zustand";
 
 // Initial value
-const authorizeData = await axios
+export const authorizeData = await axios
   .get(`${import.meta.env.VITE_BASE_URL}/authorize`)
   .then((response) => {
     return response.data;
