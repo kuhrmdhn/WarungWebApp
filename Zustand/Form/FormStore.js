@@ -2,8 +2,6 @@ import axios from "axios";
 import { create } from "zustand";
 import { authorizeData } from "../Api/ApiStore";
 
-
-
 export const initialProductData = {
   id: 0,
   code: "",

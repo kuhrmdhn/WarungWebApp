@@ -7,6 +7,7 @@ import AccountProfile from "../template/AccountProfile"
 import Login from "../template/login"
 
 function OwnerApp() {
+    document.title = "Warung Web | Owner App"
     const loginStatus = JSON.parse(localStorage.getItem("isLogin"))
     return (
         <main className="h-screen w-full bg-white font-montserrat">

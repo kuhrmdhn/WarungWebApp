@@ -52,17 +52,12 @@ export const useGetApiStore = create((set) => ({
       authorizeData: { ...state.authorizeData, [name]: value },
     }));
   },
-  setProductData: (productData) => {
-    set(() => ({ productData }));
-  },
+  setProductData: (productData) => set(() => ({ productData })),
   setOrderData: (orderData) => set(() => ({ orderData })),
   addNewOrderData: async (data) => {
     try {
       await axios.post(`${import.meta.env.VITE_BASE_URL}/keranjangs`, data);
-      // Update order data state after successful POST request
-      const newData = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}/keranjangs`
-      );
+      const newData = await axios.get(`${import.meta.env.VITE_BASE_URL}/keranjangs`);
       set(() => ({ orderData: newData.data }));
     } catch (error) {
       console.log(error);
@@ -70,14 +65,8 @@ export const useGetApiStore = create((set) => ({
   },
   updateOrderData: async (id, updateData) => {
     try {
-      await axios.put(
-        `${import.meta.env.VITE_BASE_URL}/keranjangs/${id}`,
-        updateData
-      );
-      // Update order data state after successful PUT request
-      const newData = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}/keranjangs`
-      );
+      await axios.put(`${import.meta.env.VITE_BASE_URL}/keranjangs/${id}`,updateData);
+      const newData = await axios.get(`${import.meta.env.VITE_BASE_URL}/keranjangs`);
       set(() => ({ orderData: newData.data }));
     } catch (error) {
       console.log(error);
@@ -86,10 +75,7 @@ export const useGetApiStore = create((set) => ({
   removeOrderItem: async (id) => {
     try {
       await axios.delete(`${import.meta.env.VITE_BASE_URL}/keranjangs/${id}`);
-      // Update order data state after DELETE request
-      const newData = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}/keranjangs`
-      );
+      const newData = await axios.get(`${import.meta.env.VITE_BASE_URL}/keranjangs`);
       set(() => ({ orderData: newData.data }));
     } catch (error) {
       console.log(error);
@@ -100,26 +86,19 @@ export const useGetApiStore = create((set) => ({
       .post(`${import.meta.env.VITE_BASE_URL}/pesanans`, orderData)
       .then((response) => console.log(response.data))
       .catch((error) => console.log(error));
-    // Update order data after pay success/POST request
     axios
       .get(`${import.meta.env.VITE_BASE_URL}/keranjangs`)
       .then((response) => {
         const data = response.data;
         for (const item of data) {
-          axios.delete(
-            `${import.meta.env.VITE_BASE_URL}/keranjangs/${item.id}`
-          );
+          axios.delete(`${import.meta.env.VITE_BASE_URL}/keranjangs/${item.id}`);
         }
       });
     set(() => ({ orderData: [] }));
   },
   resetSoldData: (data) => {
     const resetData = { ...data, sold: 0 };
-    // console.log(resetData)
-    axios.put(
-      `${import.meta.env.VITE_BASE_URL}/products/${data.id}`,
-      resetData
-    );
+    axios.put(`${import.meta.env.VITE_BASE_URL}/products/${data.id}`,resetData);
   },
   setOrderGroupData: (orderGroupData) => {
     set(() => ({ orderGroupData }));
