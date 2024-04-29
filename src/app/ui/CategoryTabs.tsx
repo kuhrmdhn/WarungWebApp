@@ -20,6 +20,7 @@ export default function CategoryTabs() {
                             key={index}
                             _selected={{color: "white", background: "black"}}
                             onClick={() => filterProduct(category)}
+                            className="text-xs sm:text-base"
                         >
                             {category}
                         </Tab>
