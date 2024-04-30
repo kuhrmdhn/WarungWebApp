@@ -3,15 +3,15 @@ import React from 'react'
 import { Product } from '@/lib/interface/productInterface'
 import { FormatRupiah } from '@arismun/format-rupiah'
 import { Button, Card, CardBody, CardFooter, Image, Stack, useToast } from '@chakra-ui/react'
-import { Check, ShoppingCart, Slash } from 'react-feather'
+import { Check } from 'react-feather'
 import { GroceryStore } from '@/lib/store/groceryStore'
 
 export default function ProductCard({ productData }: { productData: Product }) {
-    const { name, price, image, status } = productData
+    const { name, price, image, status, stock } = productData
     return (
         <Card className='h-80 sm:h-96 w-44 sm:w-60 bg-white text-black'>
             <CardBody padding={"5px"}>
-                <CardImage data={{ status, name, image }} />
+                <CardImage data={{ status, name, image, stock }} />
                 <Stack className='mt-3 ml-3'>
                     <h1 className='font-bold text-sm sm:text-lg'>{name}</h1>
                     <h3 className='text-xs sm:text-base'>
@@ -30,24 +30,25 @@ type CardImageProps = {
     status: boolean
     name: string
     image: string
+    stock: number
 }
 
 function CardImage({ data }: { data: CardImageProps }) {
-    const { status, name, image } = data
+    const { status, name, image, stock } = data
     return (
         <>
             {
-                status ?
+                !status || stock === 0 ?
                     <Image
                         src={image}
                         alt={name}
-                        className="w-full aspect-square rounded-lg"
+                        className="w-full aspect-square rounded-lg grayscale"
                     />
                     :
                     <Image
                         src={image}
                         alt={name}
-                        className="w-full aspect-square rounded-lg grayscale"
+                        className="w-full aspect-square rounded-lg"
                     />
             }
         </>
@@ -71,7 +72,15 @@ function CardButton({ status, product }: { status: boolean, product: Product }) 
     return (
         <>
             {
-                status ?
+                !status || product.stock === 0 ?
+                    <Button
+                        disabled
+                        aria-label='Sold Out Button'
+                        className='w-5/6 h-12 flex gap-5 text-sm bg-gray-300 text-black rounded-md cursor-not-allowed'
+                    >
+                        Sold Out!
+                    </Button>
+                    :
                     <Button
                         onClick={(e) => handleClick(e)}
                         aria-label='Add to Cart Button'
@@ -82,14 +91,6 @@ function CardButton({ status, product }: { status: boolean, product: Product }) 
                         className='w-2/3 sm:w-5/6 h-12 flex gap-5 rounded-md hover:bg-gray-300 hover:text-black'
                     >
                         Order
-                    </Button>
-                    :
-                    <Button
-                        disabled
-                        aria-label='Sold Out Button'
-                        className='w-5/6 h-12 flex gap-5 text-sm bg-gray-300 text-black rounded-md cursor-not-allowed'
-                    >
-                        Sold Out!
                     </Button>
             }
         </>
