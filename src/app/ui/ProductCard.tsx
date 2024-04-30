@@ -13,8 +13,8 @@ export default function ProductCard({ productData }: { productData: Product }) {
             <CardBody padding={"5px"}>
                 <CardImage data={{ status, name, image }} />
                 <Stack className='mt-3 ml-3'>
-                    <h1 className='font-bold text-sm'>{name}</h1>
-                    <h3 className='text-xs'>
+                    <h1 className='font-bold text-sm sm:text-lg'>{name}</h1>
+                    <h3 className='text-xs sm:text-base'>
                         <FormatRupiah value={price} />
                     </h3>
                 </Stack>
