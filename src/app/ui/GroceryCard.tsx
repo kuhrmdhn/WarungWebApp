@@ -1,7 +1,7 @@
 "use client"
 import { GroceryParam } from '@/lib/interface/groceryInterface'
 import { GroceryStore } from '@/lib/store/groceryStore'
-import { Card, CardBody, CardFooter, CardHeader, IconButton, Input, useToast } from '@chakra-ui/react'
+import { Card, IconButton, Input, useToast } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { MinusCircle, PlusCircle, Trash } from 'react-feather'
 
@@ -58,8 +58,8 @@ export default function GroceryCard({ grocery }: { grocery: GroceryParam }) {
     }
 
     return (
-        <Card className='w-full h-24 border-2 border-red-300' direction={{ base: "row" }}>
-            <CardHeader className='flex justify-center items-center gap-2'>
+        <Card width={"100%"} className='h-24 border-2 border-red-300' direction={{ base: "row" }}>
+            <div className='flex items-center gap-2 pl-2'>
                 <IconButton
                     onClick={decrementQuantity}
                     aria-label='minus button'
@@ -84,12 +84,12 @@ export default function GroceryCard({ grocery }: { grocery: GroceryParam }) {
                     icon={<PlusCircle />}
                     colorScheme='green'
                 />
-            </CardHeader>
-            <CardBody className="flex flex-col justify-center items-center">
+            </div>
+            <div className="flex flex-col justify-center items-center w-full">
                 <h1>{grocery.name}</h1>
                 <h2>{grocery.price} x {grocery.quantity}</h2>
-            </CardBody>
-            <CardFooter className="flex justify-center items-center">
+            </div>
+            <div className="flex justify-center items-center w-fit pr-2">
                 <IconButton
                     onClick={() => removeGrocery(grocery.id)}
                     variant={"ghost"}
@@ -98,7 +98,7 @@ export default function GroceryCard({ grocery }: { grocery: GroceryParam }) {
                     icon={<Trash />}
                     colorScheme='pink'
                 />
-            </CardFooter>
+            </div>
         </Card>
     )
 }
