@@ -32,7 +32,7 @@ export const ProductsStore = create<ProductsStore>()((set) => ({
         set({ filteredProducts })
     },
     updateProduct: async (id: number, data: Product) => {
-        await axios.put(`${process.env.NEXT_PUBLIC_DATABASE_URL}/product/${id}`, data)
+        await axios.put(`${process.env.NEXT_PUBLIC_DATABASE_URL}/products/${id}`, data)
         getProducts()
     }
 }))
