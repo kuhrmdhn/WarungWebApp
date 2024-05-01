@@ -12,12 +12,13 @@ type ProductsStore = {
 
 const getProducts = async () => await axios.get(`${process.env.NEXT_PUBLIC_DATABASE_URL}/products`)
     .then(({ data: products }) => {
-        ProductsStore.getState().setProducts(products)
+        const sortProducts: Product[] = products.sort((a: Product, b: Product) => a.id - b.id)
+        ProductsStore.setState({ products: sortProducts })
     })
 getProducts()
 const filterProduct = async () => await axios.get(`${process.env.NEXT_PUBLIC_DATABASE_URL}/products`)
     .then(({ data: products }) => {
-        const foodProducts = products.filter((product: Product) => product.category === "food") 
+        const foodProducts = products.filter((product: Product) => product.category === "food").sort((a: Product, b: Product) => a.id - b.id)
         ProductsStore.getState().setFilteredProducts(foodProducts)
     })
 filterProduct()
