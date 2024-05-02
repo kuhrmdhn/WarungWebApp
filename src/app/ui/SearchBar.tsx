@@ -4,7 +4,6 @@ import { ProductsStore } from '@/lib/store/productsStore'
 import { InputGroup, Input, InputRightAddon } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { Search } from 'react-feather'
-
 export default function SearchBar() {
     const [keyword, setKeyword] = useState("")
     const { products, setFilteredProducts } = ProductsStore()
