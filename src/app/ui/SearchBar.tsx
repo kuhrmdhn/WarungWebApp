@@ -4,8 +4,7 @@ import { ProductsStore } from '@/lib/store/productsStore'
 import { InputGroup, Input, InputRightAddon } from '@chakra-ui/react'
 import axios from 'axios'
 import { usePathname, useSearchParams, useRouter } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
-import { Search } from 'react-feather'
+import React, { Suspense, useEffect, useState } from 'react'
 
 export default function SearchBar() {
     const pathname = usePathname()
@@ -18,10 +17,10 @@ export default function SearchBar() {
     useEffect(() => {
         const getProduct = async () => {
             const params = new URLSearchParams(searchParams)
-            if(query === "") {
-                    const initialProducts = products.filter((product: Product) => product.category === "food")
-                     setFilteredProducts(initialProducts)
-                    params.delete('query')
+            if (query === "") {
+                const initialProducts = products.filter((product: Product) => product.category === "food")
+                setFilteredProducts(initialProducts)
+                params.delete('query')
             } else {
                 const { data: searchResult } = await axios.get(`${process.env.NEXT_PUBLIC_DATABASE_URL}/products/query=${query}`)
                 setFilteredProducts(searchResult)
@@ -56,17 +55,19 @@ export default function SearchBar() {
     }
 
     return (
-        <InputGroup>
-            <Input
-                onKeyDown={handleKeyboardEnter}
-                onChange={(e) => handleInput(e)}
-                type="text"
-                placeholder="Search Product"
-                defaultValue={query}
-            />
-            <InputRightAddon className='cursor-pointer' onClick={searchProduct}>
-                <Search />
-            </InputRightAddon>
-        </InputGroup>
+        <Suspense fallback={<h1>load</h1>}>
+            <InputGroup>
+                <Input
+                    onKeyDown={handleKeyboardEnter}
+                    onChange={(e) => handleInput(e)}
+                    type="text"
+                    placeholder="Search Product"
+                    defaultValue={query}
+                />
+                <InputRightAddon className='cursor-pointer' onClick={searchProduct}>
+                    <Search />
+                </InputRightAddon>
+            </InputGroup>
+        </Suspense>
     )
 }
