@@ -2,12 +2,32 @@
 import { Product } from '@/lib/interface/productInterface'
 import { ProductsStore } from '@/lib/store/productsStore'
 import { InputGroup, Input, InputRightAddon } from '@chakra-ui/react'
-import React, { useState } from 'react'
-import { Search } from 'react-feather'
+import axios from 'axios'
+import { usePathname, useSearchParams, useRouter } from 'next/navigation'
+import React, { Suspense, useEffect, useState } from 'react'
 
 export default function SearchBar() {
+    const pathname = usePathname()
+    const searchParams = useSearchParams()
+    const query = searchParams.get('query')?.toString()
+    const { replace } = useRouter()
     const [keyword, setKeyword] = useState("")
     const { products, setFilteredProducts } = ProductsStore()
+
+    useEffect(() => {
+        const getProduct = async () => {
+            const params = new URLSearchParams(searchParams)
+            if (query === "") {
+                const initialProducts = products.filter((product: Product) => product.category === "food")
+                setFilteredProducts(initialProducts)
+                params.delete('query')
+            } else {
+                const { data: searchResult } = await axios.get(`${process.env.NEXT_PUBLIC_DATABASE_URL}/products/query=${query}`)
+                setFilteredProducts(searchResult)
+            }
+        }
+        getProduct()
+    }, [query])
 
     const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         setKeyword(e.target.value)
@@ -19,28 +39,35 @@ export default function SearchBar() {
         }
     }
 
-    const searchProduct = () => {
+    const searchProduct = async () => {
         const key = keyword.trim().toLowerCase()
-        if (key === "") {
+        const params = new URLSearchParams(searchParams)
+        params.set('query', encodeURIComponent(key))
+        if (query === "") {
             const initialProducts = products.filter((product: Product) => product.category === "food")
             setFilteredProducts(initialProducts)
-            return
+            params.delete('query')
+        } else {
+            replace(`${pathname}?${params.toString()}`);
+            const { data: searchResult } = await axios.get(`${process.env.NEXT_PUBLIC_DATABASE_URL}/products/query=${key}`)
+            setFilteredProducts(searchResult)
         }
-        const searchResult = products.filter((product: Product) => product.name.trim().toLowerCase().includes(key))
-        setFilteredProducts(searchResult)
     }
 
     return (
-        <InputGroup>
-            <Input
-                onKeyDown={handleKeyboardEnter}
-                onChange={(e) => handleInput(e)}
-                type="text"
-                placeholder="Search Product"
-            />
-            <InputRightAddon className='cursor-pointer' onClick={searchProduct}>
-                <Search />
-            </InputRightAddon>
-        </InputGroup>
+        <Suspense fallback={<h1>load</h1>}>
+            <InputGroup>
+                <Input
+                    onKeyDown={handleKeyboardEnter}
+                    onChange={(e) => handleInput(e)}
+                    type="text"
+                    placeholder="Search Product"
+                    defaultValue={query}
+                />
+                <InputRightAddon className='cursor-pointer' onClick={searchProduct}>
+                    <Search />
+                </InputRightAddon>
+            </InputGroup>
+        </Suspense>
     )
 }
