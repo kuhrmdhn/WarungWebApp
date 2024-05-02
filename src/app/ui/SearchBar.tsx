@@ -5,7 +5,6 @@ import { InputGroup, Input, InputRightAddon } from '@chakra-ui/react'
 import axios from 'axios'
 import { usePathname, useSearchParams, useRouter } from 'next/navigation'
 import React, { Suspense, useEffect, useState } from 'react'
-import { Search } from 'react-feather'
 
 export default function SearchBar() {
     const pathname = usePathname()
