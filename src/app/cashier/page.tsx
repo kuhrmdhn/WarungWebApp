@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { Suspense } from 'react'
 import ProductsList from './components/ProductsList'
 import Header from './components/Header'
 import ScrollTopButton from '../ui/ScrollTopButton'
@@ -10,7 +10,9 @@ export default function Cashier() {
   return (
     <main className='bg-gray-300'>
       <Header />
-      <ProductsList />
+      <Suspense>
+        <ProductsList />
+      </Suspense>
       <ScrollTopButton />
       <GroceryList />
     </main>
