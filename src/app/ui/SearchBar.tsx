@@ -43,8 +43,6 @@ export default function SearchBar() {
             const searchResult = products.filter((product: Product) => product.name.trim().toLowerCase().includes(query))
             setFilteredProducts(searchResult)
         }
-        const searchResult = products.filter((product: Product) => product.name.trim().toLowerCase().includes(key))
-        setFilteredProducts(searchResult)
     }
 
     return (
