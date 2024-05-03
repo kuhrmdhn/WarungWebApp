@@ -8,13 +8,13 @@ import GroceryList from './components/GroceryList'
 export default function Cashier() {
 
   return (
-    <main className='bg-gray-300'>
-      <Header />
-      <Suspense>
+    <Suspense fallback={<h1>loading...</h1>}>
+      <main className='bg-gray-300'>
+        <Header />
         <ProductsList />
-      </Suspense>
-      <ScrollTopButton />
-      <GroceryList />
-    </main>
+        <ScrollTopButton />
+        <GroceryList />
+      </main>
+    </Suspense>
   )
 }
