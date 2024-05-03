@@ -2,7 +2,6 @@
 import { Product } from '@/lib/interface/productInterface'
 import { ProductsStore } from '@/lib/store/productsStore'
 import { InputGroup, Input, InputRightAddon } from '@chakra-ui/react'
-import axios from 'axios'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import React, { useEffect } from 'react'
 import { Search } from 'react-feather'
@@ -12,10 +11,6 @@ export default function SearchBar() {
     const pathname = usePathname()
     const { replace } = useRouter()
     const { products, setFilteredProducts } = ProductsStore()
-
-    useEffect(() => {
-        searchProduct()
-    }, [])
 
     const handleInput = (e: string) => {
         const key = e.toLowerCase()
