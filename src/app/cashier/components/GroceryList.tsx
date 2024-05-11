@@ -2,15 +2,18 @@
 import GroceryCard from '@/app/ui/GroceryCard'
 import { GroceryParam } from '@/lib/interface/groceryInterface'
 import { GroceryStore } from '@/lib/store/groceryStore'
+import { OwnerStore } from '@/lib/store/ownerStore'
 import { ProductsStore } from '@/lib/store/productsStore'
 import { FormatRupiah } from '@arismun/format-rupiah'
 import { Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Input, useDisclosure, useToast } from '@chakra-ui/react'
 import React from 'react'
 
 export default function GroceryList() {
-  const { updateProduct, products } = ProductsStore()
+  const { ownerData, updateOwnerData } = OwnerStore()
+  const { updateProduct } = ProductsStore()
   const { groceryList, groceryListOpen, setGroceryListOpen, removeGrocery } = GroceryStore()
   const totalGroceryPrice = groceryList.map((grocery: GroceryParam) => grocery.price * grocery.quantity).reduce((acc: number, prev: number) => acc + prev, 0)
+  const totalGroceryQuantity = groceryList.map((grocery: GroceryParam) => grocery.quantity).reduce((acc: number, prev: number) => acc + prev, 0)
   const toast = useToast()
 
   const onClose = () => {
@@ -28,8 +31,13 @@ export default function GroceryList() {
         sold: grocery.sold + grocery.quantity,
         category: grocery.category
       }
+      const newOwnerData = {
+        income: ownerData.income + totalGroceryPrice,
+        sale: ownerData.sale + totalGroceryQuantity
+      }
       removeGrocery(grocery.id)
       updateProduct(grocery.id, newData)
+      updateOwnerData(ownerData.id, newOwnerData)
     })
     toast({
       title: "Payment Success",
