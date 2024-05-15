@@ -1,5 +1,6 @@
 "use client"
 import ProductCard from '@/app/ui/ProductCard'
+import ScrollTopButton from '@/app/ui/ScrollTopButton'
 import { Product } from '@/lib/interface/productInterface'
 import { ProductsStore } from '@/lib/store/productsStore'
 import { useSearchParams } from 'next/navigation'
@@ -23,6 +24,7 @@ export default function ProductsList() {
                     />
                 ))
             }
+            <ScrollTopButton />
         </section>
     )
 }
