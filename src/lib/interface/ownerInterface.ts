@@ -5,4 +5,5 @@ export interface Owner {
     income: number
     sale: number
     username: string
+    categories: number
 }

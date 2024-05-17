@@ -9,6 +9,7 @@ type EditOwnerData = {
     income?: number
     sale?: number
     username?: string
+    categories? : number
 }
 
 type OwnerStore = {
@@ -32,7 +33,8 @@ export const OwnerStore = create<OwnerStore>()((set) => ({
         password: "",
         income: 0,
         sale: 0,
-        username: ""
+        username: "",
+        categories: 0
     },
     setOwnerData: (body: Owner) => {
         set({ ownerData: body })
