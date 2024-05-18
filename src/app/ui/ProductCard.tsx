@@ -20,7 +20,8 @@ export default function ProductCard({ productData }: { productData: Product }) {
                 </Stack>
             </CardBody>
             <CardFooter className='w-full h-fit flex justify-center items-center'>
-                <CardButton status={status} product={productData} />
+                <OwnerCardButton />
+                {/* <CashierCardButton status={status} product={productData} /> */}
             </CardFooter>
         </Card>
     )
@@ -55,7 +56,7 @@ function CardImage({ data }: { data: CardImageProps }) {
     )
 }
 
-function CardButton({ status, product }: { status: boolean, product: Product }) {
+function CashierCardButton({ status, product }: { status: boolean, product: Product }) {
     const { setGroceryList } = GroceryStore()
     const toast = useToast()
     const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -94,5 +95,24 @@ function CardButton({ status, product }: { status: boolean, product: Product }) 
                     </Button>
             }
         </>
+    )
+}
+
+function OwnerCardButton() {
+    return (
+        <div className='w-full flex justify-around'>
+            <Button
+                aria-label='Edit Menu Button'
+                className='bg-blue-500 text-white hover:bg-blue-400'
+            >
+                Reset
+            </Button>
+            <Button
+                aria-label='Edit Menu Button'
+                className='bg-blue-500 text-white hover:bg-blue-400'
+            >
+                Edit
+            </Button>
+        </div>
     )
 }
