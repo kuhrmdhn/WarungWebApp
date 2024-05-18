@@ -6,7 +6,7 @@ import { Button, Card, CardBody, CardFooter, Image, Stack, useToast } from '@cha
 import { Check } from 'react-feather'
 import { GroceryStore } from '@/lib/store/groceryStore'
 
-export default function ProductCard({ productData }: { productData: Product }) {
+export default function ProductCard({ productData, button }: { productData: Product, button?: React.ReactNode }) {
     const { name, price, image, status, stock } = productData
     return (
         <Card className='h-80 sm:h-96 w-44 sm:w-60 bg-white text-black'>
@@ -20,8 +20,7 @@ export default function ProductCard({ productData }: { productData: Product }) {
                 </Stack>
             </CardBody>
             <CardFooter className='w-full h-fit flex justify-center items-center'>
-                <OwnerCardButton />
-                {/* <CashierCardButton status={status} product={productData} /> */}
+                {button}
             </CardFooter>
         </Card>
     )
@@ -116,3 +115,6 @@ function OwnerCardButton() {
         </div>
     )
 }
+
+ProductCard.OwnerCardButton = OwnerCardButton
+ProductCard.CashierCardButton = CashierCardButton
