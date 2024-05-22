@@ -21,6 +21,7 @@ export default function ProductsList() {
                     <ProductCard
                         key={index}
                         productData={product}
+                        button={<ProductCard.CashierCardButton product={product} status={product.status}/>}
                     />
                 ))
             }
