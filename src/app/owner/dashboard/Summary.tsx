@@ -43,9 +43,7 @@ export default function Summary() {
     return (
         <section className='w-full h-fit mt-2 sm:mt-7 flex flex-col justify-start gap-3 sm:gap-5'>
             <PageTitle>
-                <PageTitle.SubTitle>
-                    Summary
-                </PageTitle.SubTitle>
+                <PageTitle.SubTitle text='Summary'/>
             </PageTitle>
             <div className="flex justify-evenly sm:justify-start flex-wrap gap-2 sm:gap-5">
                 {
