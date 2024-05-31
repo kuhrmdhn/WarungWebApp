@@ -7,7 +7,7 @@ import { ProductsStore } from '@/lib/store/productsStore'
 import { Button, Input, InputGroup, Select, useToast, IconButton, FormLabel } from '@chakra-ui/react'
 import { ArrowBack } from '@mui/icons-material'
 import { useRouter, useSearchParams } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 
 type FormData = {
   name: string
@@ -90,54 +90,56 @@ export default function EditProductForm() {
   }
 
   return (
-    <section className="h-[100svh] w-full flex flex-col">
-      <div className="flex gap-7 pt-5 pl-5">
-        <IconButton aria-label="previous page button" onClick={previousPage}>
-          <ArrowBack />
-        </IconButton>
-        <PageTitle>
-          <PageTitle.Title>
-            Edit Product
-          </PageTitle.Title>
-        </PageTitle>
-      </div>
-      <div className="flex justify-around items-center">
-        <form className='h-full w-2/5 px-5 pt-10 flex flex-col'>
-          <PageTitle className='mb-5'>
-            <PageTitle.SubTitle text={productById.name} />
+    <Suspense fallback={<h1>Loading...</h1>}>
+      <section className="h-[100svh] w-full flex flex-col">
+        <div className="flex gap-7 pt-5 pl-5">
+          <IconButton aria-label="previous page button" onClick={previousPage}>
+            <ArrowBack />
+          </IconButton>
+          <PageTitle>
+            <PageTitle.Title>
+              Edit Product
+            </PageTitle.Title>
           </PageTitle>
-          {
-            formData.map((data: FormData, index: number) => (
-              <InputGroup key={index} className='w-full flex gap-10 mb-3'>
-                <FormLabel className="w-1/5">
-                  {data.name}
-                </FormLabel>
-                <Input
-                  readOnly={data.isReadonly}
-                  name={data.name}
-                  value={typeof data.value !== "string" ? data.value.toString() : data.value}
-                  type={data.type}
-                  onChange={(e) => handleOnChange(e)}
-                />
-              </InputGroup>
-            ))
-          }
-          <div className="flex w-full gap-10 mb-5">
-            <FormLabel className="w-1/5">Status</FormLabel>
-            <Select name="status" value={(formState.status).toString().toLowerCase()} onChange={(e) => handleOnChange(e)}>
-              <option value={"true"}>Ready</option>
-              <option value={"false"}>Not Ready</option>
-            </Select>
-          </div>
-          <Button className='self-end w-max' colorScheme='green' onClick={(e) => submitForm(e)}>Submit!</Button>
-        </form>
-        <ProductCard>
-          <PageTitle className='mb-5'>
-            <PageTitle.SubTitle text='Preview' />
-          </PageTitle>
-          <ProductCard.OwnerProductCard productData={formState} />
-        </ProductCard>
-      </div>
-    </section>
+        </div>
+        <div className="flex justify-around items-center">
+          <form className='h-full w-2/5 px-5 pt-10 flex flex-col'>
+            <PageTitle className='mb-5'>
+              <PageTitle.SubTitle text={productById.name} />
+            </PageTitle>
+            {
+              formData.map((data: FormData, index: number) => (
+                <InputGroup key={index} className='w-full flex gap-10 mb-3'>
+                  <FormLabel className="w-1/5">
+                    {data.name}
+                  </FormLabel>
+                  <Input
+                    readOnly={data.isReadonly}
+                    name={data.name}
+                    value={typeof data.value !== "string" ? data.value.toString() : data.value}
+                    type={data.type}
+                    onChange={(e) => handleOnChange(e)}
+                  />
+                </InputGroup>
+              ))
+            }
+            <div className="flex w-full gap-10 mb-5">
+              <FormLabel className="w-1/5">Status</FormLabel>
+              <Select name="status" value={(formState.status).toString().toLowerCase()} onChange={(e) => handleOnChange(e)}>
+                <option value={"true"}>Ready</option>
+                <option value={"false"}>Not Ready</option>
+              </Select>
+            </div>
+            <Button className='self-end w-max' colorScheme='green' onClick={(e) => submitForm(e)}>Submit!</Button>
+          </form>
+          <ProductCard>
+            <PageTitle className='mb-5'>
+              <PageTitle.SubTitle text='Preview' />
+            </PageTitle>
+            <ProductCard.OwnerProductCard productData={formState} />
+          </ProductCard>
+        </div>
+      </section>
+    </Suspense>
   )
 }
