@@ -1,11 +1,11 @@
 "use client"
-import DashboardCard from '@/app/ui/DashboardCard'
+import DashboardCard from '@/app/ui/elements/DashboardCard'
 import { OwnerStore } from '@/lib/store/ownerStore'
 import { ProductsStore } from '@/lib/store/productsStore'
 import { FormatRupiah } from '@arismun/format-rupiah'
 import React, { ReactNode } from 'react'
 import { RestaurantMenu, AttachMoney, Sell, Category } from '@mui/icons-material';
-import PageTitle from '@/app/ui/PageTitle'
+import PageTitle from '@/app/ui/elements/PageTitle'
 
 type CardData = {
     heading: string | ReactNode

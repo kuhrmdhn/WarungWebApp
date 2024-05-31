@@ -1,7 +1,7 @@
 import React from 'react'
 import NavigationBar from './components/NavigationBar'
 import Summary from './dashboard/Summary'
-import PageTitle from '../ui/PageTitle'
+import PageTitle from '../ui/elements/PageTitle'
 import SalesReport from './dashboard/SalesReport'
 
 export default function OwnerDashboard() {

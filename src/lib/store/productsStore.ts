@@ -4,36 +4,50 @@ import axios from "axios";
 
 type ProductsStore = {
     products: Product[]
+    productById: Product
     filteredProducts: Product[]
-    setProducts: (params: Product[]) => void
-    setFilteredProducts: (params: Product[]) => void
-    updateProduct: (id: number, params: Product) => void
+    setProducts: (products: Product[]) => void
+    setFilteredProducts: (products: Product[]) => void
+    findProductById: (id: number) => void
+    updateProduct: (id: number, product: Product) => void
 }
 
-const getProducts = async () => await axios.get(`${process.env.NEXT_PUBLIC_DATABASE_URL}/products`)
-    .then(({ data: products }) => {
-        const sortProducts: Product[] = products.sort((a: Product, b: Product) => a.id - b.id)
-        ProductsStore.setState({ products: sortProducts })
-    })
-getProducts()
-const filterProduct = async () => await axios.get(`${process.env.NEXT_PUBLIC_DATABASE_URL}/products`)
-    .then(({ data: products }) => {
-        const foodProducts = products.filter((product: Product) => product.category === "food").sort((a: Product, b: Product) => a.id - b.id)
-        ProductsStore.getState().setFilteredProducts(foodProducts)
-    })
-filterProduct()
+const fetchProducts = async () => {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_DATABASE_URL}/products`);
+    return response.data;
+};
 
-export const ProductsStore = create<ProductsStore>()((set) => ({
+const fetchProductById = async (id: number) => {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_DATABASE_URL}/product/${id}`);
+    return response.data[0];
+};
+
+export const ProductsStore = create<ProductsStore>((set) => ({
     products: [],
+    productById: {id: 0, name: "", category: "", image: "", price: 0, sold: 0, status: false, stock: 0},
     filteredProducts: [],
-    setProducts: (products) => {
-        set({ products })
+    setProducts: (products) => set({ products }),
+    setFilteredProducts: (filteredProducts) => set({ filteredProducts }),
+    findProductById: async (id: number) => {
+        const product = await fetchProductById(id);
+        set({ productById: product });
     },
-    setFilteredProducts: (filteredProducts) => {
-        set({ filteredProducts })
-    },
-    updateProduct: async (id: number, data: Product) => {
-        await axios.put(`${process.env.NEXT_PUBLIC_DATABASE_URL}/products/${id}`, data)
-        getProducts()
+    updateProduct: async (id: number, product: Product) => {
+        await axios.put(`${process.env.NEXT_PUBLIC_DATABASE_URL}/products/${id}`, product);
+        const products = await fetchProducts();
+        set({ products });
+        const filteredProducts = products.filter((p: Product) => p.category === "food");
+        set({ filteredProducts });
     }
-}))
+}));
+
+export const initializeProductsStore = async () => {
+    const products = await fetchProducts();
+    const sortedProducts = products.sort((a: Product, b: Product) => a.id - b.id);
+    ProductsStore.getState().setProducts(sortedProducts);
+
+    const filteredProducts = sortedProducts.filter((product: Product) => product.category === "food");
+    ProductsStore.getState().setFilteredProducts(filteredProducts);
+};
+
+initializeProductsStore();

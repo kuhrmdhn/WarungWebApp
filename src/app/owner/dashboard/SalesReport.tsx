@@ -1,6 +1,6 @@
 "use client";
 import { Chart as ChartJS, CategoryScale, LinearScale, Tooltip, PointElement, LineElement, ArcElement } from "chart.js";
-import PageTitle from '@/app/ui/PageTitle'
+import PageTitle from '@/app/ui/elements/PageTitle'
 import React from 'react'
 import { Line, Pie } from "react-chartjs-2";
 import { ProductsStore } from "@/lib/store/productsStore";
