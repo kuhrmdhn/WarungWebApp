@@ -57,7 +57,9 @@ export default function SalesReport() {
     return (
         <section className='mt-7 h-max w-full'>
             <PageTitle>
-                <PageTitle.SubTitle text='Sales Report' />
+                <PageTitle.SubTitle>
+                    Sales Report
+                </PageTitle.SubTitle>
             </PageTitle>
             <div className="h-max xl:h-[80svh] w-full flex flex-col lg:flex-row justify-evenly items-center mt-5 gap-5 lg:gap-0">
                 <section className="h-auto lg:h-full w-full lg:w-3/5 flex justify-center items-center rounded-lg p-4 bg-white shadow-md shadow-gray-500">
@@ -66,7 +68,9 @@ export default function SalesReport() {
                 <section className="h-max lg:h-full w-full lg:w-1/3 text-black flex flex-col sm:flex-row lg:flex-col justify-between gap-5 lg:gap-0">
                     <div className="w-full sm:w-1/2 lg:w-full h-[200px] sm:h-[300px] lg:h-[45%] p-5 rounded-lg bg-white shadow-md shadow-gray-500">
                         <PageTitle>
-                            <PageTitle.SubTitle text="Status Menu" />
+                            <PageTitle.SubTitle>
+                                Status Menu
+                            </PageTitle.SubTitle>
                         </PageTitle>
                         <Table>
                             <Tbody>
@@ -83,7 +87,9 @@ export default function SalesReport() {
                     </div>
                     <div className="w-full sm:w-1/2 lg:w-full h-[200px] sm:h-[300px] lg:h-1/2 pt-5 pb-7 pl-5 rounded-lg bg-white shadow-md shadow-gray-500">
                         <PageTitle>
-                            <PageTitle.SubTitle text="Category Menu" />
+                            <PageTitle.SubTitle>
+                                Category Menu
+                            </PageTitle.SubTitle>
                         </PageTitle>
                         <section className="flex w-full h-full justify-around">
                             <Pie data={categoryData} />
