@@ -1,5 +1,5 @@
 "use client"
-import Logo from '@/app/ui/Logo'
+import Logo from '@/app/ui/elements/Logo'
 import React from 'react'
 
 type NavLink = {
