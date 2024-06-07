@@ -25,19 +25,20 @@ type cardProps = {
     children?: React.ReactNode
 }
 function CardImage({ productData }: cardProps) {
-    const { status, name, image, stock } = productData
+    const { status, name, image } = productData
+    const cardImage = image ? image : "/default-product-image.webp"
     return (
         <>
             {
-                !status || stock === 0 ?
+                !status ?
                     <Image
-                        src={image}
+                        src={cardImage}
                         alt={name}
                         className="w-full aspect-square rounded-lg grayscale"
                     />
                     :
                     <Image
-                        src={image}
+                        src={cardImage}
                         alt={name}
                         className="w-full aspect-square rounded-lg"
                     />

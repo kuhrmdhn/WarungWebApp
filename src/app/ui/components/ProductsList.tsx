@@ -21,11 +21,12 @@ export default function ProductsList({ isOwner }: productListProps) {
     const categoryParam = searchParams.get("category")?.toLowerCase();
 
     if (nameParam || categoryParam) {
-        productsData = products.filter(product => {
+        const searchByParam = products.filter(product => {
             const productNameMatches = nameParam ? product.name.toLowerCase().includes(nameParam) : true;
             const productCategoryMatches = categoryParam ? product.category.toLowerCase().includes(categoryParam) : true;
             return productNameMatches && productCategoryMatches;
         });
+        productsData = searchByParam.sort((a: Product,b: Product) => a.id - b.id)
     }
     return (
         <section className={`min-h-[75svh] w-full mt-2 sm:mt-7 grid ${isOwner ? ownerClassName : cashierClassName}`}>

@@ -1,11 +1,11 @@
 "use client"
 import PageTitle from '@/app/ui/elements/PageTitle'
+import PrevPageButton from '@/app/ui/elements/PrevPageButton'
 import ProductCard from '@/app/ui/elements/ProductCard'
 import { Product } from '@/lib/interface/productInterface'
 import { PageStore } from '@/lib/store/pageStore'
-import { ProductsStore } from '@/lib/store/productsStore'
-import { Button, Input, InputGroup, Select, useToast, IconButton, FormLabel } from '@chakra-ui/react'
-import { ArrowBack } from '@mui/icons-material'
+import { ProductsStore, initializeProductsStore } from '@/lib/store/productsStore'
+import { Button, Input, InputGroup, Select, useToast, FormLabel } from '@chakra-ui/react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import React, { Suspense, useEffect, useState } from 'react'
 
@@ -21,18 +21,23 @@ function EditProductFormContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { setPageTitle } = PageStore()
-  const { productById, findProductById, updateProduct } = ProductsStore()
+  const { productById, findProductById, updateProduct, deleteProduct } = ProductsStore()
   const [formState, setFormState] = useState<Product>(productById)
+  const query = new URLSearchParams(searchParams)
+  const id = Number(query.get("productId")?.toString())
 
   useEffect(() => {
-    const query = new URLSearchParams(searchParams)
-    const id = Number(query.get("productId")?.toString())
+    if (!id) {
+      return router.replace("/owner/all-products")
+    }
     findProductById(id)
   }, [])
 
   useEffect(() => {
-    setFormState(productById)
-    setPageTitle(`Edit Product | ${productById.name}`)
+    if (id) {
+      setFormState(productById)
+      setPageTitle(`Edit Product | ${productById.name}`)
+    }
   }, [productById])
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -80,23 +85,21 @@ function EditProductFormContent() {
     },
   ]
 
-  const previousPage = () => {
-    router.back()
-  }
-
   const submitForm = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault()
     updateProduct(formState.id, JSON.parse(JSON.stringify(formState)))
     toast({ title: "Update!" })
-    previousPage()
+  }
+  const deleteProducts = () => {
+    deleteProduct(id)
+    initializeProductsStore()
+    toast({ title: "Delete!" })
   }
 
   return (
     <section className="h-[100svh] w-full flex flex-col">
-      <div className="flex gap-7 pt-5 pl-5">
-        <IconButton aria-label="previous page button" onClick={previousPage}>
-          <ArrowBack />
-        </IconButton>
+      <div className="flex gap-7 pt-5 pl-5" >
+        <PrevPageButton/>
         <PageTitle>
           <PageTitle.Title>
             Edit Product
@@ -131,7 +134,10 @@ function EditProductFormContent() {
               <option value={"false"}>Not Ready</option>
             </Select>
           </div>
-          <Button className='self-end w-max' colorScheme='green' onClick={(e) => submitForm(e)}>Submit!</Button>
+          <div className="flex gap-5 self-end w-max">
+            <Button colorScheme='red' onClick={deleteProducts}>Delete</Button>
+            <Button colorScheme='green' onClick={(e) => submitForm(e)}>Submit</Button>
+          </div>
         </form>
         <ProductCard>
           <PageTitle className='mb-5'>
@@ -140,7 +146,7 @@ function EditProductFormContent() {
           <ProductCard.OwnerProductCard productData={formState} />
         </ProductCard>
       </div>
-    </section>
+    </section >
   )
 }
 
