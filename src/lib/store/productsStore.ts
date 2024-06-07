@@ -10,6 +10,8 @@ type ProductsStore = {
     setFilteredProducts: (products: Product[]) => void
     findProductById: (id: number) => void
     updateProduct: (id: number, product: Product) => void
+    deleteProduct: (id: number) => void
+    addNewProduct: (data: Product) => void
 }
 
 const fetchProducts = async () => {
@@ -38,6 +40,14 @@ export const ProductsStore = create<ProductsStore>((set) => ({
         set({ products });
         const filteredProducts = products.filter((p: Product) => p.category === "food");
         set({ filteredProducts });
+    },
+    deleteProduct: async (id: number) => {
+        await axios.delete(`${process.env.NEXT_PUBLIC_DATABASE_URL}/products/${id}`)
+        initializeProductsStore()
+    },
+    addNewProduct: async (data: Product) => {
+        await axios.post(`${process.env.NEXT_PUBLIC_DATABASE_URL}/products`, data)
+        initializeProductsStore()
     }
 }));
 
