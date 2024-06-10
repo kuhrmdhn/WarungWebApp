@@ -5,9 +5,9 @@ import ProductCard from '@/app/ui/elements/ProductCard'
 import { Product } from '@/lib/interface/productInterface'
 import { PageStore } from '@/lib/store/pageStore'
 import { ProductsStore, initializeProductsStore } from '@/lib/store/productsStore'
-import { Button, Input, InputGroup, Select, useToast, FormLabel } from '@chakra-ui/react'
+import { Button, Input, InputGroup, Select, useToast, FormLabel, AlertDialog, AlertDialogOverlay, AlertDialogContent, AlertDialogHeader, AlertDialogBody, AlertDialogFooter, useDisclosure } from '@chakra-ui/react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import React, { Suspense, useEffect, useState } from 'react'
+import React, { Suspense, useEffect, useRef, useState } from 'react'
 
 type FormData = {
   name: string
@@ -17,6 +17,8 @@ type FormData = {
 }
 
 function EditProductFormContent() {
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const cancelRef = useRef(null)
   const toast = useToast()
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -89,17 +91,19 @@ function EditProductFormContent() {
     e.preventDefault()
     updateProduct(formState.id, JSON.parse(JSON.stringify(formState)))
     toast({ title: "Update!" })
+    router.back()
   }
   const deleteProducts = () => {
     deleteProduct(id)
     initializeProductsStore()
-    toast({ title: "Delete!" })
+    router.back()
+    onClose()
   }
 
   return (
     <section className="h-[100svh] w-full flex flex-col">
       <div className="flex gap-7 pt-5 pl-5" >
-        <PrevPageButton/>
+        <PrevPageButton />
         <PageTitle>
           <PageTitle.Title>
             Edit Product
@@ -135,7 +139,7 @@ function EditProductFormContent() {
             </Select>
           </div>
           <div className="flex gap-5 self-end w-max">
-            <Button colorScheme='red' onClick={deleteProducts}>Delete</Button>
+            <Button colorScheme='red' onClick={onOpen}>Delete</Button>
             <Button colorScheme='green' onClick={(e) => submitForm(e)}>Submit</Button>
           </div>
         </form>
@@ -146,6 +150,30 @@ function EditProductFormContent() {
           <ProductCard.OwnerProductCard productData={formState} />
         </ProductCard>
       </div>
+      <AlertDialog
+        isOpen={isOpen}
+        onClose={onClose}
+        leastDestructiveRef={cancelRef}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+              Delete Product
+            </AlertDialogHeader>
+            <AlertDialogBody>
+              Are you sure? You cant undo this action afterwards.
+            </AlertDialogBody>
+            <AlertDialogFooter>
+              <Button onClick={onClose} ref={cancelRef}>
+                Cancel
+              </Button>
+              <Button colorScheme='red' onClick={deleteProducts} ml={3}>
+                Delete
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
     </section >
   )
 }
