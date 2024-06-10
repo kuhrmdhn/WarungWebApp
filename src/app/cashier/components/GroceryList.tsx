@@ -1,9 +1,9 @@
 "use client"
-import GroceryCard from '@/app/ui/GroceryCard'
+import GroceryCard from '@/app/ui/elements/GroceryCard'
 import { GroceryParam } from '@/lib/interface/groceryInterface'
 import { GroceryStore } from '@/lib/store/groceryStore'
 import { OwnerStore } from '@/lib/store/ownerStore'
-import { ProductsStore } from '@/lib/store/productsStore'
+import { ProductsStore, initializeProductsStore } from '@/lib/store/productsStore'
 import { FormatRupiah } from '@arismun/format-rupiah'
 import { Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Input, useDisclosure, useToast } from '@chakra-ui/react'
 import React from 'react'
@@ -38,6 +38,7 @@ export default function GroceryList() {
       removeGrocery(grocery.id)
       updateProduct(grocery.id, newData)
       updateOwnerData(ownerData.id, newOwnerData)
+      initializeProductsStore()
     })
     toast({
       title: "Payment Success",
