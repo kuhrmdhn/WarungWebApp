@@ -41,6 +41,7 @@ export default function NewProductForm() {
     const handleSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
         e.preventDefault()
         addNewProduct(formState)
+        router.back()
     }
 
     const formInputData = [
