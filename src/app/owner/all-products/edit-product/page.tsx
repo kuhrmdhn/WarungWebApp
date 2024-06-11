@@ -110,8 +110,8 @@ function EditProductFormContent() {
           </PageTitle.Title>
         </PageTitle>
       </div>
-      <div className="flex justify-around items-center">
-        <form className='h-full w-2/5 px-5 pt-10 flex flex-col'>
+      <div className="flex justify-around items-center flex-col-reverse lg:flex-row">
+        <form className='h-full w-11/12 lg:w-2/5 px-5 pt-10 flex flex-col'>
           <PageTitle className='mb-5'>
             <PageTitle.SubTitle text={productById.name} />
           </PageTitle>

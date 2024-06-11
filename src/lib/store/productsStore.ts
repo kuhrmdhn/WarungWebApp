@@ -35,7 +35,7 @@ export const ProductsStore = create<ProductsStore>((set) => ({
         set({ productById: product });
     },
     updateProduct: async (id: number, product: Product) => {
-        await axios.put(`${process.env.NEXT_PUBLIC_DATABASE_URL}/products/${id}`, product);
+        await axios.patch(`${process.env.NEXT_PUBLIC_DATABASE_URL}/products/${id}`, product);
         const products = await fetchProducts();
         set({ products });
         const filteredProducts = products.filter((p: Product) => p.category === "food");

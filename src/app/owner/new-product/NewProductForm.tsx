@@ -115,8 +115,8 @@ export default function NewProductForm() {
     ]
 
     return (
-        <div className='h-max w-full flex justify-around items-center'>
-            <form className="w-2/5 h-max flex flex-col gap-4">
+        <div className='h-max w-full flex justify-around items-center flex-col-reverse gap-11 lg:gap-0 lg:flex-row'>
+            <form className="w-11/12 lg:w-2/5 h-max flex flex-col gap-4">
                 {
                     formInputData.map((form, index) => (
                         <FormControl key={index} className="flex justify-between items-center">

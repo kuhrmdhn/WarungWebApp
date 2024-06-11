@@ -7,6 +7,7 @@ import { AlertCircle, Check } from 'react-feather'
 import { GroceryStore } from '@/lib/store/groceryStore'
 import { ProductsStore } from '@/lib/store/productsStore'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { Brush, RestartAlt } from '@mui/icons-material'
 
 type productCardProps = {
     children: React.ReactNode
@@ -23,6 +24,7 @@ export default function ProductCard({ children }: productCardProps) {
 type cardProps = {
     productData: Product
     children?: React.ReactNode
+    className?: string
 }
 function CardImage({ productData }: cardProps) {
     const { status, name, image } = productData
@@ -102,7 +104,7 @@ function CashierProductCard({ productData }: cardProps) {
     )
 }
 
-function OwnerProductCard({ productData, children }: cardProps) {
+function OwnerProductCard({ productData, children, className }: cardProps) {
     const { name, price, status, stock, sold } = productData
 
     const tableData = [
@@ -128,14 +130,14 @@ function OwnerProductCard({ productData, children }: cardProps) {
         }
     ]
     return (
-        <Card className='h-80 w-44 sm:w-[430px] bg-white text-black'>
-            <CardBody className='w-full h-3/5 flex flex-col'>
-                <div className="flex h-max">
-                    <div className="w-2/5">
+        <Card className={`h-96 w-44 sm:w-60 lg:w-[430px] bg-white text-black ${className}`}>
+            <CardBody className='w-full h-3/5 flex'>
+                <div className="flex flex-col sm:flex-row h-max">
+                    <div className="h-1/3 w-2/3 lg:w-2/5">
                         <CardImage productData={productData} />
                     </div>
-                    <Table className='flex justify-around'>
-                        <Tbody className="overflow-y-auto max-h-[75%] w-11/12 overflow-scrollbar-small">
+                    <Table className='sm:min-h-[280px] lg:h-max w-full flex sm:justify-around'>
+                        <Tbody className="overflow-y-auto max-h-[75%] w-full sm:w-11/12 text-xs sm:text-sm overflow-scrollbar-small">
                             {
                                 tableData.map((data, index: number) => (
                                     <Tr key={index}>
@@ -195,17 +197,21 @@ function OwnerCardFooter({ productData }: cardProps) {
         <CardFooter className="w-full flex justify-end items-center gap-3 mt-5">
             <Button
                 onClick={(e) => resetSoldProduct(e)}
-                aria-label='Edit Menu Button'
+                aria-label='Reset Sold Menu Button'
+                title='Reset Sold Menu'
                 colorScheme="red"
+                size="sm"
             >
-                Reset Sold Data
+                <RestartAlt />
             </Button>
             <Button
                 onClick={(e) => editProduct(e)}
                 aria-label='Edit Menu Button'
+                title='Edit Menu'
                 colorScheme="blue"
+                size="sm"
             >
-                Edit Menu Data
+                <Brush />
             </Button>
         </CardFooter>
     )
