@@ -37,7 +37,7 @@ export default function SearchBar() {
     }, [])
 
     return (
-        <InputGroup>
+        <InputGroup className="mb-3">
             <Input
                 ref={inputRef}
                 onChange={(e) => handleInput(e.target.value)}
