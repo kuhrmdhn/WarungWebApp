@@ -20,7 +20,7 @@ const fetchProducts = async () => {
 };
 
 const fetchProductById = async (id: number) => {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_DATABASE_URL}/product/${id}`);
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_DATABASE_URL}/products/id=${id}`);
     return response.data[0];
 };
 
