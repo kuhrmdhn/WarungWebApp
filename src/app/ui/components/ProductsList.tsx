@@ -13,7 +13,7 @@ export default function ProductsList({ isOwner }: productListProps) {
     const { products, filteredProducts } = ProductsStore();
     const searchParams = useSearchParams();
     const cashierClassName = "grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 justify-items-center gap-y-2 sm:gap-y-7";
-    const ownerClassName = "grid-cols-2 sm:grid-cols-3 justify-items-center gap-y-3";
+    const ownerClassName = "grid-cols-2 lg:grid-cols-3 justify-items-center gap-y-3";
 
     let productsData = filteredProducts;
 

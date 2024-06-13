@@ -41,7 +41,7 @@ export default function NewProductForm() {
     const handleSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
         e.preventDefault()
         addNewProduct(formState)
-        router.back()
+        // router.back()
     }
 
     const formInputData = [
@@ -117,18 +117,21 @@ export default function NewProductForm() {
     return (
         <div className='h-max w-full flex justify-around items-center flex-col-reverse gap-11 lg:gap-0 lg:flex-row'>
             <form className="w-11/12 lg:w-2/5 h-max flex flex-col gap-4">
+            <PageTitle>
+                <PageTitle.SubTitle text='New Product Form'/>
+            </PageTitle>
                 {
                     formInputData.map((form, index) => (
                         <FormControl key={index} className="flex justify-between items-center">
-                            <FormLabel className="w-1/5">
+                            <FormLabel className="w-1/5 text-2xs sm:text-base">
                                 {form.label}
                             </FormLabel>
                             <Input
+                                className="text-2xs sm:text-base"
                                 value={form.value}
                                 name={form.name}
                                 type={form.type}
                                 onChange={(e) => handleOnChange(e)}
-                                isRequired={true} required={true} aria-required={true}
                             />
                         </FormControl>
                     ))
@@ -136,7 +139,7 @@ export default function NewProductForm() {
                 {
                     formSelectData.map((form, index) => (
                         <FormControl key={index} className="flex justify-between items-center">
-                            <FormLabel className="w-1/5">
+                            <FormLabel className="w-1/5 text-2xs sm:text-base">
                                 {form.label}
                             </FormLabel>
                             <Select
@@ -146,7 +149,7 @@ export default function NewProductForm() {
                             >
                                 {
                                     form.options.map((option, index) => (
-                                        <option key={index} value={option.value}>{option.text}</option>
+                                        <option className="text-2xs sm:text-base" key={index} value={option.value}>{option.text}</option>
                                     ))
                                 }
                             </Select>
@@ -154,7 +157,7 @@ export default function NewProductForm() {
                     ))
                 }
                 <Button
-                    className='w-1/5 self-end'
+                    className='w-1/5 self-end text-xs sm:text-base'
                     colorScheme='blue'
                     type="submit"
                     onClick={(e) => handleSubmit(e)}

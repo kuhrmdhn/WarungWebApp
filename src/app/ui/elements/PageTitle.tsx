@@ -10,7 +10,7 @@ export default function PageTitle({ children, className }: { children: React.Rea
 }
 
 function Title({ children, className }: { children: React.ReactNode, className?: string }) {
-    return <h1 className={`${className} text-black text-lg sm:text-2xl font-semibold`}>{children}</h1>
+    return <h1 className={`${className} text-black text-base sm:text-2xl font-semibold`}>{children}</h1>
 }
 
 function SubTitle({ text, className }: { text: string, className?: string }) {
