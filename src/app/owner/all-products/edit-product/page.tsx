@@ -1,46 +1,49 @@
 "use client"
 import PageTitle from '@/app/ui/elements/PageTitle'
-import PrevPageButton from '@/app/ui/elements/PrevPageButton'
+import React, { Suspense, useEffect, useRef, useState } from 'react'
+import MovePageButton from '@/app/ui/elements/MovePageButton'
 import ProductCard from '@/app/ui/elements/ProductCard'
 import { Product } from '@/lib/interface/productInterface'
 import { PageStore } from '@/lib/store/pageStore'
 import { ProductsStore, initializeProductsStore } from '@/lib/store/productsStore'
-import { Button, Input, InputGroup, Select, useToast, FormLabel, AlertDialog, AlertDialogOverlay, AlertDialogContent, AlertDialogHeader, AlertDialogBody, AlertDialogFooter, useDisclosure } from '@chakra-ui/react'
+import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, FormControl, FormLabel, Input, InputGroup, Select, useDisclosure, useToast } from '@chakra-ui/react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import React, { Suspense, useEffect, useRef, useState } from 'react'
 
-type FormData = {
-  name: string
-  value: string | number | boolean
-  type: string
-  isReadonly?: boolean
-}
 
 function EditProductFormContent() {
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const cancelRef = useRef(null)
-  const toast = useToast()
   const router = useRouter()
   const searchParams = useSearchParams()
   const { setPageTitle } = PageStore()
-  const { productById, findProductById, updateProduct, deleteProduct } = ProductsStore()
+  const { productById, findProductById, updateProduct } = ProductsStore()
   const [formState, setFormState] = useState<Product>(productById)
   const query = new URLSearchParams(searchParams)
   const id = Number(query.get("productId")?.toString())
+  const toast = useToast()
+
+  const { onOpen, onClose, isOpen } = useDisclosure()
+  const cancelRef = useRef(null)
+  const { deleteProduct } = ProductsStore()
+
+  const deleteProducts = () => {
+    deleteProduct(id)
+    initializeProductsStore()
+    router.back()
+    onClose()
+  }
 
   useEffect(() => {
     if (!id) {
       return router.replace("/owner/all-products")
     }
     findProductById(id)
-  }, [])
+  }, [id])
 
   useEffect(() => {
     if (id) {
       setFormState(productById)
       setPageTitle(`Edit Product | ${productById.name}`)
     }
-  }, [productById])
+  }, [productById, id])
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const value = e.target.value
@@ -48,7 +51,14 @@ function EditProductFormContent() {
     setFormState((prevValue) => ({ ...prevValue, [name]: value }))
   }
 
-  const formData: FormData[] = [
+  const submitForm = (e: React.FormEvent<HTMLButtonElement> | React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    updateProduct(formState.id, JSON.parse(JSON.stringify(formState)))
+    toast({ title: "Update!" })
+    router.back()
+  }
+
+  const formData = [
     {
       name: "id",
       value: formState.id,
@@ -79,31 +89,48 @@ function EditProductFormContent() {
       name: "sold",
       value: formState.sold,
       type: "number"
+    }
+  ]
+  const selectFormData = [
+    {
+      name: "status",
+      label: "Status",
+      value: (formState.status).toString().toLowerCase(),
+      options: [
+        {
+          value: "true",
+          text: "Ready"
+        },
+        {
+          value: "false",
+          text: "Not Ready"
+        }
+      ]
     },
     {
       name: "category",
+      label: "Category",
       value: formState.category,
-      type: "text"
-    },
+      options: [
+        {
+          value: "food",
+          text: "Food"
+        },
+        {
+          value: "drink",
+          text: "Drink"
+        }, {
+          value: "snack",
+          text: "Snack"
+        }
+      ]
+    }
   ]
-
-  const submitForm = (e: React.FormEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    updateProduct(formState.id, JSON.parse(JSON.stringify(formState)))
-    toast({ title: "Update!" })
-    router.back()
-  }
-  const deleteProducts = () => {
-    deleteProduct(id)
-    initializeProductsStore()
-    router.back()
-    onClose()
-  }
 
   return (
     <section className="h-[100svh] w-full flex flex-col">
-      <div className="flex gap-7 pt-5 pl-5" >
-        <PrevPageButton />
+      <div className="flex gap-7 pt-5 pl-5 mb-5" >
+        <MovePageButton link='owner/all-products' />
         <PageTitle>
           <PageTitle.Title>
             Edit Product
@@ -111,17 +138,18 @@ function EditProductFormContent() {
         </PageTitle>
       </div>
       <div className="flex justify-around items-center flex-col-reverse lg:flex-row">
-        <form className='h-full w-11/12 lg:w-2/5 px-5 pt-10 flex flex-col'>
+        <form onSubmit={(e) => submitForm(e)} className='h-full w-11/12 lg:w-2/5 px-5 pt-10 flex flex-col'>
           <PageTitle className='mb-5'>
             <PageTitle.SubTitle text={productById.name} />
           </PageTitle>
           {
-            formData.map((data: FormData, index: number) => (
+            formData.map((data, index: number) => (
               <InputGroup key={index} className='w-full flex gap-10 mb-3'>
-                <FormLabel className="w-1/5">
+                <FormLabel className="w-1/5 text-2xs sm:text-base">
                   {data.name}
                 </FormLabel>
                 <Input
+                  className="text-2xs sm:text-base"
                   readOnly={data.isReadonly}
                   name={data.name}
                   value={typeof data.value !== "string" ? data.value.toString() : data.value}
@@ -131,23 +159,30 @@ function EditProductFormContent() {
               </InputGroup>
             ))
           }
-          <div className="flex w-full gap-10 mb-5">
-            <FormLabel className="w-1/5">Status</FormLabel>
-            <Select name="status" value={(formState.status).toString().toLowerCase()} onChange={(e) => handleOnChange(e)}>
-              <option value={"true"}>Ready</option>
-              <option value={"false"}>Not Ready</option>
-            </Select>
-          </div>
+          {
+            selectFormData.map((select, index) => (
+              <FormControl key={index} className="flex gap-10 mb-3">
+                <FormLabel className="w-1/5 text-2xs sm:text-base">{select.label}</FormLabel>
+                <Select name={select.name} value={select.value} onChange={(e) => handleOnChange(e)}>
+                  {
+                    select.options.map((option, index) => (
+                      <option className="text-2xs sm:text-base" key={index} value={option.value}>{option.text}</option>
+                    ))
+                  }
+                </Select>
+              </FormControl>
+            ))
+          }
           <div className="flex gap-5 self-end w-max">
             <Button colorScheme='red' onClick={onOpen}>Delete</Button>
-            <Button colorScheme='green' onClick={(e) => submitForm(e)}>Submit</Button>
+            <Button colorScheme='green' onClick={(e) => submitForm(e)} type='submit'>Submit</Button>
           </div>
         </form>
         <ProductCard>
           <PageTitle className='mb-5'>
             <PageTitle.SubTitle text='Preview' />
           </PageTitle>
-          <ProductCard.OwnerProductCard productData={formState} />
+          <ProductCard.OwnerProductCard productData={formState} className="w-[75%] mx-auto lg:m-0" />
         </ProductCard>
       </div>
       <AlertDialog

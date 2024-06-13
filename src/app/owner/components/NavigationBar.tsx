@@ -34,13 +34,14 @@ export default function NavigationBar() {
         <ul className='text-gray-600 w-full sm:w-2/3 h-full flex justify-evenly items-center'>
           {
             navLink.map((nav: NavLink, index: number) => (
-              <a
-                key={index}
-                href={nav.href}
-                className='p-2 sm:p-3 hover:bg-owner-purple text-xs sm:text-base hover:text-white duration-300 rounded-md'
-              >
-                {nav.title}
-              </a>
+              <li key={index}>
+                <a
+                  href={nav.href}
+                  className='p-2 sm:p-3 hover:bg-owner-purple text-xs sm:text-base hover:text-white duration-300 rounded-md'
+                >
+                  {nav.title}
+                </a>
+              </li>
             ))
           }
         </ul>

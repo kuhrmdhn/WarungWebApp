@@ -130,14 +130,14 @@ function OwnerProductCard({ productData, children, className }: cardProps) {
         }
     ]
     return (
-        <Card className={`h-96 w-44 sm:w-60 lg:w-[430px] bg-white text-black ${className}`}>
-            <CardBody className='w-full h-3/5 flex'>
-                <div className="flex flex-col sm:flex-row h-max">
+        <Card className={`h-80 sm:h-96 w-[95%] lg:w-[430px] bg-white text-black flex justify-center items-center ${className}`}>
+            <CardBody className="w-full h-full flex pl-3 overflow-auto overflow-scrollbar-hide">
+                <div className="flex flex-col sm:flex-row h-max items-center lg:items-start">
                     <div className="h-1/3 w-2/3 lg:w-2/5">
                         <CardImage productData={productData} />
                     </div>
-                    <Table className='sm:min-h-[280px] lg:h-max w-full flex sm:justify-around'>
-                        <Tbody className="overflow-y-auto max-h-[75%] w-full sm:w-11/12 text-xs sm:text-sm overflow-scrollbar-small">
+                    <Table className='h-1/2 sm:min-h-[280px] lg:h-max w-full flex sm:justify-around'>
+                        <Tbody className="h-full w-full sm:w-11/12 text-2xs sm:text-sm">
                             {
                                 tableData.map((data, index: number) => (
                                     <Tr key={index}>
@@ -163,8 +163,7 @@ function OwnerCardFooter({ productData }: cardProps) {
     const { updateProduct } = ProductsStore()
     const { id } = productData
 
-    const resetSoldProduct = (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault()
+    const resetSoldProduct = () => {
         if (productData.sold === 0) {
             toast({
                 title: "Product Not Sale Yet!",
@@ -185,7 +184,7 @@ function OwnerCardFooter({ productData }: cardProps) {
             position: "top"
         })
     }
-    const editProduct = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const editProduct = () => {
         query.set("productId", `${productData.id}`)
         query.delete("category")
         query.delete("name")
@@ -193,26 +192,39 @@ function OwnerCardFooter({ productData }: cardProps) {
         router.push(`${pathname}/edit-product?${query.toString()}`)
     }
 
+    const buttonData = [
+        {
+            onClick: resetSoldProduct,
+            ariaLabel: 'Reset Sold Menu Button',
+            title: 'Reset Sold Menu',
+            colorScheme: 'red',
+            children: <RestartAlt className="text-xs lg:text-xl" />
+        },
+        {
+            onClick: editProduct,
+            ariaLabel: 'Edit Menu Button',
+            title: 'Edit Menu',
+            colorScheme: "blue",
+            children: <Brush className="text-xs lg:text-xl" />
+        }
+    ]
+
     return (
-        <CardFooter className="w-full flex justify-end items-center gap-3 mt-5">
-            <Button
-                onClick={(e) => resetSoldProduct(e)}
-                aria-label='Reset Sold Menu Button'
-                title='Reset Sold Menu'
-                colorScheme="red"
-                size="sm"
-            >
-                <RestartAlt />
-            </Button>
-            <Button
-                onClick={(e) => editProduct(e)}
-                aria-label='Edit Menu Button'
-                title='Edit Menu'
-                colorScheme="blue"
-                size="sm"
-            >
-                <Brush />
-            </Button>
+        <CardFooter className="w-full flex justify-end items-center gap-3 h-1/6">
+            {
+                buttonData.map((button, index: number) => (
+                    <Button
+                        key={index}
+                        onClick={button.onClick}
+                        aria-label={button.ariaLabel}
+                        title={button.title}
+                        colorScheme={button.colorScheme}
+                        className="h-6 lg:h-10 w-6 lg:w-16"
+                    >
+                        {button.children}
+                    </Button>
+                ))
+            }
         </CardFooter>
     )
 }

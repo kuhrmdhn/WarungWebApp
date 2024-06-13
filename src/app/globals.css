@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.overflow-scrollbar-small::-webkit-scrollbar {
-  width: 4px;
-  background: gray;
-}
-.overflow-scrollbar-small::-webkit-scrollbar-thumb {
-  background: #000;
+.overflow-scrollbar-hide::-webkit-scrollbar {
+  width: 0px;
 }
