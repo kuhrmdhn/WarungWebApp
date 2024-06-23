@@ -1,15 +1,32 @@
 "use client"
+import { UserStore } from '@/lib/store/userStore'
 import { Button, FormLabel, Input, InputGroup } from '@chakra-ui/react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import React from 'react'
+import React, { useState } from 'react'
 
-export default function LoginPage() {
+export default function page() {
+  const [formData, setFormData] = useState({username: "", password: ""})
+  const { getUser } = UserStore()
   const { push } = useRouter()
-  const handleLogin = (e: React.FormEvent<HTMLButtonElement>) => {
+
+  async function handleLogin(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     e.preventDefault()
-    document.cookie = "loginStatus=true; path=/"
-    push("/owner")
+    alert("click")
+    const user = await getUser(formData.username, formData.password)
+    if(user.role === "OWNER") {
+      push("/owner")
+    } else if(user.role === "CASHIER") {
+      push("/cashier")
+    }
+  }
+
+
+  function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const name = e.target.name
+    const value = e.target.value
+
+    setFormData((current) => ({...current, [name]: value}))
   }
 
   return (
@@ -20,13 +37,13 @@ export default function LoginPage() {
           <FormLabel className='w-1/2'>
             Username
           </FormLabel>
-          <Input type="text" placeholder='John Doe' />
+          <Input type="text" placeholder='John Doe' name='username' value={formData.username} onChange={(e) => handleOnChange(e)} />
         </InputGroup>
         <InputGroup className="flex justify-center items-center gap-5">
           <FormLabel className='w-1/2'>
             Password
           </FormLabel>
-          <Input type='password' placeholder='johndoe' />
+          <Input type='password' placeholder='johndoe' name="password" value={formData.password} onChange={(e) => handleOnChange(e)} />
         </InputGroup>
         <Button onClick={(e) => handleLogin(e)} type="submit" colorScheme='blue' className="w-1/4 self-end">Submit</Button>
       </form>
