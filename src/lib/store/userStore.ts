@@ -1,8 +1,9 @@
 import axios from "axios";
 import { create } from "zustand";
+import { User } from "../interface/userInterface";
 
 type UserStore = {
-    getUser: (username: string, password: string) => void
+    getUser: (username: string, password: string) => Promise<User>
 }
 
 export const UserStore = create<UserStore>((set) => ({

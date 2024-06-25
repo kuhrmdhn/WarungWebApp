@@ -12,7 +12,6 @@ export default function LoginPage() {
 
   async function handleLogin(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     e.preventDefault()
-    alert("click")
     const user = await getUser(formData.username, formData.password)
     if (user.role === "OWNER") {
       push("/owner")
