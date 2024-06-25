@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 
 export function middleware(req: NextRequest) {
     const loginStatus = req.cookies.get("loginStatus")
-    if(!loginStatus) {
+    if (!loginStatus) {
         return NextResponse.redirect(new URL("/login", req.url))
     }
     return NextResponse.next()
@@ -10,5 +10,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-    matcher: "/owner"
+    matcher: ["/owner", "/cashier"]
 }
