@@ -5,8 +5,8 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 
-export default function page() {
-  const [formData, setFormData] = useState({username: "", password: ""})
+export default function LoginPage() {
+  const [formData, setFormData] = useState({ username: "", password: "" })
   const { getUser } = UserStore()
   const { push } = useRouter()
 
@@ -14,9 +14,9 @@ export default function page() {
     e.preventDefault()
     alert("click")
     const user = await getUser(formData.username, formData.password)
-    if(user.role === "OWNER") {
+    if (user.role === "OWNER") {
       push("/owner")
-    } else if(user.role === "CASHIER") {
+    } else if (user.role === "CASHIER") {
       push("/cashier")
     }
   }
@@ -26,7 +26,7 @@ export default function page() {
     const name = e.target.name
     const value = e.target.value
 
-    setFormData((current) => ({...current, [name]: value}))
+    setFormData((current) => ({ ...current, [name]: value }))
   }
 
   return (

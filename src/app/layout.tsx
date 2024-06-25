@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Providers } from "./providers";
+import { ProvidersOfChakra } from "./chakraProvider";
+import ProviderOfSession from "./sessionProvider";
 
 export const metadata: Metadata = {
   title: "Warung Web",
@@ -16,7 +17,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Providers>{children}</Providers>
+        <ProviderOfSession>
+          <ProvidersOfChakra>{children}</ProvidersOfChakra>
+        </ProviderOfSession>
       </body>
     </html>
   );
