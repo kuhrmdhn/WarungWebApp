@@ -4,7 +4,6 @@ import { useRouter } from 'next/navigation'
 import { getSession, signIn } from 'next-auth/react'
 import Image from 'next/image'
 import { Button, FormLabel, Input, InputGroup } from '@chakra-ui/react'
-import { User } from '@/lib/interface/userInterface'
 import { Session } from '@/lib/interface/token'
 
 export default function LoginPage() {
