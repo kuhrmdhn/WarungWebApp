@@ -1,25 +1,35 @@
 "use client"
-import { UserStore } from '@/lib/store/userStore'
-import { Button, FormLabel, Input, InputGroup } from '@chakra-ui/react'
-import Image from 'next/image'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import React, { useState } from 'react'
+import { getSession, signIn } from 'next-auth/react'
+import Image from 'next/image'
+import { Button, FormLabel, Input, InputGroup } from '@chakra-ui/react'
+import { User } from '@/lib/interface/userInterface'
+import { Session } from '@/lib/interface/token'
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({ username: "", password: "" })
-  const { getUser } = UserStore()
   const { push } = useRouter()
 
   async function handleLogin(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     e.preventDefault()
-    const user = await getUser(formData.username, formData.password)
-    if (user.role === "OWNER") {
-      push("/owner")
-    } else if (user.role === "CASHIER") {
-      push("/cashier")
+    const res = await signIn('credentials', {
+      redirect: false,
+      username: formData.username,
+      password: formData.password,
+    })
+
+    if (res && res.ok) {
+      const session: Session | null = await getSession() as Session | null
+      if (session?.role === "OWNER") {
+        push('/owner')
+      } else if (session?.role === "CASHIER") {
+        push('/cashier')
+      }
+    } else {
+      console.error('Failed to sign in')
     }
   }
-
 
   function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
     const name = e.target.name
