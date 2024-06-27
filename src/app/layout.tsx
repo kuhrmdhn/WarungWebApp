@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
-import { ProvidersOfChakra } from "./chakraProvider";
+import ProvidersOfChakra from "./chakraProvider";
 import ProviderOfSession from "./sessionProvider";
 
 export const metadata: Metadata = {
