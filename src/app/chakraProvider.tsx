@@ -1,5 +1,5 @@
 'use client'
 import { ChakraProvider } from '@chakra-ui/react'
-export function ProvidersOfChakra({ children }: { children: React.ReactNode }) {
+export default function ProvidersOfChakra({ children }: { children: React.ReactNode }) {
     return <ChakraProvider>{children}</ChakraProvider>
 }

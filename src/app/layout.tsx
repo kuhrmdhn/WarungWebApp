@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { ProvidersOfChakra } from "./chakraProvider";
+import ProvidersOfChakra from "./chakraProvider";
 import ProviderOfSession from "./sessionProvider";
-import { Providers } from "./providers";
 
 export const metadata: Metadata = {
   title: "Warung Web",
