@@ -13,7 +13,6 @@ export default function LoginPage() {
 
   async function handleLogin(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     e.preventDefault()
-
     const res = await signIn('credentials', {
       redirect: false,
       username: formData.username,
