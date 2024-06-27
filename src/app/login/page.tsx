@@ -1,15 +1,41 @@
 "use client"
-import { Button, FormLabel, Input, InputGroup } from '@chakra-ui/react'
-import Image from 'next/image'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import React from 'react'
+import { getSession, signIn } from 'next-auth/react'
+import Image from 'next/image'
+import { Button, FormLabel, Input, InputGroup } from '@chakra-ui/react'
+import { User } from '@/lib/interface/userInterface'
+import { Session } from '@/lib/interface/token'
 
 export default function LoginPage() {
+  const [formData, setFormData] = useState({ username: "", password: "" })
   const { push } = useRouter()
-  const handleLogin = (e: React.FormEvent<HTMLButtonElement>) => {
+
+  async function handleLogin(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     e.preventDefault()
-    document.cookie = "loginStatus=true; path=/"
-    push("/owner")
+    const res = await signIn('credentials', {
+      redirect: false,
+      username: formData.username,
+      password: formData.password,
+    })
+
+    if (res && res.ok) {
+      const session: Session | null = await getSession() as Session | null
+      if (session?.role === "OWNER") {
+        push('/owner')
+      } else if (session?.role === "CASHIER") {
+        push('/cashier')
+      }
+    } else {
+      console.error('Failed to sign in')
+    }
+  }
+
+  function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const name = e.target.name
+    const value = e.target.value
+
+    setFormData((current) => ({ ...current, [name]: value }))
   }
 
   return (
@@ -20,13 +46,13 @@ export default function LoginPage() {
           <FormLabel className='w-1/2'>
             Username
           </FormLabel>
-          <Input type="text" placeholder='John Doe' />
+          <Input type="text" placeholder='John Doe' name='username' value={formData.username} onChange={(e) => handleOnChange(e)} />
         </InputGroup>
         <InputGroup className="flex justify-center items-center gap-5">
           <FormLabel className='w-1/2'>
             Password
           </FormLabel>
-          <Input type='password' placeholder='johndoe' />
+          <Input type='password' placeholder='johndoe' name="password" value={formData.password} onChange={(e) => handleOnChange(e)} />
         </InputGroup>
         <Button onClick={(e) => handleLogin(e)} type="submit" colorScheme='blue' className="w-1/4 self-end">Submit</Button>
       </form>
