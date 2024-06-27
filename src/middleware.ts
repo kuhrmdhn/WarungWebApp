@@ -48,5 +48,4 @@ export async function middleware(req: NextRequest) {
 
 export const config = {
     matcher: ["/owner", "/cashier", "/login"]
->>>>>>> f6c5385f08cecc5469601c2d61842bbd09df05ec
 }
