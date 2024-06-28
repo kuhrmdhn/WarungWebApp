@@ -1,5 +1,4 @@
 import { JWTtypes } from "@/lib/interface/token";
-import { User } from "@/lib/interface/userInterface";
 import axios from "axios";
 import { NextAuthOptions } from "next-auth";
 import { JWT } from "next-auth/jwt";
@@ -13,6 +12,7 @@ async function getUser(username: string, password: string) {
 }
 
 const authOptions: NextAuthOptions = {
+    secret: process.env.NEXT_AUTH_SECRET,
     providers: [
         CredentialsProvider({
             name: "Credentials",
