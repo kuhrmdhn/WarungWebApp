@@ -19,10 +19,11 @@ type OwnerStore = {
 }
 
 async function getOwnerData() {
-    await axios.get(`${process.env.NEXT_PUBLIC_DATABASE_URL}/owner`).
-        then(({ data: ownerData }) => {
-            OwnerStore.setState({ ownerData: ownerData[0] })
-        })
+    // await axios.get(`${process.env.NEXT_PUBLIC_DATABASE_URL}/owner`).
+    //     then(({ data: ownerData }) => {
+    //         OwnerStore.setState({ ownerData: ownerData[0] })
+    //     })
+    console.log("first")
 }
 getOwnerData()
 

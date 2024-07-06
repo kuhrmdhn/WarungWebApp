@@ -1,13 +1,11 @@
-import { USER_ROLE, User } from "./userInterface";
+import { User } from "./userInterface";
 import { Account, Profile } from "next-auth";
 import { JWT } from "next-auth/jwt";
 
 export interface Session {
-    sub: string
-    id: number
-    username: string
-    password: string
-    role: USER_ROLE
+    sub?: string
+    id?: number
+    user: User
     iat?: number
     exp?: number
     jti?: string 
