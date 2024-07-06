@@ -1,6 +1,7 @@
 "use client"
 import { GroceryParam } from '@/lib/interface/groceryInterface'
 import { GroceryStore } from '@/lib/store/groceryStore'
+import { UserStore } from '@/lib/store/userStore'
 import { Card, IconButton, Input, useToast } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { MinusCircle, PlusCircle, Trash } from 'react-feather'
@@ -9,11 +10,12 @@ export default function GroceryCard({ grocery }: { grocery: GroceryParam }) {
     const [inputValue, setInputValue] = useState<number>(grocery.quantity)
     const { removeGrocery, updateSelectedGrocery } = GroceryStore()
     const toast = useToast()
+    const { username } = UserStore()
 
     const updateQuantity = async (newQuantity: number) => {
         const data = { ...grocery, quantity: newQuantity }
         setInputValue(newQuantity)
-        updateSelectedGrocery(grocery.id, data)
+        updateSelectedGrocery(username, data)
     }
     const incrementQuantity = () => {
         let newQuantity = grocery.quantity + 1
@@ -32,7 +34,7 @@ export default function GroceryCard({ grocery }: { grocery: GroceryParam }) {
     const decrementQuantity = () => {
         let newQuantity = grocery.quantity - 1
         if (newQuantity === 0) {
-            removeGrocery(grocery.id)
+            removeGrocery(grocery.id, username)
         } else {
             updateQuantity(newQuantity)
         }
@@ -91,7 +93,7 @@ export default function GroceryCard({ grocery }: { grocery: GroceryParam }) {
             </div>
             <div className="flex justify-center items-center w-fit pr-2">
                 <IconButton
-                    onClick={() => removeGrocery(grocery.id)}
+                    onClick={() => removeGrocery(grocery.id, username)}
                     variant={"ghost"}
                     size={"sm"}
                     aria-label='delete button'

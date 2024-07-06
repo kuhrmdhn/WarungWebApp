@@ -1,5 +1,5 @@
 "use client"
-import { GroceryStore, getGroceryList } from '@/lib/store/groceryStore'
+import { GroceryStore } from '@/lib/store/groceryStore'
 import { IconButton } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import { ShoppingBag } from 'react-feather'
@@ -9,7 +9,6 @@ export default function GroceryListButton() {
   const [loading, setLoading] = useState(true);
   let groceryLength = groceryList.length
   useEffect(() => {
-    getGroceryList()
     setLoading(false)
 
   }, [])
