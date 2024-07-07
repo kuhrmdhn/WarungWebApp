@@ -8,6 +8,7 @@ import { GroceryStore } from '@/lib/store/groceryStore'
 import { ProductsStore } from '@/lib/store/productsStore'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { Brush, RestartAlt } from '@mui/icons-material'
+import { UserStore } from '@/lib/store/userStore'
 
 type productCardProps = {
     children: React.ReactNode
@@ -52,11 +53,12 @@ function CardImage({ productData }: cardProps) {
 
 function CashierProductCard({ productData }: cardProps) {
     const { name, price, status, stock } = productData
-    const { setGroceryList } = GroceryStore()
+    const { addNewGroceryProduct } = GroceryStore()
+    const { username } = UserStore()
     const toast = useToast()
-    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const addProductToGrocery = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
-        setGroceryList({ ...productData, quantity: 1 })
+        addNewGroceryProduct({ ...productData, quantity: 1 }, username)
         toast({
             title: "Added to Order List!",
             status: "success",
@@ -88,7 +90,7 @@ function CashierProductCard({ productData }: cardProps) {
                         </Button>
                         :
                         <Button
-                            onClick={(e) => handleClick(e)}
+                            onClick={(e) => addProductToGrocery(e)}
                             aria-label='Add to Cart Button'
                             backgroundColor={"#000"}
                             color={"#fff"}

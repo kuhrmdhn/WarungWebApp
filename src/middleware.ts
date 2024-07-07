@@ -47,5 +47,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-    matcher: ["/owner", "/cashier", "/login"]
+    matcher: ["/owner/:path*", "/cashier", "/login"]
 }
