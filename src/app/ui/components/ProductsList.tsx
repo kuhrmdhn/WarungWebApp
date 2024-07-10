@@ -1,7 +1,7 @@
 "use client"
 import ProductCard from '@/app/ui/elements/ProductCard'
 import ScrollTopButton from '@/app/ui/elements/ScrollTopButton'
-import { Product } from '@/lib/interface/productInterface'
+import { Product } from '@/types/productInterface'
 import { ProductsStore } from '@/lib/store/productsStore'
 import { useSearchParams } from 'next/navigation'
 import React from 'react'
@@ -26,7 +26,7 @@ export default function ProductsList({ isOwner }: productListProps) {
             const productCategoryMatches = categoryParam ? product.category.toLowerCase().includes(categoryParam) : true;
             return productNameMatches && productCategoryMatches;
         });
-        productsData = searchByParam.sort((a: Product,b: Product) => a.id - b.id)
+        productsData = searchByParam.sort((a: Product, b: Product) => a.id - b.id)
     }
     return (
         <section className={`min-h-[75svh] w-full mt-2 sm:mt-7 grid ${isOwner ? ownerClassName : cashierClassName}`}>

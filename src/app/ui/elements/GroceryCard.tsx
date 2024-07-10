@@ -1,5 +1,5 @@
 "use client"
-import { GroceryParam } from '@/lib/interface/groceryInterface'
+import { GroceryParam } from '@/types/groceryInterface'
 import { GroceryStore } from '@/lib/store/groceryStore'
 import { Card, IconButton, Input, useToast } from '@chakra-ui/react'
 import React, { useState } from 'react'

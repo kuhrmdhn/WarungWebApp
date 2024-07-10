@@ -1,6 +1,5 @@
 import { create } from "zustand";
-import axios, { AxiosResponse } from "axios";
-import { GroceryParam } from "../interface/groceryInterface";
+import { GroceryParam } from "../../types/groceryInterface";
 
 type GroceryStore = {
     groceryList: GroceryParam[]
@@ -11,10 +10,6 @@ type GroceryStore = {
     removeGrocery: (id: number) => void
     updateSelectedGrocery: (id: number, selectedData: GroceryParam) => void
 }
-
-export const getGroceryList = async () => await axios.get(`${process.env.NEXT_PUBLIC_DATABASE_URL}/grocery`)
-    .then(({ data: grocery }) => GroceryStore.setState({ groceryList: grocery }))
-getGroceryList()
 
 export const GroceryStore = create<GroceryStore>()((set) => ({
     groceryList: [],

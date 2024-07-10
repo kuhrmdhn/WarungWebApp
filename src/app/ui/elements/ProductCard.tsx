@@ -1,6 +1,6 @@
 "use client"
 import React from 'react'
-import { Product } from '@/lib/interface/productInterface'
+import { Product } from '@/types/productInterface'
 import { FormatRupiah } from '@arismun/format-rupiah'
 import { Button, Card, CardBody, CardFooter, Image, Stack, Table, Tbody, Td, Tr, useToast } from '@chakra-ui/react'
 import { AlertCircle, Check } from 'react-feather'

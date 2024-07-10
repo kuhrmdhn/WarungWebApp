@@ -4,7 +4,7 @@ import PageTitle from '@/app/ui/elements/PageTitle'
 import React from 'react'
 import { Line, Pie } from "react-chartjs-2";
 import { ProductsStore } from "@/lib/store/productsStore";
-import { Product } from "@/lib/interface/productInterface";
+import { Product } from "@/types/productInterface";
 import { ListItem, Table, Tbody, Td, Tr, UnorderedList } from "@chakra-ui/react";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, ArcElement);

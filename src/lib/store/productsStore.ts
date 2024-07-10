@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { Product } from "../interface/productInterface";
+import { Product } from "../../types/productInterface";
 import axios from "axios";
 
 type ProductsStore = {
@@ -26,7 +26,7 @@ const fetchProductById = async (id: number) => {
 
 export const ProductsStore = create<ProductsStore>((set) => ({
     products: [],
-    productById: {id: 0, name: "", category: "", image: "", price: 0, sold: 0, status: false, stock: 0},
+    productById: { id: 0, name: "", category: "", image: "", price: 0, sold: 0, status: false, stock: 0 },
     filteredProducts: [],
     setProducts: (products) => set({ products }),
     setFilteredProducts: (filteredProducts) => set({ filteredProducts }),

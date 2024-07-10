@@ -1,7 +1,7 @@
 "use client"
 import PageTitle from '@/app/ui/elements/PageTitle'
 import ProductCard from '@/app/ui/elements/ProductCard'
-import { Product } from '@/lib/interface/productInterface'
+import { Product } from '@/types/productInterface'
 import { ProductsStore } from '@/lib/store/productsStore'
 import { Button, FormControl, FormLabel, Input, Select } from '@chakra-ui/react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
@@ -117,9 +117,9 @@ export default function NewProductForm() {
     return (
         <div className='h-max w-full flex justify-around items-center flex-col-reverse gap-11 lg:gap-0 lg:flex-row'>
             <form className="w-11/12 lg:w-2/5 h-max flex flex-col gap-4">
-            <PageTitle>
-                <PageTitle.SubTitle text='New Product Form'/>
-            </PageTitle>
+                <PageTitle>
+                    <PageTitle.SubTitle text='New Product Form' />
+                </PageTitle>
                 {
                     formInputData.map((form, index) => (
                         <FormControl key={index} className="flex justify-between items-center">

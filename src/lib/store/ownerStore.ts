@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { Owner } from "../interface/ownerInterface";
+import { Owner } from "../../types/ownerInterface";
 import axios from "axios";
 
 type EditOwnerData = {
@@ -9,7 +9,7 @@ type EditOwnerData = {
     income?: number
     sale?: number
     username?: string
-    categories? : number
+    categories?: number
 }
 
 type OwnerStore = {

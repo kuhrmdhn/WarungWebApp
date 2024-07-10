@@ -1,6 +1,6 @@
 "use client"
 import GroceryCard from '@/app/ui/elements/GroceryCard'
-import { GroceryParam } from '@/lib/interface/groceryInterface'
+import { GroceryParam } from '@/types/groceryInterface'
 import { GroceryStore } from '@/lib/store/groceryStore'
 import { OwnerStore } from '@/lib/store/ownerStore'
 import { ProductsStore, initializeProductsStore } from '@/lib/store/productsStore'

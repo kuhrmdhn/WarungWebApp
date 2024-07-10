@@ -1,4 +1,4 @@
-import { JWTtypes } from "@/lib/interface/token";
+import { JWTtypes } from "@/types/token";
 import axios from "axios";
 import { NextAuthOptions } from "next-auth";
 import { JWT } from "next-auth/jwt";
