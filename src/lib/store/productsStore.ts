@@ -1,9 +1,5 @@
 import { create } from "zustand";
-<<<<<<< HEAD
 import { Product, ProductCategory } from "../../types/productInterface";
-=======
-import { Product } from "../../types/productInterface";
->>>>>>> 0a34f9db0ca72df4512487c0e6f33fd7ae47b17d
 import axios from "axios";
 
 type ProductsStore = {
