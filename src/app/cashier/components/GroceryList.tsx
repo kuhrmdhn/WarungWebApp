@@ -8,6 +8,7 @@ import { UserStore } from '@/lib/store/userStore'
 import { FormatRupiah } from '@arismun/format-rupiah'
 import { Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Input, useDisclosure, useToast } from '@chakra-ui/react'
 import React from 'react'
+import { groceryRouter } from '@/lib/database/groceryRouter'
 
 export default function GroceryList() {
   const { ownerData, updateOwnerData } = OwnerStore()
@@ -37,10 +38,10 @@ export default function GroceryList() {
         income: ownerData.income + totalGroceryPrice,
         sale: ownerData.sale + totalGroceryQuantity
       }
-      removeGrocery(grocery.id, username)
-      updateProduct(grocery.id, newData)
-      updateOwnerData(ownerData.id, newOwnerData)
-      initializeProductsStore()
+      groceryRouter.deleteUserGroceryItem(username, grocery.id)
+      // updateProduct(grocery.id, newData)
+      // updateOwnerData(ownerData.id, newOwnerData)
+      // initializeProductsStore()
     })
     toast({
       title: "Payment Success",

@@ -112,7 +112,7 @@ export const groceryRouter = {
                 }
             })
             await supabase.from("users").update({ grocery_list: updatedGroceryData }).eq("username", username)
-            return this.getUserGrocery(username)
+            this.getUserGrocery(username)
         } catch (error) {
             return { error }
         }

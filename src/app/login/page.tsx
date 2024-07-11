@@ -48,9 +48,9 @@ export default function LoginPage() {
 
     if (res && res.ok) {
       const session: Session | null = await getSession() as Session | null
-      if (session?.role === "OWNER") {
+      if (session?.user.role === "OWNER") {
         push('/owner')
-      } else if (session?.role === "CASHIER") {
+      } else if (session?.user.role === "CASHIER") {
         push('/cashier')
       }
     } else {

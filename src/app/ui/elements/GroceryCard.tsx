@@ -5,7 +5,6 @@ import React, { useState } from 'react'
 import { MinusCircle, PlusCircle, Trash } from 'react-feather'
 import { groceryRouter } from '@/lib/database/groceryRouter'
 import { GroceryProduct } from '@/types/groceryInterface'
-import { useFormStatus } from 'react-dom'
 
 export default function GroceryCard({ grocery }: { grocery: GroceryProduct }) {
     const [inputValue, setInputValue] = useState<number>(grocery.quantity)
