@@ -1,3 +1,9 @@
+enum ProductCategory {
+    FOOD = "food",
+    DRINK = "drink",
+    SNACK = "snack"
+}
+
 export interface Product {
     id: number
     name: string
@@ -6,5 +12,5 @@ export interface Product {
     status: boolean
     stock: number
     sold: number
-    category: string
+    category: ProductCategory
 }

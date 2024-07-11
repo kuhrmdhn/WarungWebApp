@@ -1,5 +1,5 @@
 import { Product } from "./productInterface";
 
-export interface GroceryParam extends Product {
+export interface GroceryProduct extends Product {
     quantity : number
 }

@@ -1,16 +1,16 @@
 import { create } from "zustand";
+import { GroceryProduct } from "../../types/groceryInterface";
 import axios from "axios";
-import { GroceryParam } from "../interface/groceryInterface";
 
 type GroceryStore = {
-    groceryList: GroceryParam[]
+    groceryList: GroceryProduct[]
     getGroceryList: (username: string) => void
-    addNewGroceryProduct: (params: GroceryParam, username: string) => void
-    updateGroceryList: (productData: GroceryParam) => void
+    addNewGroceryProduct: (params: GroceryProduct, username: string) => void
+    updateGroceryList: (productData: GroceryProduct) => void
     groceryListOpen: boolean
     setGroceryListOpen: (status: boolean) => void
     removeGrocery: (id: number, username: string) => void
-    updateSelectedGrocery: (username: string, selectedData: GroceryParam) => void
+    updateSelectedGrocery: (username: string, selectedData: GroceryProduct) => void
 }
 
 export const GroceryStore = create<GroceryStore>()((set) => ({

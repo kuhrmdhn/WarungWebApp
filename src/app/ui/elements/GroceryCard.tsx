@@ -1,21 +1,20 @@
 "use client"
-import { GroceryParam } from '@/lib/interface/groceryInterface'
-import { GroceryStore } from '@/lib/store/groceryStore'
 import { UserStore } from '@/lib/store/userStore'
 import { Card, IconButton, Input, useToast } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { MinusCircle, PlusCircle, Trash } from 'react-feather'
+import { groceryRouter } from '@/lib/database/groceryRouter'
+import { GroceryProduct } from '@/types/groceryInterface'
 
-export default function GroceryCard({ grocery }: { grocery: GroceryParam }) {
+export default function GroceryCard({ grocery }: { grocery: GroceryProduct }) {
     const [inputValue, setInputValue] = useState<number>(grocery.quantity)
-    const { removeGrocery, updateSelectedGrocery } = GroceryStore()
     const toast = useToast()
     const { username } = UserStore()
 
     const updateQuantity = async (newQuantity: number) => {
         const data = { ...grocery, quantity: newQuantity }
         setInputValue(newQuantity)
-        updateSelectedGrocery(username, data)
+        groceryRouter.updateUserGroceryItem(username, data)
     }
     const incrementQuantity = () => {
         let newQuantity = grocery.quantity + 1
@@ -34,7 +33,7 @@ export default function GroceryCard({ grocery }: { grocery: GroceryParam }) {
     const decrementQuantity = () => {
         let newQuantity = grocery.quantity - 1
         if (newQuantity === 0) {
-            removeGrocery(grocery.id, username)
+            groceryRouter.deleteUserGroceryItem(username, grocery.id)
         } else {
             updateQuantity(newQuantity)
         }
@@ -93,12 +92,12 @@ export default function GroceryCard({ grocery }: { grocery: GroceryParam }) {
             </div>
             <div className="flex justify-center items-center w-fit pr-2">
                 <IconButton
-                    onClick={() => removeGrocery(grocery.id, username)}
-                    variant={"ghost"}
-                    size={"sm"}
-                    aria-label='delete button'
-                    icon={<Trash />}
-                    colorScheme='pink'
+                onClick={() => groceryRouter.deleteUserGroceryItem(username, grocery.id)}
+                variant={"ghost"}
+                size={"sm"}
+                aria-label='delete button'
+                icon={<Trash />}
+                colorScheme='pink'
                 />
             </div>
         </Card>
