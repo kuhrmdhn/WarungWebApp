@@ -16,6 +16,7 @@
     "@emotion/styled": "^11.11.5",
     "@mui/icons-material": "^5.15.16",
     "@supabase/supabase-js": "^2.44.3",
+    "axios": "^1.7.2",
     "bcryptjs": "^2.4.3",
     "chart.js": "^4.4.2",
     "framer-motion": "^11.1.7",

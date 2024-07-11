@@ -18,13 +18,13 @@ type OwnerStore = {
     updateOwnerData: (id: number, data: EditOwnerData) => void
 }
 
-async function getOwnerData() {
-    await axios.get(`${process.env.NEXT_PUBLIC_DATABASE_URL}/owner`).
-        then(({ data: ownerData }) => {
-            OwnerStore.setState({ ownerData: ownerData[0] })
-        })
-}
-getOwnerData()
+// async function getOwnerData() {
+//     // await axios.get(`${process.env.NEXT_PUBLIC_DATABASE_URL}/owner`).
+//     //     then(({ data: ownerData }) => {
+//     //         OwnerStore.setState({ ownerData: ownerData[0] })
+//     //     })
+// }
+// getOwnerData()
 
 export const OwnerStore = create<OwnerStore>()((set) => ({
     ownerData: {
@@ -41,6 +41,6 @@ export const OwnerStore = create<OwnerStore>()((set) => ({
     },
     updateOwnerData: (id: number, data: EditOwnerData) => {
         axios.patch(`${process.env.NEXT_PUBLIC_DATABASE_URL}/owner/${id}`, data)
-        getOwnerData()
+        // getOwnerData()
     }
 }))

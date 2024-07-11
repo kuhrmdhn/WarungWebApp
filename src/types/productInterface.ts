@@ -14,7 +14,3 @@ export interface Product {
     sold: number
     category: ProductCategory
 }
-
-export interface GroceryProduct extends Product {
-    quantity: number
-}

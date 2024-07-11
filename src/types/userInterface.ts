@@ -1,4 +1,4 @@
-import { Product } from "./productInterface";
+import { GroceryProduct } from "./groceryInterface";
 
 export enum USER_ROLE {
     OWNER = "OWNER",
@@ -10,5 +10,5 @@ export interface User {
     username?: string,
     password?: string,
     role?: USER_ROLE,
-    grocery_list?: Product[]
+    grocery_list?: GroceryProduct[]
 }
