@@ -1,7 +1,7 @@
 "use client"
 import PageTitle from '@/app/ui/elements/PageTitle'
 import ProductCard from '@/app/ui/elements/ProductCard'
-import { Product } from '@/lib/interface/productInterface'
+import { Product, ProductCategory } from '@/types/productInterface'
 import { ProductsStore } from '@/lib/store/productsStore'
 import { Button, FormControl, FormLabel, Input, Select } from '@chakra-ui/react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
@@ -17,7 +17,9 @@ export default function NewProductForm() {
     const productDataByQuery: Product = {
         id: Date.now(),
         name: query.get("name")?.toString() || "",
-        category: query.get("category")?.toString() || "food",
+        category: (Object.values(ProductCategory).includes(query.get("category")?.toString() as ProductCategory)
+            ? query.get("category")?.toString() as ProductCategory
+            : ProductCategory.FOOD),
         image: query.get("image")?.toString() || "",
         price: Number(query.get("price")?.toString()) || 0,
         sold: Number(query.get("sold")?.toString()) || 0,
@@ -99,15 +101,15 @@ export default function NewProductForm() {
             value: formState.category?.toString().toLowerCase(),
             options: [
                 {
-                    value: "food",
+                    value: "FOOD",
                     text: "Food"
                 },
                 {
-                    value: "drink",
+                    value: "DRINK",
                     text: "Drink"
                 },
                 {
-                    value: "snack",
+                    value: "SNACK",
                     text: "Snack"
                 }
             ]
@@ -117,9 +119,9 @@ export default function NewProductForm() {
     return (
         <div className='h-max w-full flex justify-around items-center flex-col-reverse gap-11 lg:gap-0 lg:flex-row'>
             <form className="w-11/12 lg:w-2/5 h-max flex flex-col gap-4">
-            <PageTitle>
-                <PageTitle.SubTitle text='New Product Form'/>
-            </PageTitle>
+                <PageTitle>
+                    <PageTitle.SubTitle text='New Product Form' />
+                </PageTitle>
                 {
                     formInputData.map((form, index) => (
                         <FormControl key={index} className="flex justify-between items-center">

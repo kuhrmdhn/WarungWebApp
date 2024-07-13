@@ -1,36 +1,43 @@
 import { create } from "zustand";
-import axios, { AxiosResponse } from "axios";
-import { GroceryParam } from "../interface/groceryInterface";
+import { GroceryProduct } from "../../types/groceryInterface";
+import axios from "axios";
 
 type GroceryStore = {
-    groceryList: GroceryParam[]
-    setGroceryList: (params: GroceryParam) => void
-    updateGroceryList: (productData: GroceryParam) => void
+    groceryList: GroceryProduct[]
+    getGroceryList: (username: string) => void
+    addNewGroceryProduct: (params: GroceryProduct, username: string) => void
+    updateGroceryList: (productData: GroceryProduct) => void
     groceryListOpen: boolean
     setGroceryListOpen: (status: boolean) => void
-    removeGrocery: (id: number) => void
-    updateSelectedGrocery: (id: number, selectedData: GroceryParam) => void
+    removeGrocery: (id: number, username: string) => void
+    updateSelectedGrocery: (username: string, selectedData: GroceryProduct) => void
 }
-
-export const getGroceryList = async () => await axios.get(`${process.env.NEXT_PUBLIC_DATABASE_URL}/grocery`)
-    .then(({ data: grocery }) => GroceryStore.setState({ groceryList: grocery }))
-getGroceryList()
 
 export const GroceryStore = create<GroceryStore>()((set) => ({
     groceryList: [],
-    setGroceryList: async (product) => {
+    getGroceryList: async (username: string) => {
+        try {
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_DATABASE_URL}/user/grocery?username=${username}`);
+            set({ groceryList: data });
+        } catch (error) {
+            console.error("Error fetching grocery list:", error);
+            set({ groceryList: [] });
+        }
+    },
+    addNewGroceryProduct: async (product, username) => {
         const currentGroceryData = GroceryStore.getState().groceryList
         const index = currentGroceryData.findIndex(grocery => grocery.id === product.id)
         if (index === -1) {
-            await axios.post(`${process.env.NEXT_PUBLIC_DATABASE_URL}/grocery`, product)
+            await axios.post(`${process.env.NEXT_PUBLIC_DATABASE_URL}/user/grocery?username=${username}`, product)
         } else {
             const currentData = currentGroceryData.filter(grocery => grocery.id === product.id)[0]
             const updatedData = {
-                ...currentData, quantity: currentData.quantity + 1
+                ...currentData,
+                quantity: currentData.quantity + 1
             }
-            await axios.put(`${process.env.NEXT_PUBLIC_DATABASE_URL}/grocery/${product.id}`, updatedData)
+            await axios.patch(`${process.env.NEXT_PUBLIC_DATABASE_URL}/user/grocery?username=${username}`, updatedData)
         }
-        getGroceryList()
+        GroceryStore.getState().getGroceryList(username)
     },
     updateGroceryList: (newData) => {
         set((state) => ({
@@ -41,12 +48,12 @@ export const GroceryStore = create<GroceryStore>()((set) => ({
     setGroceryListOpen: (status) => {
         set({ groceryListOpen: status })
     },
-    removeGrocery: async (id: number) => {
-        await axios.delete(`${process.env.NEXT_PUBLIC_DATABASE_URL}/grocery/${id}`)
-        getGroceryList()
+    removeGrocery: async (id, username) => {
+        await axios.delete(`${process.env.NEXT_PUBLIC_DATABASE_URL}/user/grocery?username=${username}&&grocery_id=${id}`)
+        GroceryStore.getState().getGroceryList(username)
     },
-    updateSelectedGrocery: async (id: number, selectedData: GroceryParam) => {
-        await axios.put(`${process.env.NEXT_PUBLIC_DATABASE_URL}/grocery/${id}`, selectedData)
-        getGroceryList()
+    updateSelectedGrocery: async (username, selectedData) => {
+        await axios.patch(`${process.env.NEXT_PUBLIC_DATABASE_URL}/user/grocery?username=${username}`, selectedData)
+        GroceryStore.getState().getGroceryList(username)
     }
 }))

@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { getSession, signIn } from 'next-auth/react'
 import { Button, FormLabel, Input, InputGroup, useToast } from '@chakra-ui/react'
-import { Session } from '@/lib/interface/token'
+import { Session } from '@/types/token'
 import { ArrowForward, Error, HourglassBottom } from '@mui/icons-material'
 
 export default function LoginPage() {
@@ -48,9 +48,9 @@ export default function LoginPage() {
 
     if (res && res.ok) {
       const session: Session | null = await getSession() as Session | null
-      if (session?.role === "OWNER") {
+      if (session?.user.role === "OWNER") {
         push('/owner')
-      } else if (session?.role === "CASHIER") {
+      } else if (session?.user.role === "CASHIER") {
         push('/cashier')
       }
     } else {
@@ -64,7 +64,6 @@ export default function LoginPage() {
 
     setFormData((current) => ({ ...current, [name]: value }))
   }
-  // 
 
   return (
     <section className="h-[100svh] w-full flex justify-center lg:justify-end items-center bg-[url('/login-bg.webp')] bg-cover bg-fixed bg-no-repeat bg-right-bottom">
