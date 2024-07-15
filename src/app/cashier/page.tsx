@@ -3,12 +3,11 @@ import React, { Suspense, useEffect } from 'react'
 import ProductsList from '../ui/components/ProductsList'
 import Header from './components/Header'
 import GroceryList from './components/GroceryList'
-import { GroceryStore } from '@/lib/store/groceryStore'
 import { getSession } from 'next-auth/react'
 import { UserStore } from '@/lib/store/userStore'
+import { groceryRouter } from '@/lib/database/groceryRouter'
 
 export default function Cashier() {
-  const { getGroceryList } = GroceryStore()
   const { setUsername } = UserStore()
 
   async function fetchUserGroceryList() {
@@ -16,12 +15,11 @@ export default function Cashier() {
     if (session) {
       const username = session.user?.name;
       if (username) {
-        getGroceryList(username);
+        groceryRouter.getUserGrocery(username);
         setUsername(username)
       }
     }
   }
-
   useEffect(() => {
     fetchUserGroceryList()
   }, [])

@@ -1,6 +1,6 @@
 "use client"
 import React from 'react'
-import { Product } from '@/lib/interface/productInterface'
+import { Product } from '@/types/productInterface'
 import { FormatRupiah } from '@arismun/format-rupiah'
 import { Button, Card, CardBody, CardFooter, Image, Stack, Table, Tbody, Td, Tr, useToast } from '@chakra-ui/react'
 import { AlertCircle, Check } from 'react-feather'
@@ -9,6 +9,8 @@ import { ProductsStore } from '@/lib/store/productsStore'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { Brush, RestartAlt } from '@mui/icons-material'
 import { UserStore } from '@/lib/store/userStore'
+import { groceryRouter } from '@/lib/database/groceryRouter'
+import { GroceryProduct } from '@/types/groceryInterface'
 
 type productCardProps = {
     children: React.ReactNode
@@ -53,12 +55,18 @@ function CardImage({ productData }: cardProps) {
 
 function CashierProductCard({ productData }: cardProps) {
     const { name, price, status, stock } = productData
-    const { addNewGroceryProduct } = GroceryStore()
-    const { username } = UserStore()
     const toast = useToast()
+    const { username } = UserStore()
+    const { groceryList } = GroceryStore()
     const addProductToGrocery = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
-        addNewGroceryProduct({ ...productData, quantity: 1 }, username)
+        const groceryProductIndex = groceryList.findIndex((groceryItem: GroceryProduct) => groceryItem.id === productData.id)
+        if(groceryProductIndex === -1) {
+            groceryRouter.addNewUserGrocery(username, { ...productData, quantity: 1 })
+        } else {
+            const productIndexItemData = { ...groceryList[groceryProductIndex], quantity: groceryList[groceryProductIndex].quantity + 1}
+            groceryRouter.updateUserGroceryItem(username, productIndexItemData)
+        }
         toast({
             title: "Added to Order List!",
             status: "success",
