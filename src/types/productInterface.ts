@@ -14,3 +14,13 @@ export interface Product {
     sold: number
     category: ProductCategory
 }
+
+export interface UpdateProductType {
+    name?: string
+    price?: number
+    image?: string
+    status?: boolean
+    stock?: number
+    sold?: number
+    category?: ProductCategory
+}
