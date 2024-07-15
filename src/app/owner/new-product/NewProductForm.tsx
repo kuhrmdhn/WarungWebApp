@@ -6,9 +6,9 @@ import { ProductsStore } from '@/lib/store/productsStore'
 import { Button, FormControl, FormLabel, Input, Select } from '@chakra-ui/react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import React, { useState } from 'react'
+import { productRouter } from '@/lib/database/productRouter'
 
 export default function NewProductForm() {
-    const { addNewProduct } = ProductsStore()
     const router = useRouter()
     const searchParams = useSearchParams()
     const pathname = usePathname()
@@ -42,8 +42,8 @@ export default function NewProductForm() {
     }
     const handleSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
         e.preventDefault()
-        addNewProduct(formState)
-        // router.back()
+        productRouter.addNewProduct(formState)
+        router.back()
     }
 
     const formInputData = [
@@ -101,15 +101,15 @@ export default function NewProductForm() {
             value: formState.category?.toString().toLowerCase(),
             options: [
                 {
-                    value: "FOOD",
+                    value: ProductCategory.FOOD,
                     text: "Food"
                 },
                 {
-                    value: "DRINK",
+                    value: ProductCategory.DRINK,
                     text: "Drink"
                 },
                 {
-                    value: "SNACK",
+                    value: ProductCategory.SNACK,
                     text: "Snack"
                 }
             ]

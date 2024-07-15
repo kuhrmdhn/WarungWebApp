@@ -8,13 +8,13 @@ import { PageStore } from '@/lib/store/pageStore'
 import { ProductsStore, initializeProductsStore } from '@/lib/store/productsStore'
 import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, FormControl, FormLabel, Input, InputGroup, Select, useDisclosure, useToast } from '@chakra-ui/react'
 import { useRouter, useSearchParams } from 'next/navigation'
-
+import { productRouter } from '@/lib/database/productRouter'
 
 function EditProductFormContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { setPageTitle } = PageStore()
-  const { productById, findProductById, updateProduct } = ProductsStore()
+  const { productById } = ProductsStore()
   const [formState, setFormState] = useState<Product>(productById)
   const query = new URLSearchParams(searchParams)
   const id = Number(query.get("productId")?.toString())
@@ -22,11 +22,9 @@ function EditProductFormContent() {
 
   const { onOpen, onClose, isOpen } = useDisclosure()
   const cancelRef = useRef(null)
-  const { deleteProduct } = ProductsStore()
 
   const deleteProducts = () => {
-    deleteProduct(id)
-    initializeProductsStore()
+    productRouter.deleteProduct(id)
     router.back()
     onClose()
   }
@@ -35,7 +33,7 @@ function EditProductFormContent() {
     if (!id) {
       return router.replace("/owner/all-products")
     }
-    findProductById(id)
+    productRouter.getProductById(id)
   }, [id])
 
   useEffect(() => {
@@ -53,7 +51,7 @@ function EditProductFormContent() {
 
   const submitForm = (e: React.FormEvent<HTMLButtonElement> | React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    updateProduct(formState.id, JSON.parse(JSON.stringify(formState)))
+    productRouter.updateProductData(formState.id, JSON.parse(JSON.stringify(formState)))
     toast({ title: "Update!" })
     router.back()
   }
@@ -130,7 +128,7 @@ function EditProductFormContent() {
   return (
     <section className="h-[100svh] w-full flex flex-col">
       <div className="flex gap-7 pt-5 pl-5 mb-5" >
-        <MovePageButton link='owner/all-products' />
+        <MovePageButton />
         <PageTitle>
           <PageTitle.Title>
             Edit Product
