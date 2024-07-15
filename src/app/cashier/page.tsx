@@ -20,7 +20,6 @@ export default function Cashier() {
       }
     }
   }
-
   useEffect(() => {
     fetchUserGroceryList()
   }, [])

@@ -15,7 +15,7 @@ export default function ProductsList({ isOwner }: productListProps) {
     const cashierClassName = "grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 justify-items-center gap-y-2 sm:gap-y-7";
     const ownerClassName = "grid-cols-2 lg:grid-cols-3 justify-items-center gap-y-3";
 
-    let productsData = filteredProducts;
+    let productsData = products;
 
     const nameParam = searchParams.get("name")?.toLowerCase();
     const categoryParam = searchParams.get("category")?.toLowerCase();
