@@ -6,6 +6,7 @@ import { FormatRupiah } from '@arismun/format-rupiah'
 import React, { ReactNode } from 'react'
 import { RestaurantMenu, AttachMoney, Sell, Category } from '@mui/icons-material';
 import PageTitle from '@/app/ui/elements/PageTitle'
+import FadeInUp from '@/app/ui/framer-motion/FadeInUp'
 
 type CardData = {
     heading: string | ReactNode
@@ -43,18 +44,19 @@ export default function Summary() {
     return (
         <section className='w-full h-fit mt-2 sm:mt-7 flex flex-col justify-start gap-3 sm:gap-5'>
             <PageTitle>
-                <PageTitle.SubTitle text='Summary'/>
+                <PageTitle.SubTitle text='Summary' />
             </PageTitle>
             <div className="flex justify-evenly sm:justify-start flex-wrap gap-2 sm:gap-5">
                 {
                     cardData.map((card: CardData, index: number) => (
-                        <DashboardCard
-                            key={index}
-                            heading={card.heading}
-                            icon={card.icon}
-                            description={card.description}
-                            className='shadow-md shadow-gray-500 hover:scale-105 hover:shadow-lg hover:shadow-owner-purple duration-300'
-                        />
+                        <FadeInUp key={index} delay={index * 0.1}>
+                            <DashboardCard
+                                heading={card.heading}
+                                icon={card.icon}
+                                description={card.description}
+                                className='shadow-md shadow-gray-500 hover:shadow-lg hover:shadow-owner-purple duration-300'
+                            />
+                        </FadeInUp>
                     ))
                 }
             </div>
