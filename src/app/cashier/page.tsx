@@ -1,11 +1,11 @@
 "use client"
 import React, { Suspense, useEffect } from 'react'
 import ProductsList from '../ui/components/ProductsList'
-import Header from './components/Header'
 import GroceryList from './components/GroceryList'
 import { getSession } from 'next-auth/react'
 import { UserStore } from '@/lib/store/userStore'
 import { groceryRouter } from '@/lib/database/groceryRouter'
+import NavigationBar from '../ui/elements/NavigationBar'
 
 export default function Cashier() {
   const { setUsername } = UserStore()
@@ -23,10 +23,13 @@ export default function Cashier() {
   useEffect(() => {
     fetchUserGroceryList()
   }, [])
+
   return (
     <Suspense fallback={<h1>loading...</h1>}>
       <main className='bg-gray-300'>
-        <Header />
+        <NavigationBar>
+          <NavigationBar.CashierNavbar />
+        </NavigationBar>
         <ProductsList isOwner={false} />
         <GroceryList />
       </main>

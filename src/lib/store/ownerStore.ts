@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import { Owner } from "../../types/ownerInterface";
-import { ownerRouter } from "../database/ownerRouter";
 
 type EditOwnerData = {
     id: number

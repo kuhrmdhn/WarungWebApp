@@ -3,17 +3,19 @@ import GroceryCard from '@/app/ui/elements/GroceryCard'
 import { GroceryProduct } from '@/types/groceryInterface'
 import { GroceryStore } from '@/lib/store/groceryStore'
 import { OwnerStore } from '@/lib/store/ownerStore'
-import { ProductsStore, initializeProductsStore } from '@/lib/store/productsStore'
 import { UserStore } from '@/lib/store/userStore'
 import { FormatRupiah } from '@arismun/format-rupiah'
 import { Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Input, useDisclosure, useToast } from '@chakra-ui/react'
 import React from 'react'
 import { groceryRouter } from '@/lib/database/groceryRouter'
+import { productRouter } from '@/lib/database/productRouter'
+import { ownerRouter } from '@/lib/database/ownerRouter'
+import { getSession } from 'next-auth/react'
+import { Session } from '@/types/token'
 
 export default function GroceryList() {
-  const { ownerData, updateOwnerData } = OwnerStore()
+  const { ownerData } = OwnerStore()
   const { username } = UserStore()
-  const { updateProduct } = ProductsStore()
   const { groceryList, groceryListOpen, setGroceryListOpen, removeGrocery } = GroceryStore()
   const totalGroceryPrice = groceryList.map((grocery: GroceryProduct) => grocery.price * grocery.quantity).reduce((acc: number, prev: number) => acc + prev, 0)
   const totalGroceryQuantity = groceryList.map((grocery: GroceryProduct) => grocery.quantity).reduce((acc: number, prev: number) => acc + prev, 0)
@@ -22,27 +24,30 @@ export default function GroceryList() {
   const onCloseGrocery = () => {
     setGroceryListOpen(false)
   }
-  const payGrocery = () => {
+  const payGrocery = async () => {
     groceryList.map((grocery: GroceryProduct) => {
-      const newData = {
-        id: grocery.id,
-        name: grocery.name,
-        price: grocery.price,
-        image: grocery.image,
-        status: grocery.status,
+      let productStatus = true
+      if (grocery.stock - grocery.quantity == 0) {
+        productStatus = false
+      }
+      const newProductData = {
+        status: productStatus,
         stock: grocery.stock - grocery.quantity,
         sold: grocery.sold + grocery.quantity,
         category: grocery.category
       }
+      groceryRouter.deleteUserGroceryItem(username, grocery.id)
+      productRouter.updateProductData(grocery.id, newProductData)
+    })
+    const session: Session | null = await getSession() as Session | null
+    const userRole = session?.user.role
+    if (userRole === "CASHIER" || userRole === "OWNER") {
       const newOwnerData = {
         income: ownerData.income + totalGroceryPrice,
         sale: ownerData.sale + totalGroceryQuantity
       }
-      groceryRouter.deleteUserGroceryItem(username, grocery.id)
-      // updateProduct(grocery.id, newData)
-      // updateOwnerData(ownerData.id, newOwnerData)
-      // initializeProductsStore()
-    })
+      ownerRouter.updateOwnerData(newOwnerData)
+    }
     toast({
       title: "Payment Success",
       duration: 1500,
