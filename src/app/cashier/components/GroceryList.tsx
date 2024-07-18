@@ -9,6 +9,9 @@ import { Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFoo
 import React from 'react'
 import { groceryRouter } from '@/lib/database/groceryRouter'
 import { productRouter } from '@/lib/database/productRouter'
+import { ownerRouter } from '@/lib/database/ownerRouter'
+import { getSession } from 'next-auth/react'
+import { Session } from '@/types/token'
 
 export default function GroceryList() {
   const { ownerData } = OwnerStore()
@@ -21,7 +24,7 @@ export default function GroceryList() {
   const onCloseGrocery = () => {
     setGroceryListOpen(false)
   }
-  const payGrocery = () => {
+  const payGrocery = async () => {
     groceryList.map((grocery: GroceryProduct) => {
       let productStatus = true
       if (grocery.stock - grocery.quantity == 0) {
@@ -33,13 +36,18 @@ export default function GroceryList() {
         sold: grocery.sold + grocery.quantity,
         category: grocery.category
       }
+      groceryRouter.deleteUserGroceryItem(username, grocery.id)
+      productRouter.updateProductData(grocery.id, newProductData)
+    })
+    const session: Session | null = await getSession() as Session | null
+    const userRole = session?.user.role
+    if (userRole === "CASHIER" || userRole === "OWNER") {
       const newOwnerData = {
         income: ownerData.income + totalGroceryPrice,
         sale: ownerData.sale + totalGroceryQuantity
       }
-      groceryRouter.deleteUserGroceryItem(username, grocery.id)
-      productRouter.updateProductData(grocery.id, newProductData)
-    })
+      ownerRouter.updateOwnerData(newOwnerData)
+    }
     toast({
       title: "Payment Success",
       duration: 1500,

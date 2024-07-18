@@ -22,6 +22,20 @@ const config: Config = {
       },
       fontSize: {
         "2xs": "0.625rem"
+      },
+      keyframes: {
+        fade_in: {
+          "0%": {
+            transform: "translateY(50px)"
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translateY(0)"
+          }
+        }
+      },
+      animation: {
+        "fade-in": "fade_in 1s ease"
       }
     },
   },
