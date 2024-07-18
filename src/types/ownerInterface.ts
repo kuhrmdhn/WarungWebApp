@@ -7,3 +7,12 @@ export interface Owner {
     username: string
     categories: number
 }
+
+export interface UpdatedOwnerData {
+    name?: string
+    password?: string
+    income?: number
+    sale?: number
+    username?: string
+    categories?: number
+}

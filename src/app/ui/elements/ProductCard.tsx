@@ -53,7 +53,7 @@ function CardImage({ productData }: cardProps) {
 }
 
 
-function CashierProductCard({ productData }: cardProps) {
+function CashierProductCard({ productData, className }: cardProps) {
     const { name, price, status, stock } = productData
     const toast = useToast()
     const { username } = UserStore()
@@ -61,10 +61,10 @@ function CashierProductCard({ productData }: cardProps) {
     const addProductToGrocery = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
         const groceryProductIndex = groceryList.findIndex((groceryItem: GroceryProduct) => groceryItem.id === productData.id)
-        if(groceryProductIndex === -1) {
+        if (groceryProductIndex === -1) {
             groceryRouter.addNewUserGrocery(username, { ...productData, quantity: 1 })
         } else {
-            const productIndexItemData = { ...groceryList[groceryProductIndex], quantity: groceryList[groceryProductIndex].quantity + 1}
+            const productIndexItemData = { ...groceryList[groceryProductIndex], quantity: groceryList[groceryProductIndex].quantity + 1 }
             groceryRouter.updateUserGroceryItem(username, productIndexItemData)
         }
         toast({
@@ -76,7 +76,7 @@ function CashierProductCard({ productData }: cardProps) {
         })
     }
     return (
-        <Card className='h-80 sm:h-96 w-44 sm:w-60 bg-white text-black'>
+        <Card className={`h-80 sm:h-96 w-44 sm:w-60 bg-white text-black`}>
             <CardBody padding={"5px"}>
                 <CardImage productData={productData} />
                 <Stack className='mt-3 ml-3'>
