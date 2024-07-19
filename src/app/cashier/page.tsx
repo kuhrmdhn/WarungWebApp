@@ -1,5 +1,5 @@
 "use client"
-import React, { Suspense, useEffect } from 'react'
+import React, { Suspense, useCallback, useEffect } from 'react'
 import ProductsList from '../ui/components/ProductsList'
 import GroceryList from './components/GroceryList'
 import { getSession } from 'next-auth/react'
@@ -9,20 +9,20 @@ import NavigationBar from '../ui/elements/NavigationBar'
 
 export default function Cashier() {
   const { setUsername } = UserStore()
-
-  async function fetchUserGroceryList() {
+  const fetchUserGroceryList = useCallback(async () => {
     const session = await getSession();
     if (session) {
       const username = session.user?.name;
       if (username) {
         groceryRouter.getUserGrocery(username);
-        setUsername(username)
+        setUsername(username);
       }
     }
-  }
+  }, [setUsername]);
+
   useEffect(() => {
-    fetchUserGroceryList()
-  }, [])
+    fetchUserGroceryList();
+  }, [fetchUserGroceryList]);
 
   return (
     <Suspense fallback={<h1>loading...</h1>}>
