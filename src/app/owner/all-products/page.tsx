@@ -1,7 +1,6 @@
 import ProductsList from '@/app/ui/components/ProductsList'
 import SearchBar from '@/app/ui/elements/SearchBar'
 import React, { Suspense } from 'react'
-import NavigationBar from '../components/NavigationBar'
 import CategoryTabs from '@/app/ui/elements/CategoryTabs'
 
 export default function AllProducts() {
