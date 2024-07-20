@@ -12,7 +12,7 @@ type NavLink = {
 
 export default function NavigationBar({ children }: { children: React.ReactNode }) {
     return (
-        <div className='flex justify-center items-center'>
+        <div className='flex justify-center items-center w-full bg-white'>
             {children}
             <LogOutButton/>
         </div>
@@ -21,7 +21,7 @@ export default function NavigationBar({ children }: { children: React.ReactNode 
 
 function CashierNavbar() {
   return (
-      <header className='h-[18svh] lg:h-[25svh] w-full pb-2 bg-white shadow-md shadow-gray-300'>
+      <header className='h-[18svh] lg:h-[25svh] w-full pb-2 bg-white'>
           <section className='w-full h-1/2 flex justify-around sm:justify-evenly items-center'>
               <div className='w-fit sm:w-1/3 h-full flex justify-start sm:justify-center items-center'>
                   <Logo>
