@@ -23,7 +23,7 @@ async function getOwnerData() {
     //     then(({ data: ownerData }) => {
     //         OwnerStore.setState({ ownerData: ownerData[0] })
     //     })
-    console.log("first")
+    // console.log("first")
 }
 getOwnerData()
 
