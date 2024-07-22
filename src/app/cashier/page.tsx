@@ -1,35 +1,38 @@
 "use client"
-import React, { Suspense, useEffect } from 'react'
+import React, { Suspense, useCallback, useEffect } from 'react'
 import ProductsList from '../ui/components/ProductsList'
-import Header from './components/Header'
 import GroceryList from './components/GroceryList'
-import { GroceryStore } from '@/lib/store/groceryStore'
 import { getSession } from 'next-auth/react'
 import { UserStore } from '@/lib/store/userStore'
+import { groceryRouter } from '@/lib/database/groceryRouter'
+import NavigationBar from '../ui/elements/NavigationBar'
 
 export default function Cashier() {
-  const { getGroceryList } = GroceryStore()
   const { setUsername } = UserStore()
-
-  async function fetchUserGroceryList() {
+  const fetchUserGroceryList = useCallback(async () => {
     const session = await getSession();
     if (session) {
       const username = session.user?.name;
       if (username) {
-        getGroceryList(username);
-        setUsername(username)
+        groceryRouter.getUserGrocery(username);
+        setUsername(username);
       }
     }
-  }
+  }, [setUsername]);
 
   useEffect(() => {
-    fetchUserGroceryList()
-  }, [])
+    fetchUserGroceryList();
+  }, [fetchUserGroceryList]);
+
   return (
     <Suspense fallback={<h1>loading...</h1>}>
       <main className='bg-gray-300'>
-        <Header />
-        <ProductsList isOwner={false} />
+        <NavigationBar>
+          <NavigationBar.CashierNavbar />
+        </NavigationBar>
+        <Suspense fallback={<h1>loading...</h1>}>
+          <ProductsList isOwner={false} />
+        </Suspense>
         <GroceryList />
       </main>
     </Suspense>

@@ -1,4 +1,7 @@
 "use client"
+import { productRouter } from '@/lib/database/productRouter'
+import { ProductsStore } from '@/lib/store/productsStore'
+import { Product } from '@/types/productInterface'
 import { InputGroup, Input, InputRightElement, Kbd } from '@chakra-ui/react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import React, { useEffect, useRef } from 'react'
@@ -9,7 +12,7 @@ export default function SearchBar() {
     const { replace } = useRouter()
     const inputRef = useRef<HTMLInputElement>(null)
 
-    const handleInput = (e: string) => {
+    const handleInput = async (e: string) => {
         const key = e.toLowerCase()
         const query = new URLSearchParams(searchParams)
         if (key !== "") {
@@ -17,6 +20,9 @@ export default function SearchBar() {
             query.delete('category')
         } else {
             query.delete('name')
+            const allProduct: Product[] = await productRouter.getProducts()
+            const foodProducts = allProduct.filter((product: Product) => product.category === "food")
+            ProductsStore.setState({ products: foodProducts })
         }
         replace(`${pathname}?${query.toString()}`)
     }

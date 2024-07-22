@@ -1,31 +1,20 @@
 import { create } from "zustand";
-import { Owner } from "../interface/ownerInterface";
-import axios from "axios";
+import { Owner } from "../../types/ownerInterface";
 
 type EditOwnerData = {
-    id?: number
-    name?: string
+    id: number
+    name: string
     password?: string
     income?: number
     sale?: number
     username?: string
-    categories? : number
+    categories?: number
 }
 
 type OwnerStore = {
     ownerData: Owner
     setOwnerData: (param: Owner) => void
-    updateOwnerData: (id: number, data: EditOwnerData) => void
 }
-
-async function getOwnerData() {
-    // await axios.get(`${process.env.NEXT_PUBLIC_DATABASE_URL}/owner`).
-    //     then(({ data: ownerData }) => {
-    //         OwnerStore.setState({ ownerData: ownerData[0] })
-    //     })
-    // console.log("first")
-}
-getOwnerData()
 
 export const OwnerStore = create<OwnerStore>()((set) => ({
     ownerData: {
@@ -39,9 +28,5 @@ export const OwnerStore = create<OwnerStore>()((set) => ({
     },
     setOwnerData: (body: Owner) => {
         set({ ownerData: body })
-    },
-    updateOwnerData: (id: number, data: EditOwnerData) => {
-        axios.patch(`${process.env.NEXT_PUBLIC_DATABASE_URL}/owner/${id}`, data)
-        getOwnerData()
     }
 }))

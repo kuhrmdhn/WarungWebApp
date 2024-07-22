@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { getSession, signIn } from 'next-auth/react'
 import { Button, FormLabel, Input, InputGroup, useToast } from '@chakra-ui/react'
+import { Session } from '@/types/token'
 import { ArrowForward, Error, HourglassBottom } from '@mui/icons-material'
 import { Session } from '@/lib/interface/token'
 
