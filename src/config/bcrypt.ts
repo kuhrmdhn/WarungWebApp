@@ -6,7 +6,7 @@ export const bcryptConfig = {
         const hashedPassword = await bcrypt.hash(password, salt)
         return hashedPassword
     },
-    async verifyPassword(plainPassword: any, hashedPassword: any): Promise<boolean> {
+    async verifyPassword(plainPassword: string, hashedPassword: string): Promise<boolean> {
         const result = await bcrypt.compare(plainPassword, hashedPassword);
         return result
     }
