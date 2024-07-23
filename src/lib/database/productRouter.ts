@@ -3,7 +3,7 @@ import { ProductsStore } from "../store/productsStore"
 import { Product, UpdateProductType } from "@/types/productInterface"
 
 export const productRouter = {
-    async getProducts() {
+    async getProducts(): Promise<Product[] | any> {
         try {
             const { data: products, error } = await supabase.from("products").select()
             if (error) {
@@ -27,6 +27,32 @@ export const productRouter = {
             const product: Product = data
             ProductsStore.setState({ productById: product })
             return product
+        } catch (error) {
+            return error
+        }
+    },
+    async getProductsByName(productName: string) {
+        ProductsStore.setState({ products: [] })
+        try {
+            const { data: products, error } = await supabase.from("products").select()
+            if (error) {
+                return error.message
+            }
+            const productByName = products.filter((product: Product) => product.name.toLowerCase().trim().includes(productName.toLowerCase().trim()))
+            ProductsStore.setState({ products: productByName })
+        } catch (error) {
+            return error
+        }
+    },
+    async getProductByCategory(productCategory: string) {
+        ProductsStore.setState({ products: [] })
+        let category = productCategory;
+        try {
+            const { data: products, error } = await supabase.from("products").select().eq("category", category)
+            if (!products || error) {
+                return error.message
+            }
+            ProductsStore.setState({ products })
         } catch (error) {
             return error
         }
