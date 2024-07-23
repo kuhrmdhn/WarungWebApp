@@ -32,16 +32,14 @@ const authOptions: NextAuthOptions = {
             if (user) {
                 token.id = user.id
                 token.username = user.username
-                token.password = user.password
                 token.role = user.role
-            }
+            }            
             return token
         },
         async session({ session, token }: { session: any, token: JWT }): Promise<any> {
             if (token) {
                 session.user.id = token.id
                 session.user.name = token.username
-                session.user.password = token.password
                 session.user.role = token.role
             }
             return session
