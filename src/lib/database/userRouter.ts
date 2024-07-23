@@ -1,4 +1,3 @@
-import { apiHandler } from "@/config/apiHandler";
 import { bcryptConfig } from "@/config/bcrypt";
 import { supabase } from "@/config/supabase";
 import { User } from "@/types/userInterface";
@@ -6,7 +5,7 @@ import { User } from "@/types/userInterface";
 export const userRouter = {
     async getUser(username: string, password: string) {
         if (!username || !password) {
-            return "Password and Username is Required!"
+            throw new Error("Password and Username is Required!")
         }
         try {
             const { data, error } = await supabase.from("users").select().eq("username", username)
@@ -16,12 +15,12 @@ export const userRouter = {
 
             const user = data[0]
             if (!user) {
-                return "Invalid username"
+                throw new Error("Invalid username")
             }
 
             const checkPassword = await bcryptConfig.verifyPassword(password, user.password)
             if (!checkPassword) {
-                return "Invalid password"
+                throw new Error("Invalid password")
             }
 
             return user
