@@ -11,10 +11,10 @@ type DashboardCardProps = {
     className?: string
 }
 
-export default function DashboardCard({ heading, icon, description, backgroundColor, className }: DashboardCardProps) {
+export default function DashboardCard({ heading, icon, description, className }: DashboardCardProps) {
     return (
         <ScaleHover
-            className={`w-36 xs:w-40 sm:w-72 h-16 sm:h-24 flex flex-row justify-evenly bg-white text-black ${className}`}
+            className={`w-36 xs:w-40 sm:w-72 h-16 sm:h-24 flex flex-row justify-evenly bg-white text-black shadow-md hover:shadow-lg shadow-gray-400 hover:shadow-primary-blue duration-300 cursor-pointer ${className}`}
         >
             <div className='h-full w-3/5 flex flex-col items-start justify-center'>
                 <p className='text-2xs xs:text-xs sm:text-sm font-light'>
