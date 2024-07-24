@@ -1,15 +1,13 @@
 "use client"
 import React from 'react';
-import NavigationBar from '../ui/elements/NavigationBar';
+import OwnerSidebar from '../ui/components/OwnerSidebar';
 
 const AboutLayout = ({ children }: { children: React.ReactNode }) => {
     return (
-        <>
-            <NavigationBar>
-                <NavigationBar.OwnerNavbar />
-            </NavigationBar>
-            <main>{children}</main>
-        </>
+        <main>
+            <OwnerSidebar />
+            <section>{children}</section>
+        </main>
     );
 };
 
