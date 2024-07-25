@@ -54,7 +54,6 @@ export default function Summary() {
                                 heading={card.heading}
                                 icon={card.icon}
                                 description={card.description}
-                                className='shadow-md shadow-gray-500 hover:shadow-lg hover:shadow-owner-purple duration-300'
                             />
                         </FadeInUp>
                     ))
