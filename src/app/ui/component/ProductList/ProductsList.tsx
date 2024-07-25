@@ -1,10 +1,10 @@
 "use client"
-import ProductCard from '@/app/ui/elements/ProductCard'
+import ProductCard from '@/app/ui/component/ProductList/ProductCard'
 import ScrollTopButton from '@/app/ui/elements/ScrollTopButton'
 import { Product } from '@/types/productInterface'
 import { ProductsStore } from '@/lib/store/productsStore'
 import React from 'react'
-import FadeInUp from '../framer-motion/FadeInUp'
+import FadeInUp from '../../framer-motion/FadeInUp'
 
 type productListProps = {
     isOwner: boolean

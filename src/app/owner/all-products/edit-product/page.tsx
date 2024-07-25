@@ -2,7 +2,7 @@
 import PageTitle from '@/app/ui/elements/PageTitle'
 import React, { Suspense, useEffect, useRef, useState } from 'react'
 import MovePageButton from '@/app/ui/elements/MovePageButton'
-import ProductCard from '@/app/ui/elements/ProductCard'
+import ProductCard from '@/app/ui/component/ProductList/ProductCard'
 import { Product } from '@/types/productInterface'
 import { PageStore } from '@/lib/store/pageStore'
 import { ProductsStore } from '@/lib/store/productsStore'
