@@ -1,9 +1,8 @@
 import React from 'react'
-import LogOutButton from './LogOutButton'
 import Logo from './Logo'
 import SearchBar from './SearchBar'
 import GroceryListButton from './GroceryListButton'
-import CategoryTabs from './CategoryTabs'
+import ProductCategoryTabs from '../component/ProductCategoryTab/ProductCategoryTabs'
 
 type NavLink = {
     title: string
@@ -34,7 +33,7 @@ function CashierNavbar() {
                 </div>
             </section>
             <section className='w-fit sm:w-full h-1/2 pl-7 flex items-end sm:items-center'>
-                <CategoryTabs />
+                <ProductCategoryTabs />
             </section>
         </header>
 

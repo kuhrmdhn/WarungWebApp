@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import ProvidersOfChakra from "./chakraProvider";
 import ProviderOfSession from "./sessionProvider";
+import Footer from "./ui/elements/Footer";
 
 export const metadata: Metadata = {
   title: "Warung Web",
@@ -19,6 +20,7 @@ export default function RootLayout({
         <ProviderOfSession>
           <ProvidersOfChakra>{children}</ProvidersOfChakra>
         </ProviderOfSession>
+        <Footer />
       </body>
     </html>
   );

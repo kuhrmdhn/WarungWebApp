@@ -4,12 +4,10 @@ import Summary from './dashboard/Summary'
 import PageTitle from '../ui/elements/PageTitle'
 import SalesReport from './dashboard/SalesReport'
 import { ownerRouter } from '@/lib/database/ownerRouter'
-import { OwnerStore } from '@/lib/store/ownerStore'
 
 export default function OwnerDashboard() {
   useEffect(() => {
     ownerRouter.getOwnerData()
-    console.log(OwnerStore.getState().ownerData)
   }, [])
 
   return (
