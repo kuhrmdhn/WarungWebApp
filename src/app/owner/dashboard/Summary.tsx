@@ -1,42 +1,36 @@
 "use client"
-import DashboardCard from '@/app/ui/elements/DashboardCard'
 import { OwnerStore } from '@/lib/store/ownerStore'
 import { ProductsStore } from '@/lib/store/productsStore'
 import { FormatRupiah } from '@arismun/format-rupiah'
-import React, { ReactNode } from 'react'
+import React from 'react'
 import { RestaurantMenu, AttachMoney, Sell, Category } from '@mui/icons-material';
 import PageTitle from '@/app/ui/elements/PageTitle'
-import FadeInUp from '@/app/ui/framer-motion/FadeInUp'
-
-type CardData = {
-    heading: string | ReactNode
-    icon: ReactNode
-    description: string
-}
+import { SummaryItem } from '@/types/SummaryItemInterface'
+import SummaryCardList from '@/app/ui/component/SummaryCardList/SummaryCardList'
 
 export default function Summary() {
     const { products } = ProductsStore()
     const { ownerData } = OwnerStore()
 
-    const cardData: CardData[] = [
+    const summaryData: SummaryItem[] = [
         {
             heading: `${products.length}`,
-            icon: <RestaurantMenu className="text-owner-purple text-base" />,
+            icon: <RestaurantMenu className="text-owner-purple text-lg" />,
             description: "Total Provides Menu",
         },
         {
             heading: <FormatRupiah value={ownerData?.income} />,
-            icon: <AttachMoney className="text-owner-purple text-base" />,
+            icon: <AttachMoney className="text-owner-purple text-lg" />,
             description: "Total Current Income",
         },
         {
             heading: `${ownerData?.sale}`,
-            icon: <Sell className="text-owner-purple text-base" />,
+            icon: <Sell className="text-owner-purple text-lg" />,
             description: "Total Sold Menu",
         },
         {
             heading: `${ownerData?.categories}`,
-            icon: <Category className="text-owner-purple text-base" />,
+            icon: <Category className="text-owner-purple text-lg" />,
             description: "Menu Categories"
         }
     ]
@@ -46,20 +40,7 @@ export default function Summary() {
             <PageTitle>
                 <PageTitle.SubTitle text='Summary' />
             </PageTitle>
-            <div className="flex justify-evenly sm:justify-start flex-wrap gap-2 sm:gap-5">
-                {
-                    cardData.map((card: CardData, index: number) => (
-                        <FadeInUp key={index} delay={index * 0.1}>
-                            <DashboardCard
-                                heading={card.heading}
-                                icon={card.icon}
-                                description={card.description}
-                                className='shadow-md shadow-gray-500 hover:shadow-lg hover:shadow-owner-purple duration-300'
-                            />
-                        </FadeInUp>
-                    ))
-                }
-            </div>
+            <SummaryCardList summaryData={summaryData} />
         </section>
     )
 }

@@ -52,9 +52,27 @@ export default function LoginPage() {
         push('/owner')
       } else if (session?.user.role === "CASHIER") {
         push('/cashier')
+      } else {
+        setPending(false)
+        toast({
+          title: "Failed Login, check out your username and password correct",
+          colorScheme: "red",
+          icon: <Error />,
+          duration: 3000,
+          position: "top-right"
+        })
+        return
       }
-    } else {
-      console.error('Failed to sign in')
+    } else if (res && res.error) {
+      setPending(false)
+      toast({
+        title: "Failed Login",
+        colorScheme: "red",
+        icon: <Error />,
+        duration: 3000,
+        position: "top-right"
+      })
+      return
     }
   }
 
@@ -66,7 +84,7 @@ export default function LoginPage() {
   }
 
   return (
-    <section className="h-[100svh] w-full flex justify-center lg:justify-end items-center bg-[url('/login-bg.webp')] bg-cover bg-fixed bg-no-repeat bg-right-bottom">
+    <section className="h-[100svh] w-full flex justify-center lg:justify-end items-center bg-[url('/login-bg.webp')] bg-cover bg-no-repeat bg-right">
       <form className="w-full sm:w-2/3 lg:w-1/3 h-full rounded-md flex justify-center items-start flex-col gap-3 px-9 lg:px-4 lg:mr-7 text-white">
         <div className="h-1/5">
           <h1 className="text-4xl">Welcome Back!</h1>

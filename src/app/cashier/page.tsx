@@ -1,6 +1,6 @@
 "use client"
 import React, { Suspense, useCallback, useEffect } from 'react'
-import ProductsList from '../ui/components/ProductsList'
+import ProductsList from '../ui/component/ProductList/ProductsList'
 import GroceryList from './components/GroceryList'
 import { getSession } from 'next-auth/react'
 import { UserStore } from '@/lib/store/userStore'
@@ -30,7 +30,9 @@ export default function Cashier() {
         <NavigationBar>
           <NavigationBar.CashierNavbar />
         </NavigationBar>
-        <ProductsList isOwner={false} />
+        <Suspense fallback={<h1>loading...</h1>}>
+          <ProductsList isOwner={false} />
+        </Suspense>
         <GroceryList />
       </main>
     </Suspense>

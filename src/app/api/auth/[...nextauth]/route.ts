@@ -16,28 +16,29 @@ const authOptions: NextAuthOptions = {
                 password: { label: "Password", type: "password", placeholder: "******" }
             },
             async authorize(credentials): Promise<any> {
-                const { username, password } = credentials as { username: string, password: string }
-                const user = await userRouter.getUser(username, password)
-                if (user) {
+                try {
+                    const { username, password } = credentials as { username: string, password: string }
+                    const user = await userRouter.getUser(username, password)
                     return user
-                } else {
+                } catch(error) {
+                    console.error("Authorize error, ", error)
                     return null
                 }
-            },
+        },
         })
     ],
-    callbacks: {
-        async jwt(params: JWTtypes): Promise<any> {
-            const { token, user } = params;
-            if (user) {
-                token.id = user.id
-                token.username = user.username
-                token.role = user.role
-            }            
+callbacks: {
+        async jwt(params: JWTtypes): Promise < any > {
+        const { token, user } = params;
+        if(user) {
+            token.id = user.id
+            token.username = user.username
+            token.role = user.role
+        }
             return token
-        },
-        async session({ session, token }: { session: any, token: JWT }): Promise<any> {
-            if (token) {
+    },
+        async session({ session, token }: { session: any, token: JWT }): Promise < any > {
+            if(token) {
                 session.user.id = token.id
                 session.user.name = token.username
                 session.user.role = token.role
@@ -45,14 +46,14 @@ const authOptions: NextAuthOptions = {
             return session
         },
     },
-    pages: {
-        signIn: "/login"
-    },
-    session: {
-        strategy: 'jwt',
-        maxAge: 30 * 24 * 60 * 60,
-        updateAge: 24 * 60 * 60
-    },
+pages: {
+    signIn: "/login"
+},
+session: {
+    strategy: 'jwt',
+        maxAge: 7 * 24 * 60 * 60,
+            updateAge: 24 * 60 * 60
+},
 }
 
 
