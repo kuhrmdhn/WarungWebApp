@@ -2,7 +2,7 @@ import React from 'react'
 import { motion } from "framer-motion"
 
 type ToggleMenuProps = {
-    toggleMenu: () => void
+    toggleMenu: (e: React.MouseEvent) => void
     menuOpen: boolean
     className?: string
 }
@@ -21,7 +21,7 @@ const Path = (props: any) => {
 
 export default function ToggleButton({ toggleMenu, menuOpen, className }: ToggleMenuProps) {
     return (
-        <button onClick={toggleMenu} className={`left-5 top-5 z-50 fixed ${className}`}>
+        <button onClick={toggleMenu} className={`left-5 top-5 z-50 fixed ${className} toggle-button`}>
             <svg width="23" height="23" viewBox="0 0 23 23">
                 <Path
                     animate={menuOpen ? 'open' : 'closed'}

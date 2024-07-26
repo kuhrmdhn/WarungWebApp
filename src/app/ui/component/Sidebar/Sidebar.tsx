@@ -35,27 +35,30 @@ const navLink = [
 
 export default function Sidebar() {
     const [sidebarOpen, setSidebarOpen] = useState(false)
-    function handleSidebar() {
+    const handleSidebarToggle = (e: React.MouseEvent) => {
+        e.stopPropagation()
         setSidebarOpen(state => !state)
     }
 
-    const handleBodyClick = useCallback(() => {
-        if (sidebarOpen) {
-            setSidebarOpen(false);
+    const handleBodyClick = useCallback((e: MouseEvent) => {
+        const target = e.target as HTMLElement
+        if (!target.closest('.toggle-button')) {
+            setSidebarOpen(false)
         }
-    }, [sidebarOpen])
+    }, [])
 
     useEffect(() => {
-        document.body.addEventListener('click', handleBodyClick);
+        const body = document.body
+        body.addEventListener('click', handleBodyClick)
         return () => {
-            document.body.removeEventListener('click', handleBodyClick);
+            body.removeEventListener('click', handleBodyClick)
         }
-    }, [sidebarOpen, handleBodyClick])
+    }, [handleBodyClick])
 
     return (
         <header className="h-24 w-full z-50 fixed bg-white flex justify-center items-center">
             <ToggleButton
-                toggleMenu={handleSidebar}
+                toggleMenu={handleSidebarToggle}
                 menuOpen={sidebarOpen}
             />
             <Logo>
