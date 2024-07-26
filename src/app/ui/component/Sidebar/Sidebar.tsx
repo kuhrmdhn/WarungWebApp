@@ -35,7 +35,6 @@ const navLink = [
 
 export default function Sidebar() {
     const [sidebarOpen, setSidebarOpen] = useState(false)
-
     const handleSidebarToggle = (e: React.MouseEvent) => {
         e.stopPropagation()
         setSidebarOpen(state => !state)
