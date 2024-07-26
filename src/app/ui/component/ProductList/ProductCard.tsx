@@ -7,7 +7,7 @@ import { AlertCircle, Check } from 'react-feather'
 import { GroceryStore } from '@/lib/store/groceryStore'
 import { ProductsStore } from '@/lib/store/productsStore'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { Brush, RestartAlt } from '@mui/icons-material'
+import { Brush, RestartAlt, Warning } from '@mui/icons-material'
 import { UserStore } from '@/lib/store/userStore'
 import { groceryRouter } from '@/lib/database/groceryRouter'
 import { GroceryProduct } from '@/types/groceryInterface'
@@ -64,8 +64,19 @@ function CashierProductCard({ productData, className }: cardProps) {
         if (groceryProductIndex === -1) {
             groceryRouter.addNewUserGrocery(username, { ...productData, quantity: 1 })
         } else {
-            const productIndexItemData = { ...groceryList[groceryProductIndex], quantity: groceryList[groceryProductIndex].quantity + 1 }
-            groceryRouter.updateUserGroceryItem(username, productIndexItemData)
+            if (groceryList[groceryProductIndex].quantity === productData.stock) {
+                toast({
+                    title: "Max quantity!",
+                    status: "warning",
+                    duration: 1500,
+                    icon: <Warning />,
+                    position: "top"
+                })
+                return
+            } else {
+                const productIndexItemData = { ...groceryList[groceryProductIndex], quantity: groceryList[groceryProductIndex].quantity + 1 }
+                groceryRouter.updateUserGroceryItem(username, productIndexItemData)
+            }
         }
         toast({
             title: "Added to Order List!",
