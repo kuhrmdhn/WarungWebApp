@@ -4,11 +4,15 @@ import Summary from './dashboard/Summary'
 import PageTitle from '../ui/elements/PageTitle'
 import SalesReport from './dashboard/SalesReport'
 import { ownerRouter } from '@/lib/database/ownerRouter'
-import { OwnerStore } from '@/lib/store/ownerStore'
+import { productRouter } from '@/lib/database/productRouter'
 
 export default function OwnerDashboard() {
+  const { getOwnerData } = ownerRouter
+  const { getProducts } = productRouter
+
   useEffect(() => {
-    ownerRouter.getOwnerData()
+    getOwnerData()
+    getProducts()
   }, [])
 
   return (
