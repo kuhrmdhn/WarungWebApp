@@ -3,9 +3,9 @@ import { Button, Card, CardBody, CardFooter, Table, Tbody, Td, Tr, useToast } fr
 import React from 'react'
 import ProductCardImage from './ProductCardImage'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { ProductsStore } from '@/lib/store/productsStore'
 import { AlertCircle, Check } from 'react-feather'
 import { Brush, RestartAlt } from '@mui/icons-material'
+import { productRouter } from '@/lib/database/productRouter'
 
 export default function OwnerProductCard({ productData }: { productData: Product }) {
     const { name, price, status, stock, sold } = productData
@@ -14,7 +14,7 @@ export default function OwnerProductCard({ productData }: { productData: Product
     const router = useRouter()
     const pathname = usePathname()
     const query = new URLSearchParams(searchParams)
-    const { updateProduct } = ProductsStore()
+    const { updateProductData } = productRouter
     const { id } = productData
 
     const resetSoldProduct = () => {
@@ -29,7 +29,7 @@ export default function OwnerProductCard({ productData }: { productData: Product
             return
         }
         const data = { ...productData, sold: 0 }
-        updateProduct(id, data)
+        updateProductData(id, data)
         toast({
             title: `Success Reset ${data.name} Sold Data!`,
             status: "success",
