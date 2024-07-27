@@ -1,12 +1,11 @@
 "use client"
 import PageTitle from '@/app/ui/elements/PageTitle'
-import ProductCard from '@/app/ui/component/ProductList/ProductCard'
 import { Product, ProductCategory } from '@/types/productInterface'
-import { ProductsStore } from '@/lib/store/productsStore'
 import { Button, FormControl, FormLabel, Input, Select } from '@chakra-ui/react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import React, { useState } from 'react'
 import { productRouter } from '@/lib/database/productRouter'
+import OwnerProductCard from '@/app/ui/component/ProductList/OwnerProductCard'
 
 export default function NewProductForm() {
     const router = useRouter()
@@ -167,14 +166,10 @@ export default function NewProductForm() {
                     Submit
                 </Button>
             </form>
-            <ProductCard>
                 <PageTitle>
                     <PageTitle.SubTitle text='Preview' />
                 </PageTitle>
-                <ProductCard.OwnerProductCard
-                    productData={formState}
-                />
-            </ProductCard>
+                <OwnerProductCard productData={formState} />
         </div>
     )
 
