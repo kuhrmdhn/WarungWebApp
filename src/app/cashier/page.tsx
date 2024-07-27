@@ -27,10 +27,8 @@ export default function Cashier() {
   return (
     <Suspense fallback={<h1>loading...</h1>}>
       <main className='bg-gray-300'>
-          <Navbar />
-        <Suspense fallback={<h1>loading...</h1>}>
-          <ProductsList isOwner={false} />
-        </Suspense>
+        <Navbar />
+        <ProductsList isOwner={false} />
         <GroceryList />
       </main>
     </Suspense>

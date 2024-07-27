@@ -34,14 +34,14 @@ function EditProductFormContent() {
       return router.replace("/owner/all-products")
     }
     productRouter.getProductById(id)
-  }, [id])
+  }, [id, router])
 
   useEffect(() => {
     if (id) {
       setFormState(productById)
       setPageTitle(`Edit Product | ${productById.name}`)
     }
-  }, [productById, id])
+  }, [productById, id, setPageTitle])
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const value = e.target.value

@@ -9,7 +9,6 @@ export const ownerRouter = {
             return error.message
         }
         OwnerStore.setState({ ownerData })
-        console.log({ownerData})
         return ownerData
     },
     async updateOwnerData(newOwnerData: UpdatedOwnerData) {
