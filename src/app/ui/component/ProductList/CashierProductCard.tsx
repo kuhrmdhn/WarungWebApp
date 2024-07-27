@@ -14,13 +14,14 @@ export default function CashierProductCard({ productData }: { productData: Produ
     const toast = useToast()
     const { username } = UserStore()
     const { groceryList } = GroceryStore()
-    const { addNewUserGrocery } = groceryRouter
 
     const addProductToGrocery = (e: React.MouseEvent<HTMLButtonElement>) => {
+        console.log("add to grocery")
         e.preventDefault()
         const groceryProductIndex = groceryList.findIndex((groceryItem: GroceryProduct) => groceryItem.id === productData.id)
         if (groceryProductIndex === -1) {
-            addNewUserGrocery(username, { ...productData, quantity: 1 })
+            groceryRouter.addNewUserGrocery(username, { ...productData, quantity: 1 })
+            console.log("add new grocery")
         } else {
             if (groceryList[groceryProductIndex].quantity === productData.stock) {
                 toast({
@@ -30,10 +31,12 @@ export default function CashierProductCard({ productData }: { productData: Produ
                     icon: <Warning />,
                     position: "top"
                 })
+                console.log("max qty")
                 return
             } else {
                 const productIndexItemData = { ...groceryList[groceryProductIndex], quantity: groceryList[groceryProductIndex].quantity + 1 }
                 groceryRouter.updateUserGroceryItem(username, productIndexItemData)
+                console.log("updated grocery")
             }
         }
         toast({
@@ -59,7 +62,7 @@ export default function CashierProductCard({ productData }: { productData: Produ
             <CardFooter className='w-full h-fit flex justify-center items-center'>
                 <Button
                     disabled={invalidMenu}
-                    onClick={(e) => !invalidMenu && addProductToGrocery(e)}
+                    onClick={(e) => invalidMenu == false && addProductToGrocery(e)}
                     aria-label={invalidMenu ? "Sold Out Product Button" : "Add To Grocery Button"}
                     backgroundColor={"#000"}
                     color={"#fff"}
