@@ -2,13 +2,13 @@
 import PageTitle from '@/app/ui/elements/PageTitle'
 import React, { Suspense, useEffect, useRef, useState } from 'react'
 import MovePageButton from '@/app/ui/elements/MovePageButton'
-import ProductCard from '@/app/ui/component/ProductList/ProductCard'
 import { Product } from '@/types/productInterface'
 import { PageStore } from '@/lib/store/pageStore'
 import { ProductsStore } from '@/lib/store/productsStore'
 import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, FormControl, FormLabel, Input, InputGroup, Select, useDisclosure, useToast } from '@chakra-ui/react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { productRouter } from '@/lib/database/productRouter'
+import OwnerProductCard from '@/app/ui/component/ProductList/OwnerProductCard'
 
 function EditProductFormContent() {
   const router = useRouter()
@@ -176,12 +176,10 @@ function EditProductFormContent() {
             <Button colorScheme='green' onClick={(e) => submitForm(e)} type='submit'>Submit</Button>
           </div>
         </form>
-        <ProductCard>
-          <PageTitle className='mb-5'>
-            <PageTitle.SubTitle text='Preview' />
-          </PageTitle>
-          <ProductCard.OwnerProductCard productData={formState} className="w-[75%] mx-auto lg:m-0" />
-        </ProductCard>
+        <PageTitle className='mb-5'>
+          <PageTitle.SubTitle text='Preview' />
+        </PageTitle>
+        <OwnerProductCard productData={formState} />
       </div>
       <AlertDialog
         isOpen={isOpen}
