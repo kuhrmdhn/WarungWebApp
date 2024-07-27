@@ -1,5 +1,4 @@
 "use client"
-import GroceryCard from '@/app/ui/elements/GroceryCard'
 import { GroceryProduct } from '@/types/groceryInterface'
 import { GroceryStore } from '@/lib/store/groceryStore'
 import { OwnerStore } from '@/lib/store/ownerStore'
@@ -12,6 +11,7 @@ import { productRouter } from '@/lib/database/productRouter'
 import { ownerRouter } from '@/lib/database/ownerRouter'
 import { getSession } from 'next-auth/react'
 import { Session } from '@/types/token'
+import GroceryCard from './GroceryCard'
 
 export default function GroceryList() {
   const { ownerData } = OwnerStore()

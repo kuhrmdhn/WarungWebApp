@@ -1,6 +1,6 @@
 "use client"
 import PageTitle from '@/app/ui/elements/PageTitle'
-import ProductCard from '@/app/ui/elements/ProductCard'
+import ProductCard from '@/app/ui/component/ProductList/ProductCard'
 import { Product, ProductCategory } from '@/types/productInterface'
 import { ProductsStore } from '@/lib/store/productsStore'
 import { Button, FormControl, FormLabel, Input, Select } from '@chakra-ui/react'

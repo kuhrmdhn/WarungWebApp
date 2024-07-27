@@ -9,7 +9,6 @@ import { OwnerStore } from '@/lib/store/ownerStore'
 export default function OwnerDashboard() {
   useEffect(() => {
     ownerRouter.getOwnerData()
-    console.log(OwnerStore.getState().ownerData)
   }, [])
 
   return (

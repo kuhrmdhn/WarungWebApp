@@ -1,12 +1,12 @@
 "use client"
 import React from 'react';
-import OwnerSidebar from '../ui/components/OwnerSidebar';
+import Sidebar from '../ui/component/NavigationBar/Sidebar';
 
 const AboutLayout = ({ children }: { children: React.ReactNode }) => {
     return (
         <main>
-            <OwnerSidebar />
-            <section>{children}</section>
+            <Sidebar />
+            <section className='pt-24'>{children}</section>
         </main>
     );
 };

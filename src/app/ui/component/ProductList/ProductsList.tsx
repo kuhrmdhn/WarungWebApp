@@ -1,10 +1,11 @@
 "use client"
-import ProductCard from '@/app/ui/elements/ProductCard'
 import ScrollTopButton from '@/app/ui/elements/ScrollTopButton'
 import { Product } from '@/types/productInterface'
 import { ProductsStore } from '@/lib/store/productsStore'
 import React from 'react'
-import FadeInUp from '../framer-motion/FadeInUp'
+import FadeInUp from '../../framer-motion/FadeInUp'
+import CashierProductCard from './CashierProductCard'
+import OwnerProductCard from './OwnerProductCard'
 
 type productListProps = {
     isOwner: boolean
@@ -21,13 +22,9 @@ export default function ProductsList({ isOwner }: productListProps) {
                     <FadeInUp key={index} delay={index * 0.1}>
                         {
                             isOwner ?
-                                <ProductCard.OwnerProductCard productData={product}>
-                                    <ProductCard.OwnerCardFooter productData={product} />
-                                </ProductCard.OwnerProductCard>
+                                <OwnerProductCard productData={product} />
                                 :
-                                <ProductCard.CashierProductCard
-                                    productData={product}
-                                />
+                                <CashierProductCard productData={product} />
                         }
                     </FadeInUp>
                 ))

@@ -16,7 +16,7 @@ function Title({ children, className }: { children: React.ReactNode, className?:
 function SubTitle({ text, className }: { text: string, className?: string }) {
     return (
         <div className={`${className} text-black text-sm sm:text-lg font-semibold flex gap-1 items-center`}>
-            <ArrowRightIcon className='text-purple-500' />
+            <ArrowRightIcon className='text-primary-blue' />
             <h3>{text}</h3>
         </div>
     )

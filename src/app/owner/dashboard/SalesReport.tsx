@@ -24,7 +24,7 @@ export default function SalesReport() {
         datasets: [{
             label: "Sales",
             data: products.map((product: Product) => product.sold),
-            borderColor: "#6147DB"
+            borderColor: "#56B9F1"
         }]
     }
     const categoryData = {
@@ -32,7 +32,7 @@ export default function SalesReport() {
         datasets: [{
             label: "Total Menu",
             data: [foodMenuCategory, drinkMenuCategory, snackMenuCategory],
-            backgroundColor: ["#6147DB", "#F86767", "#14BF97"],
+            backgroundColor: ["#56B9F1", "#F86767", "#14BF97"],
         }]
     }
 
