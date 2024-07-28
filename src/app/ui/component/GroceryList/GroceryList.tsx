@@ -1,5 +1,4 @@
 "use client"
-import GroceryCard from '@/app/ui/elements/GroceryCard'
 import { GroceryProduct } from '@/types/groceryInterface'
 import { GroceryStore } from '@/lib/store/groceryStore'
 import { OwnerStore } from '@/lib/store/ownerStore'
@@ -12,11 +11,13 @@ import { productRouter } from '@/lib/database/productRouter'
 import { ownerRouter } from '@/lib/database/ownerRouter'
 import { getSession } from 'next-auth/react'
 import { Session } from '@/types/token'
+import GroceryCard from './GroceryCard'
+import { orderListRouter } from '@/lib/database/orderListRouter'
 
 export default function GroceryList() {
   const { ownerData } = OwnerStore()
   const { username } = UserStore()
-  const { groceryList, groceryListOpen, setGroceryListOpen, removeGrocery } = GroceryStore()
+  const { groceryList, groceryListOpen, setGroceryListOpen } = GroceryStore()
   const totalGroceryPrice = groceryList.map((grocery: GroceryProduct) => grocery.price * grocery.quantity).reduce((acc: number, prev: number) => acc + prev, 0)
   const totalGroceryQuantity = groceryList.map((grocery: GroceryProduct) => grocery.quantity).reduce((acc: number, prev: number) => acc + prev, 0)
   const toast = useToast()
@@ -25,7 +26,7 @@ export default function GroceryList() {
     setGroceryListOpen(false)
   }
   const payGrocery = async () => {
-    groceryList.map((grocery: GroceryProduct) => {
+    for (let grocery of groceryList) {
       let productStatus = true
       if (grocery.stock - grocery.quantity == 0) {
         productStatus = false
@@ -36,9 +37,9 @@ export default function GroceryList() {
         sold: grocery.sold + grocery.quantity,
         category: grocery.category
       }
-      groceryRouter.deleteUserGroceryItem(username, grocery.id)
-      productRouter.updateProductData(grocery.id, newProductData)
-    })
+      await groceryRouter.deleteUserGroceryItem(username, grocery.id)
+      await productRouter.updateProductData(grocery.id, newProductData)
+    }
     const session: Session | null = await getSession() as Session | null
     const userRole = session?.user.role
     if (userRole === "CASHIER" || userRole === "OWNER") {
@@ -48,6 +49,7 @@ export default function GroceryList() {
       }
       ownerRouter.updateOwnerData(newOwnerData)
     }
+    orderListRouter.addNewOrderList(groceryList)
     toast({
       title: "Payment Success",
       duration: 1500,

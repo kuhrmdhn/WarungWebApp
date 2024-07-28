@@ -1,6 +1,6 @@
 "use client"
 import React from 'react';
-import Sidebar from '../ui/component/Sidebar/Sidebar';
+import Sidebar from '../ui/component/NavigationBar/Sidebar';
 
 const AboutLayout = ({ children }: { children: React.ReactNode }) => {
     return (

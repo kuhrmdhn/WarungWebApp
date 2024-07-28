@@ -2,13 +2,14 @@
 import PageTitle from '@/app/ui/elements/PageTitle'
 import React, { Suspense, useEffect, useRef, useState } from 'react'
 import MovePageButton from '@/app/ui/elements/MovePageButton'
-import ProductCard from '@/app/ui/component/ProductList/ProductCard'
 import { Product } from '@/types/productInterface'
 import { PageStore } from '@/lib/store/pageStore'
 import { ProductsStore } from '@/lib/store/productsStore'
 import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, FormControl, FormLabel, Input, InputGroup, Select, useDisclosure, useToast } from '@chakra-ui/react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { productRouter } from '@/lib/database/productRouter'
+import OwnerProductCard from '@/app/ui/component/ProductList/OwnerProductCard'
+import Loading from '@/app/loading'
 
 function EditProductFormContent() {
   const router = useRouter()
@@ -34,14 +35,14 @@ function EditProductFormContent() {
       return router.replace("/owner/all-products")
     }
     productRouter.getProductById(id)
-  }, [id])
+  }, [id, router])
 
   useEffect(() => {
     if (id) {
       setFormState(productById)
       setPageTitle(`Edit Product | ${productById.name}`)
     }
-  }, [productById, id])
+  }, [productById, id, setPageTitle])
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const value = e.target.value
@@ -176,12 +177,12 @@ function EditProductFormContent() {
             <Button colorScheme='green' onClick={(e) => submitForm(e)} type='submit'>Submit</Button>
           </div>
         </form>
-        <ProductCard>
+        <div className="flex flex-col">
           <PageTitle className='mb-5'>
             <PageTitle.SubTitle text='Preview' />
           </PageTitle>
-          <ProductCard.OwnerProductCard productData={formState} className="w-[75%] mx-auto lg:m-0" />
-        </ProductCard>
+          <OwnerProductCard productData={formState} isPreviewCard={true} />
+        </div>
       </div>
       <AlertDialog
         isOpen={isOpen}
@@ -213,7 +214,7 @@ function EditProductFormContent() {
 
 export default function EditProductForm() {
   return (
-    <Suspense fallback={<h1>Loading...</h1>}>
+    <Suspense fallback={<Loading />}>
       <EditProductFormContent />
     </Suspense>
   )
