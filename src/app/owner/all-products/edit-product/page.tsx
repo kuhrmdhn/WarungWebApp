@@ -10,6 +10,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { productRouter } from '@/lib/database/productRouter'
 import OwnerProductCard from '@/app/ui/component/ProductList/OwnerProductCard'
 import Loading from '@/app/loading'
+import { bucketRouter } from '@/lib/database/bucketRouter'
 
 function EditProductFormContent() {
   const router = useRouter()
@@ -17,6 +18,7 @@ function EditProductFormContent() {
   const { setPageTitle } = PageStore()
   const { productById } = ProductsStore()
   const [formState, setFormState] = useState<Product>(productById)
+  const [productImageFile, setProductImageFile] = useState<File>()
   const query = new URLSearchParams(searchParams)
   const id = Number(query.get("productId")?.toString())
   const toast = useToast()
@@ -50,9 +52,20 @@ function EditProductFormContent() {
     setFormState((prevValue) => ({ ...prevValue, [name]: value }))
   }
 
-  const submitForm = (e: React.FormEvent<HTMLButtonElement> | React.FormEvent<HTMLFormElement>) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setProductImageFile(e.target.files[0]);
+    }
+  };
+
+  const submitForm = async (e: React.FormEvent<HTMLButtonElement> | React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    productRouter.updateProductData(formState.id, JSON.parse(JSON.stringify(formState)))
+    if (productImageFile) {
+      const publicUrl = await bucketRouter.uploadFile(productImageFile)
+      productRouter.updateProductData(formState.id, JSON.parse(JSON.stringify({ ...formState, image: publicUrl })))
+    } else {
+      productRouter.updateProductData(formState.id, JSON.parse(JSON.stringify(formState)))
+    }
     toast({ title: "Update!" })
     router.back()
   }
@@ -73,11 +86,6 @@ function EditProductFormContent() {
       name: "price",
       value: formState.price,
       type: "number"
-    },
-    {
-      name: "image",
-      value: formState.image,
-      type: "text"
     },
     {
       name: "stock",
@@ -158,6 +166,10 @@ function EditProductFormContent() {
               </InputGroup>
             ))
           }
+          <Input
+            type="file"
+            onChange={(e) => handleFileChange(e)}
+          />
           {
             selectFormData.map((select, index) => (
               <FormControl key={index} className="flex gap-10 mb-3">
