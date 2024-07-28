@@ -7,7 +7,7 @@ import { AlertCircle, Check } from 'react-feather'
 import { Brush, RestartAlt } from '@mui/icons-material'
 import { productRouter } from '@/lib/database/productRouter'
 
-export default function OwnerProductCard({ productData }: { productData: Product }) {
+export default function OwnerProductCard({ productData, isPreviewCard = false }: { productData: Product, isPreviewCard?: boolean }) {
     const { name, price, status, stock, sold } = productData
     const searchParams = useSearchParams()
     const toast = useToast()
@@ -105,22 +105,25 @@ export default function OwnerProductCard({ productData }: { productData: Product
                     </Table>
                 </div>
             </CardBody>
-            <CardFooter className="w-full flex justify-end items-center gap-3 h-1/6">
-                {
-                    buttonData.map((button, index: number) => (
-                        <Button
-                            key={index}
-                            onClick={button.onClick}
-                            aria-label={button.ariaLabel}
-                            title={button.title}
-                            colorScheme={button.colorScheme}
-                            className="h-6 lg:h-10 w-6 lg:w-16"
-                        >
-                            {button.children}
-                        </Button>
-                    ))
-                }
-            </CardFooter>
+            {
+                !isPreviewCard &&
+                <CardFooter className="w-full flex justify-end items-center gap-3 h-1/6">
+                    {
+                        buttonData.map((button, index: number) => (
+                            <Button
+                                key={index}
+                                onClick={button.onClick}
+                                aria-label={button.ariaLabel}
+                                title={button.title}
+                                colorScheme={button.colorScheme}
+                                className="h-6 lg:h-10 w-6 lg:w-16"
+                            >
+                                {button.children}
+                            </Button>
+                        ))
+                    }
+                </CardFooter>
+            }
         </Card>
     )
 }

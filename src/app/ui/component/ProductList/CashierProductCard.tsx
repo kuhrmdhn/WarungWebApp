@@ -64,8 +64,6 @@ export default function CashierProductCard({ productData }: { productData: Produ
                     disabled={invalidMenu}
                     onClick={(e) => invalidMenu == false && addProductToGrocery(e)}
                     aria-label={invalidMenu ? "Sold Out Product Button" : "Add To Grocery Button"}
-                    backgroundColor={"#000"}
-                    color={"#fff"}
                     transitionDuration={"300ms"}
                     fontSize={"0.8em"}
                     className={`w-2/3 sm:w-5/6 h-12 flex gap-5 text-sm ${invalidMenu ? "bg-gray-300 text-black cursor-not-allowed" : "bg-black text-white hover:bg-gray-300 hover:text-black cursor-pointer"} rounded-md `}

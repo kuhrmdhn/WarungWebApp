@@ -29,7 +29,7 @@ const contactList: NavigationItem[] = [
 
 export default function Footer() {
     return (
-        <footer className="w-full h-32 flex flex-col justify-center items-center gap-5">
+        <footer className="w-full h-32 flex flex-col justify-center items-center gap-5 mt-7">
             <h1>Get In Touch</h1>
             <div className="flex items-center gap-5">
                 {
