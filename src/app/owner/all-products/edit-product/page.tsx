@@ -9,6 +9,7 @@ import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, Al
 import { useRouter, useSearchParams } from 'next/navigation'
 import { productRouter } from '@/lib/database/productRouter'
 import OwnerProductCard from '@/app/ui/component/ProductList/OwnerProductCard'
+import Loading from '@/app/loading'
 
 function EditProductFormContent() {
   const router = useRouter()
@@ -176,10 +177,12 @@ function EditProductFormContent() {
             <Button colorScheme='green' onClick={(e) => submitForm(e)} type='submit'>Submit</Button>
           </div>
         </form>
-        <PageTitle className='mb-5'>
-          <PageTitle.SubTitle text='Preview' />
-        </PageTitle>
-        <OwnerProductCard productData={formState} />
+        <div className="flex flex-col">
+          <PageTitle className='mb-5'>
+            <PageTitle.SubTitle text='Preview' />
+          </PageTitle>
+          <OwnerProductCard productData={formState} isPreviewCard={true} />
+        </div>
       </div>
       <AlertDialog
         isOpen={isOpen}
@@ -211,7 +214,7 @@ function EditProductFormContent() {
 
 export default function EditProductForm() {
   return (
-    <Suspense fallback={<h1>Loading...</h1>}>
+    <Suspense fallback={<Loading />}>
       <EditProductFormContent />
     </Suspense>
   )
