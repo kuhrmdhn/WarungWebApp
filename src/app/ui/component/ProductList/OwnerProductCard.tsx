@@ -3,18 +3,18 @@ import { Button, Card, CardBody, CardFooter, Table, Tbody, Td, Tr, useToast } fr
 import React from 'react'
 import ProductCardImage from './ProductCardImage'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { ProductsStore } from '@/lib/store/productsStore'
 import { AlertCircle, Check } from 'react-feather'
 import { Brush, RestartAlt } from '@mui/icons-material'
+import { productRouter } from '@/lib/database/productRouter'
 
-export default function OwnerProductCard({ productData }: { productData: Product }) {
+export default function OwnerProductCard({ productData, isPreviewCard = false }: { productData: Product, isPreviewCard?: boolean }) {
     const { name, price, status, stock, sold } = productData
     const searchParams = useSearchParams()
     const toast = useToast()
     const router = useRouter()
     const pathname = usePathname()
     const query = new URLSearchParams(searchParams)
-    const { updateProduct } = ProductsStore()
+    const { updateProductData } = productRouter
     const { id } = productData
 
     const resetSoldProduct = () => {
@@ -29,7 +29,7 @@ export default function OwnerProductCard({ productData }: { productData: Product
             return
         }
         const data = { ...productData, sold: 0 }
-        updateProduct(id, data)
+        updateProductData(id, data)
         toast({
             title: `Success Reset ${data.name} Sold Data!`,
             status: "success",
@@ -105,22 +105,25 @@ export default function OwnerProductCard({ productData }: { productData: Product
                     </Table>
                 </div>
             </CardBody>
-            <CardFooter className="w-full flex justify-end items-center gap-3 h-1/6">
-                {
-                    buttonData.map((button, index: number) => (
-                        <Button
-                            key={index}
-                            onClick={button.onClick}
-                            aria-label={button.ariaLabel}
-                            title={button.title}
-                            colorScheme={button.colorScheme}
-                            className="h-6 lg:h-10 w-6 lg:w-16"
-                        >
-                            {button.children}
-                        </Button>
-                    ))
-                }
-            </CardFooter>
+            {
+                !isPreviewCard &&
+                <CardFooter className="w-full flex justify-end items-center gap-3 h-1/6">
+                    {
+                        buttonData.map((button, index: number) => (
+                            <Button
+                                key={index}
+                                onClick={button.onClick}
+                                aria-label={button.ariaLabel}
+                                title={button.title}
+                                colorScheme={button.colorScheme}
+                                className="h-6 lg:h-10 w-6 lg:w-16"
+                            >
+                                {button.children}
+                            </Button>
+                        ))
+                    }
+                </CardFooter>
+            }
         </Card>
     )
 }

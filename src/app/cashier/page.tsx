@@ -6,6 +6,7 @@ import { getSession } from 'next-auth/react'
 import { UserStore } from '@/lib/store/userStore'
 import { groceryRouter } from '@/lib/database/groceryRouter'
 import Navbar from '../ui/component/NavigationBar/Navbar'
+import Loading from '../loading'
 
 export default function Cashier() {
   const { setUsername } = UserStore()
@@ -25,12 +26,10 @@ export default function Cashier() {
   }, [fetchUserGroceryList]);
 
   return (
-    <Suspense fallback={<h1>loading...</h1>}>
+    <Suspense fallback={<Loading />}>
       <main className='bg-gray-300'>
-          <Navbar />
-        <Suspense fallback={<h1>loading...</h1>}>
-          <ProductsList isOwner={false} />
-        </Suspense>
+        <Navbar />
+        <ProductsList isOwner={false} />
         <GroceryList />
       </main>
     </Suspense>

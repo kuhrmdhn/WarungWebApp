@@ -10,20 +10,18 @@ export const groceryRouter = {
             return "Username is required"
         }
         try {
-            const { data, error } = await supabase.from("users").select().eq("username", username);
+            const { data, error } = await supabase.from("users").select().eq("username", username).single();
             if (error) {
                 return error.message
             }
 
-            const user: User = data[0];
+            const user: User = data;
             if (!user) {
                 return "Can't find user grocery, please checking username or user is available"
             }
-
             const groceryList = user.grocery_list;
             if (groceryList) {
-                GroceryStore.setState({ groceryList })
-                return groceryList
+                return GroceryStore.getState().setGroceryList(groceryList)
             }
         } catch (error) {
             return "Internal server error"
@@ -34,17 +32,18 @@ export const groceryRouter = {
             return "Username or new grocery data is required"
         }
         try {
-            const { error, data: selectedUser } = await supabase.from("users").select().eq("username", username)
-            if (error) {
-                return error.message
+            const { error: undefinedUser, data: selectedUser } = await supabase.from("users").select().eq("username", username)
+            if (undefinedUser) {
+                return undefinedUser.message
             }
             const user: User = selectedUser[0]
             const userGroceryList = user.grocery_list
             const userGrocery = userGroceryList ? [...userGroceryList, groceryData] : [groceryData]
-            await supabase.from("users").update({ grocery_list: userGrocery }).eq("username", username)
-            if (userGroceryList) {
-                return this.getUserGrocery(username)
+            const { error } = await supabase.from("users").update({ grocery_list: userGrocery }).eq("username", username)
+            if (error) {
+                return error
             }
+            this.getUserGrocery(username)
         } catch (error) {
             return error
         }

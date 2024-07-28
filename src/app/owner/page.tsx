@@ -7,9 +7,11 @@ import { ownerRouter } from '@/lib/database/ownerRouter'
 import { OwnerStore } from '@/lib/store/ownerStore'
 
 export default function OwnerDashboard() {
+  const { getOwnerData } = ownerRouter
+
   useEffect(() => {
-    ownerRouter.getOwnerData()
-  }, [])
+    getOwnerData()
+  }, [getOwnerData])
 
   return (
     <section className='bg-white min-h-[87svh] h-max w-full px-2 sm:px-5 pt-3 sm:pt-7'>
