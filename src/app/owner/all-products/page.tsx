@@ -1,8 +1,8 @@
-import ProductsList from '@/app/ui/component/ProductList/ProductsList'
-import SearchBar from '@/app/ui/elements/SearchBar'
 import React, { Suspense } from 'react'
-import ProductCategoryTabs from '@/app/ui/component/ProductCategoryTab/ProductCategoryTabs'
 import Loading from '@/app/loading'
+import SearchBar from '@/app/ui/elements/SearchBar'
+import ProductCategoryTabs from '@/app/ui/component/ProductCategoryTab/ProductCategoryTabs'
+import ProductsList from '@/app/ui/component/ProductList/ProductsList'
 
 export default function AllProducts() {
   return (
