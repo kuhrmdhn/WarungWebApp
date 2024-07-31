@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import ProviderOfSession from "@/config/sessionProvider";
-import ProvidersOfChakra from "@/config/chakraProvider";
 import { Open_Sans } from "next/font/google"
 import Footer from "./ui/elements/Footer";
+import ProviderOfSession from "@/config/sessionProvider";
+import ProvidersOfChakra from "@/config/chakraProvider";
 
 export const metadata: Metadata = {
   title: "Warung Web",
