@@ -38,10 +38,11 @@ export default function EditProduct() {
         let updatedValue: string | number | boolean | File = value
 
         if (type == "file") {
-            if (e.target.files && e.target.files.length > 0) {
-                const previewImageUrl = URL.createObjectURL(e.target.files[0])
+            const inputElement = e.target as HTMLInputElement;
+            if (inputElement.files && inputElement.files.length > 0) {
+                const previewImageUrl = URL.createObjectURL(inputElement.files[0])
                 updatedValue = previewImageUrl
-                setProductImageFile(e.target.files[0])
+                setProductImageFile(inputElement.files[0])
             }
         }
         if (name === "status") {

@@ -9,7 +9,6 @@ import Title from '@/app/ui/component/SectionTitle/Title'
 export default function OwnerDashboard() {
   const { getOwnerData } = ownerRouter
   const { getProducts } = productRouter
-
   useEffect(() => {
     getOwnerData()
     getProducts()
