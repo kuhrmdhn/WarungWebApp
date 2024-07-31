@@ -1,12 +1,12 @@
 "use client"
 import React, { Suspense, useCallback, useEffect } from 'react'
-import ProductsList from '../ui/component/ProductList/ProductsList'
-import GroceryList from '../ui/component/GroceryList/GroceryList'
 import { getSession } from 'next-auth/react'
 import { UserStore } from '@/lib/store/userStore'
 import { groceryRouter } from '@/lib/database/groceryRouter'
-import Navbar from '../ui/component/NavigationBar/Navbar'
 import Loading from '../loading'
+import Navbar from '../ui/component/NavigationBar/Navbar'
+import ProductsList from '../ui/component/ProductList/ProductsList'
+import GroceryList from '../ui/component/GroceryList/GroceryList'
 
 export default function Cashier() {
   const { setUsername } = UserStore()
