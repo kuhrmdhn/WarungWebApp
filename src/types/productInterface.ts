@@ -8,7 +8,7 @@ export interface Product {
     id: number
     name: string
     price: number
-    image: string
+    image: string | File
     status: boolean
     stock: number
     sold: number
