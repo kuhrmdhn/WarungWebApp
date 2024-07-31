@@ -1,11 +1,11 @@
 "use client";
 import { Chart as ChartJS, CategoryScale, LinearScale, Tooltip, PointElement, LineElement, ArcElement } from "chart.js";
-import PageTitle from '@/app/ui/elements/PageTitle'
 import React from 'react'
 import { Line, Pie } from "react-chartjs-2";
 import { ProductsStore } from "@/lib/store/productsStore";
 import { Product } from "@/types/productInterface";
 import { ListItem, Table, Tbody, Td, Tr, UnorderedList } from "@chakra-ui/react";
+import SubTitle from "@/app/ui/component/SectionTitle/Subtitle";
 import FadeInUp from "@/app/ui/framer-motion/FadeInUp";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, ArcElement);
@@ -57,18 +57,14 @@ export default function SalesReport() {
 
     return (
         <section className='mt-7 h-max w-full'>
-            <PageTitle>
-                <PageTitle.SubTitle text='Sales Report' />
-            </PageTitle>
+            <SubTitle text='Sales Report' />
             <div className="h-max xl:h-[80svh] w-full flex flex-col lg:flex-row justify-evenly items-center mt-5 gap-5 lg:gap-0">
                 <FadeInUp className="h-auto lg:h-full w-full lg:w-3/5 flex justify-center items-center rounded-lg p-4 bg-white shadow-md shadow-gray-500">
                     <Line data={productData} />
                 </FadeInUp>
                 <section className="h-max lg:h-full w-full lg:w-1/3 text-black flex flex-col sm:flex-row lg:flex-col justify-between gap-5 lg:gap-0">
                     <FadeInUp className="w-full sm:w-1/2 lg:w-full h-[200px] sm:h-[300px] lg:h-[45%] p-5 rounded-lg bg-white shadow-md shadow-gray-500">
-                        <PageTitle>
-                            <PageTitle.SubTitle text="Status Menu" />
-                        </PageTitle>
+                        <SubTitle text="Status Menu" />
                         <Table>
                             <Tbody>
                                 {
@@ -83,9 +79,7 @@ export default function SalesReport() {
                         </Table>
                     </FadeInUp>
                     <FadeInUp className="w-full sm:w-1/2 lg:w-full h-[200px] sm:h-[300px] lg:h-1/2 pt-5 pb-7 pl-5 rounded-lg bg-white shadow-md shadow-gray-500">
-                        <PageTitle>
-                            <PageTitle.SubTitle text="Category Menu" />
-                        </PageTitle>
+                        <SubTitle text="Category Menu" />
                         <section className="flex w-full h-full justify-around">
                             <Pie data={categoryData} />
                             <UnorderedList className="h-full w-full flex flex-col items-center justify-center text-xs sm:text-base">

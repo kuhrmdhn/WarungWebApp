@@ -9,7 +9,7 @@ export const productRouter = {
             if (error) {
                 return error.message
             }
-            ProductsStore.setState({ products })
+            ProductsStore.getState().setProducts(products)
             return products
         } catch (error) {
             return error

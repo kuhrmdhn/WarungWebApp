@@ -1,17 +1,18 @@
-import PageTitle from '@/app/ui/elements/PageTitle'
 import { Suspense } from 'react'
-import NewProductForm from './NewProductForm'
+import Loading from '@/app/loading'
+import Title from '@/app/ui/component/SectionTitle/Title'
 import MovePageButton from '@/app/ui/elements/MovePageButton'
+import AddProduct from '@/app/ui/component/Form/AddProduct'
 
 export default function NewProduct() {
     return (
-        <Suspense fallback={<h1>Loading...</h1>}>
+        <Suspense fallback={<Loading />}>
             <div className='px-7'>
-                <PageTitle.Title className='flex items-center gap-5 mb-9'>
+                <Title className='flex items-center gap-5 mb-9'>
                     <MovePageButton link='/owner/all-products' />
                     New Product
-                </PageTitle.Title>
-                <NewProductForm />
+                </Title>
+                <AddProduct />
             </div>
         </Suspense>
     )

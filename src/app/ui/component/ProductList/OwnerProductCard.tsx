@@ -1,42 +1,36 @@
+"use client"
 import { Product } from '@/types/productInterface'
-import { Button, Card, CardBody, CardFooter, Table, Tbody, Td, Tr, useToast } from '@chakra-ui/react'
-import React from 'react'
+import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, Card, CardBody, CardFooter, Table, Tbody, Td, Tr, useDisclosure, useToast } from '@chakra-ui/react'
+import React, { useRef } from 'react'
 import ProductCardImage from './ProductCardImage'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { AlertCircle, Check } from 'react-feather'
-import { Brush, RestartAlt } from '@mui/icons-material'
+import { Check } from 'react-feather'
+import { Brush, Delete } from '@mui/icons-material'
 import { productRouter } from '@/lib/database/productRouter'
 
-export default function OwnerProductCard({ productData }: { productData: Product }) {
+export default function OwnerProductCard({ productData, isPreviewCard = false }: { productData: Product, isPreviewCard?: boolean }) {
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const cancelRef = useRef(null)
     const { name, price, status, stock, sold } = productData
     const searchParams = useSearchParams()
     const toast = useToast()
     const router = useRouter()
     const pathname = usePathname()
     const query = new URLSearchParams(searchParams)
-    const { updateProductData } = productRouter
+    const { deleteProduct, getProducts } = productRouter
     const { id } = productData
 
-    const resetSoldProduct = () => {
-        if (productData.sold === 0) {
-            toast({
-                title: "Product Not Sale Yet!",
-                status: "warning",
-                duration: 1500,
-                icon: <AlertCircle />,
-                position: "top"
-            })
-            return
-        }
-        const data = { ...productData, sold: 0 }
-        updateProductData(id, data)
+    const deleteSelectedProduct = async () => {
+        await deleteProduct(id)
         toast({
-            title: `Success Reset ${data.name} Sold Data!`,
+            title: `Deleted ${name}!`,
             status: "success",
             duration: 1500,
             icon: <Check />,
             position: "top"
         })
+        getProducts()
+        onClose()
     }
     const editProduct = () => {
         query.set("productId", `${productData.id}`)
@@ -48,11 +42,11 @@ export default function OwnerProductCard({ productData }: { productData: Product
 
     const buttonData = [
         {
-            onClick: resetSoldProduct,
-            ariaLabel: 'Reset Sold Menu Button',
-            title: 'Reset Sold Menu',
+            onClick: onOpen,
+            ariaLabel: 'Delete Menu Button',
+            title: 'Delete Menu',
             colorScheme: 'red',
-            children: <RestartAlt className="text-xs lg:text-xl" />
+            children: <Delete className="text-xs lg:text-xl" />
         },
         {
             onClick: editProduct,
@@ -86,41 +80,70 @@ export default function OwnerProductCard({ productData }: { productData: Product
         }
     ]
     return (
-        <Card className="h-80 sm:h-96 w-[95%] lg:w-[430px] bg-white text-black flex justify-center items-center">
-            <CardBody className="w-full h-full flex pl-3 overflow-auto overflow-scrollbar-hide">
-                <div className="flex flex-col sm:flex-row h-max items-center lg:items-start">
-                    <div className="h-1/3 w-2/3 lg:w-2/5">
-                        <ProductCardImage productData={productData} />
+        <>
+            <Card className="h-80 sm:h-96 w-[95%] lg:w-[430px] bg-white text-black flex justify-center items-center">
+                <CardBody className="w-full h-full flex pl-3 overflow-auto overflow-scrollbar-hide">
+                    <div className="flex flex-col sm:flex-row h-max items-center lg:items-start">
+                        <div className="h-1/3 w-2/3 lg:w-2/5">
+                            <ProductCardImage productData={productData} />
+                        </div>
+                        <Table className='h-1/2 sm:min-h-[280px] lg:h-max w-full flex sm:justify-around'>
+                            <Tbody className="h-full w-full sm:w-11/12 text-2xs sm:text-sm">
+                                {
+                                    tableData.map((data, index: number) => (
+                                        <Tr key={index}>
+                                            <Td>{data.name}: {data.value}</Td>
+                                        </Tr>
+                                    ))
+                                }
+                            </Tbody>
+                        </Table>
                     </div>
-                    <Table className='h-1/2 sm:min-h-[280px] lg:h-max w-full flex sm:justify-around'>
-                        <Tbody className="h-full w-full sm:w-11/12 text-2xs sm:text-sm">
-                            {
-                                tableData.map((data, index: number) => (
-                                    <Tr key={index}>
-                                        <Td>{data.name}: {data.value}</Td>
-                                    </Tr>
-                                ))
-                            }
-                        </Tbody>
-                    </Table>
-                </div>
-            </CardBody>
-            <CardFooter className="w-full flex justify-end items-center gap-3 h-1/6">
+                </CardBody>
                 {
-                    buttonData.map((button, index: number) => (
-                        <Button
-                            key={index}
-                            onClick={button.onClick}
-                            aria-label={button.ariaLabel}
-                            title={button.title}
-                            colorScheme={button.colorScheme}
-                            className="h-6 lg:h-10 w-6 lg:w-16"
-                        >
-                            {button.children}
-                        </Button>
-                    ))
+                    !isPreviewCard &&
+                    <CardFooter className="w-full flex justify-end items-center gap-3 h-1/6">
+                        {
+                            buttonData.map((button, index: number) => (
+                                <Button
+                                    key={index}
+                                    onClick={button.onClick}
+                                    aria-label={button.ariaLabel}
+                                    title={button.title}
+                                    colorScheme={button.colorScheme}
+                                    className="h-6 lg:h-10 w-6 lg:w-16"
+                                >
+                                    {button.children}
+                                </Button>
+                            ))
+                        }
+                    </CardFooter>
                 }
-            </CardFooter>
-        </Card>
+            </Card>
+            <AlertDialog
+                leastDestructiveRef={cancelRef}
+                isOpen={isOpen}
+                onClose={onClose}
+            >
+                <AlertDialogOverlay>
+                    <AlertDialogContent>
+                        <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+                            Delete {name}?
+                        </AlertDialogHeader>
+                        <AlertDialogBody>
+                            Are you sure? You cant undo this action afterwards.
+                        </AlertDialogBody>
+                        <AlertDialogFooter>
+                            <Button onClick={onClose} ref={cancelRef}>
+                                Cancel
+                            </Button>
+                            <Button colorScheme='red' onClick={deleteSelectedProduct} ml={3}>
+                                Delete
+                            </Button>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialogOverlay>
+            </AlertDialog>
+        </>
     )
 }

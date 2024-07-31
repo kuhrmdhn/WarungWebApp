@@ -4,8 +4,8 @@ import { ProductsStore } from '@/lib/store/productsStore'
 import { FormatRupiah } from '@arismun/format-rupiah'
 import React from 'react'
 import { RestaurantMenu, AttachMoney, Sell, Category } from '@mui/icons-material';
-import PageTitle from '@/app/ui/elements/PageTitle'
 import { SummaryItem } from '@/types/SummaryItemInterface'
+import SubTitle from '@/app/ui/component/SectionTitle/Subtitle'
 import SummaryCardList from '@/app/ui/component/SummaryCardList/SummaryCardList'
 
 export default function Summary() {
@@ -37,9 +37,7 @@ export default function Summary() {
 
     return (
         <section className='w-full h-fit mt-2 sm:mt-7 flex flex-col justify-start gap-3 sm:gap-5'>
-            <PageTitle>
-                <PageTitle.SubTitle text='Summary' />
-            </PageTitle>
+            <SubTitle text='Summary' />
             <SummaryCardList summaryData={summaryData} />
         </section>
     )

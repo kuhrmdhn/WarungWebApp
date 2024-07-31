@@ -1,10 +1,10 @@
-import { motion, useCycle } from "framer-motion"
+import { motion } from "framer-motion"
 import Image from "next/image"
 import React, { useState } from "react"
-import ScaleHover from "../framer-motion/ScaleHover"
 import { OwnerStore } from "@/lib/store/ownerStore"
-import Logo from "../elements/Logo"
 import { Button } from "@chakra-ui/react"
+import ScaleHover from "../../framer-motion/ScaleHover"
+import LogoBlack from "../Logo/LogoBlack"
 
 const navLink = [
     {
@@ -50,9 +50,7 @@ export default function OwnerSidebar() {
                         </svg>
                 }
             </button>
-            <Logo>
-                <Logo.LogoBlack />
-            </Logo>
+                <LogoBlack />
             <NavList sidebarOpen={sidebarOpen} />
         </header>
     )
@@ -124,7 +122,7 @@ function UserAccount() {
     return (
         <ScaleHover className="flex w-full h-14 justify-center space-x-3 items-center gap-3">
             <Image width={20} height={20} alt="User Account Icon" src={"/user-icon.svg"} className="h-full" />
-            <h1>Kukuh Ardi</h1>
+            <h1>{ownerData.name}</h1>
         </ScaleHover>
     )
 }
