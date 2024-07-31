@@ -54,9 +54,9 @@ export default function CashierProductCard({ productData }: { productData: Produ
                 <ProductCardImage productData={productData} />
                 <Stack className='mt-3 ml-3'>
                     <h1 className='font-bold text-sm sm:text-lg'>{name}</h1>
-                    <h3 className='text-xs sm:text-base'>
+                    <h2 className='text-xs sm:text-base'>
                         <FormatRupiah value={price} />
-                    </h3>
+                    </h2>
                 </Stack>
             </CardBody>
             <CardFooter className='w-full h-fit flex justify-center items-center'>

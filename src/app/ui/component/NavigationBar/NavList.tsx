@@ -39,17 +39,12 @@ export default function NavList({ sidebarOpen, navItems, children }: NavListProp
             <ul className='h-5/6 flex flex-col items-center gap-2'>
                 {
                     navItems.map((nav: NavigationItem, index: number) => (
-                        <li
-                            key={index}
-                            className="w-full"
-                        >
-                            <NavItem>
-                                <a href={nav.href} className="flex px-5 items-center gap-3">
-                                    <Image width={20} height={20} alt="User Account Icon" src={nav.icon} className="h-full" />
-                                    {nav.title}
-                                </a>
-                            </NavItem>
-                        </li>
+                        <NavItem key={index}>
+                            <a href={nav.href} className="flex px-5 items-center gap-3">
+                                <Image width={20} height={20} alt="User Account Icon" src={nav.icon} className="h-full" />
+                                {nav.title}
+                            </a>
+                        </NavItem>
                     ))
                 }
                 {children}
