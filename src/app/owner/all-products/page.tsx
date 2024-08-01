@@ -1,10 +1,20 @@
-import React, { Suspense } from 'react'
+import React, { Suspense, useEffect } from 'react'
 import Loading from '@/app/loading'
 import SearchBar from '@/app/ui/elements/SearchBar'
 import ProductCategoryTabs from '@/app/ui/component/ProductCategoryTab/ProductCategoryTabs'
 import ProductsList from '@/app/ui/component/ProductList/ProductsList'
+import OwnerProductCard from '@/app/ui/component/ProductList/OwnerProductCard'
+import { productRouter } from '@/lib/database/productRouter'
+import { ProductsStore } from '@/lib/store/productsStore'
 
 export default function AllProducts() {
+  const { getProducts } = productRouter
+  const { products } = ProductsStore();
+
+  useEffect(() => {
+    getProducts()
+  }, [getProducts])
+
   return (
     <Suspense fallback={<Loading />}>
       <main id='allProduct' className='min-h-screen h-max w-full flex flex-col'>
@@ -13,7 +23,11 @@ export default function AllProducts() {
         </section>
         <ProductCategoryTabs />
         <section className='bg-body-gray mt-5'>
-          <ProductsList isOwner={true} />
+          <ProductsList
+            className='grid-cols-2 lg:grid-cols-3 justify-items-center gap-y-3'
+            products={products}
+            renderCard={(product) => <OwnerProductCard isPreviewCard={false} productData={product} />}
+          />
         </section>
       </main>
     </Suspense>

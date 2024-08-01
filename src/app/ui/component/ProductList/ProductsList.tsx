@@ -1,38 +1,22 @@
 "use client"
 import ScrollTopButton from '@/app/ui/elements/ScrollTopButton'
 import { Product } from '@/types/productInterface'
-import { ProductsStore } from '@/lib/store/productsStore'
-import React, { useEffect } from 'react'
+import React, { ReactNode } from 'react'
 import FadeInUp from '../../framer-motion/FadeInUp'
-import CashierProductCard from './CashierProductCard'
-import OwnerProductCard from './OwnerProductCard'
-import { productRouter } from '@/lib/database/productRouter'
 
 type productListProps = {
-    isOwner: boolean
+    className?: string
+    products: Product[]
+    renderCard: (params: Product) => ReactNode
 }
 
-export default function ProductsList({ isOwner }: productListProps) {
-    const { getProducts } = productRouter
-    const { products } = ProductsStore();
-
-    useEffect(() => {
-        getProducts()
-    }, [getProducts])
-
-    const cashierClassName = "grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 justify-items-center gap-y-2 sm:gap-y-7";
-    const ownerClassName = "grid-cols-2 lg:grid-cols-3 justify-items-center gap-y-3";
+export default function ProductsList({ className, products, renderCard }: productListProps) {
     return (
-        <section className={`min-h-[75svh] w-full mt-2 sm:mt-7 grid ${isOwner ? ownerClassName : cashierClassName}`}>
+        <section className={`min-h-[75svh] w-full mt-2 sm:mt-7 grid ${className}`}>
             {
                 products.map((product: Product, index: number) => (
                     <FadeInUp key={index} delay={index * 0.1}>
-                        {
-                            isOwner ?
-                                <OwnerProductCard productData={product} />
-                                :
-                                <CashierProductCard productData={product} />
-                        }
+                        {renderCard(product)}
                     </FadeInUp>
                 ))
             }
