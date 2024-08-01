@@ -5,3 +5,11 @@
 .overflow-scrollbar-hide::-webkit-scrollbar {
   width: 0px;
 }
+
+.overflow-scrollbar-small::-webkit-scrollbar {
+  width: 4px;
+  background: rgb(249 250 251);
+  }
+  .overflow-scrollbar-small::-webkit-scrollbar-thumb {
+    background: #2e2e1e;
+  }
