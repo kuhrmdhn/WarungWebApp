@@ -1,6 +1,6 @@
 import { Product } from "./productInterface";
 
 export interface GroceryProduct extends Product {
-    orderData: any;
+    orderData?: any;
     quantity : number
 }
