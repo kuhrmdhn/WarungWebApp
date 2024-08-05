@@ -1,5 +1,5 @@
 import React from 'react'
-import LogoBlack from '../../Logo/LogoBlack'
+import LogoBlack from '../Logo/LogoBlack'
 import { Button } from '@chakra-ui/react'
 
 export default function Header() {

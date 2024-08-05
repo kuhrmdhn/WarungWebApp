@@ -1,5 +1,5 @@
 import React from 'react'
-import LogoBlack from '../../Logo/LogoBlack'
+import LogoBlack from '../Logo/LogoBlack'
 
 export default function Header() {
   return (

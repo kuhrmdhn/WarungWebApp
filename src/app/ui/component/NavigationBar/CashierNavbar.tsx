@@ -1,8 +1,8 @@
 import React from 'react'
-import LogoBlack from '../../Logo/LogoBlack'
-import SearchBar from '../../../elements/SearchBar'
-import GroceryListButton from '../../GroceryList/GroceryListButton'
-import ProductCategoryTabs from '../../ProductCategoryTab/ProductCategoryTabs'
+import LogoBlack from '../Logo/LogoBlack'
+import SearchBar from '../../elements/SearchBar'
+import GroceryListButton from '../GroceryList/GroceryListButton'
+import ProductCategoryTabs from '../ProductCategoryTab/ProductCategoryTabs'
 
 export default function Navbar() {
     return (

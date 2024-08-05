@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react"
-import NavList from "../NavList"
-import NavItem from "../NavItem"
-import LogOutButton from "../../../elements/LogOutButton"
+import NavList from "./NavList"
+import NavItem from "./NavItem"
+import LogOutButton from "../../elements/LogOutButton"
 import ToggleButton from "./ToggleButton"
-import LogoBlack from "../../Logo/LogoBlack"
+import LogoBlack from "../Logo/LogoBlack"
 
 const navLink = [
     {
@@ -61,7 +61,7 @@ export default function Sidebar() {
                 toggleMenu={handleSidebarToggle}
                 menuOpen={sidebarOpen}
             />
-            <LogoBlack className="w-24"/>
+            <LogoBlack className="w-24" />
             <NavList sidebarOpen={sidebarOpen} navItems={navLink}>
                 <NavItem>
                     <LogOutButton />

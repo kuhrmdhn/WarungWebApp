@@ -1,5 +1,5 @@
 "use client"
-import Sidebar from '@/app/ui/component/NavigationBar/(Owner)/Sidebar';
+import Sidebar from '@/app/ui/component/NavigationBar/Sidebar';
 import React from 'react';
 
 const AboutLayout = ({ children }: { children: React.ReactNode }) => {
