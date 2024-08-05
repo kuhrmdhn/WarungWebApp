@@ -23,6 +23,10 @@ export async function middleware(req: NextRequest) {
                 url.pathname = "/cashier"
                 return NextResponse.redirect(url)
             }
+            else if (token.role === "CHEF") {
+                url.pathname = "/chef"
+                return NextResponse.redirect(url)
+            }
         }
 
         if (token.role === "OWNER") {
@@ -30,14 +34,16 @@ export async function middleware(req: NextRequest) {
                 return NextResponse.next()
             }
         } else if (token.role === "CASHIER") {
-            if (pathname === "/owner") {
+            if (pathname === "/owner" || pathname === "/chef") {
                 url.pathname = "/cashier"
                 return NextResponse.redirect(url)
             }
             return NextResponse.next()
-        } else {
-            url.pathname = "/login"
-            return NextResponse.redirect(url)
+        } else if (token.role === "CHEF") {
+            if (pathname === "/owner" || pathname === "/cashier") {
+                url.pathname = "/chef"
+                return NextResponse.redirect(url)
+            }
         }
     } catch (error) {
         console.error(error)
@@ -47,5 +53,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-    matcher: ["/owner/:path*", "/cashier", "/login"]
+    matcher: ["/owner/:path*", "/cashier", "/login", "/chef"]
 }

@@ -50,8 +50,9 @@ export default function SearchBar() {
                 type="text"
                 placeholder="Search Product"
                 defaultValue={searchParams.get('name')?.toString()}
+                className='text-sm'
             />
-            <InputRightElement className='mr-7'>
+            <InputRightElement className='text-sm hidden lg:flex mr-7'>
                 <Kbd>Ctrl</Kbd> + <Kbd>K</Kbd>
             </InputRightElement>
         </InputGroup>

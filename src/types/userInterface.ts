@@ -2,7 +2,8 @@ import { GroceryProduct } from "./groceryInterface";
 
 export enum USER_ROLE {
     OWNER = "OWNER",
-    CASHIER = "CASHIER"
+    CASHIER = "CASHIER",
+    CHEF = "CHEF"
 }
 
 export interface User {
