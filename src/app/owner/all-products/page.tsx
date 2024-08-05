@@ -1,3 +1,4 @@
+"use client"
 import React, { Suspense, useEffect } from 'react'
 import Loading from '@/app/loading'
 import SearchBar from '@/app/ui/elements/SearchBar'

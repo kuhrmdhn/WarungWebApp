@@ -14,7 +14,7 @@ export const ownerRouter = {
     async updateOwnerData(newOwnerData: UpdatedOwnerData) {
         const currentOwnerData = await this.getOwnerData()
         const updatedOwnerData = { ...currentOwnerData, ...newOwnerData }
-        const name = "Kukuh Ardi"
+        const name = process.env.OWNER_NAME
         const { status, error } = await supabase.from("owner").update(updatedOwnerData).eq("name", name).select()
         if (error) {
             return error.message
