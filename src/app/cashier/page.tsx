@@ -4,7 +4,6 @@ import { getSession } from 'next-auth/react'
 import { UserStore } from '@/lib/store/userStore'
 import { groceryRouter } from '@/lib/database/groceryRouter'
 import Loading from '../loading'
-import Navbar from '../ui/component/NavigationBar/CashierNavbar'
 import ProductsList from '../ui/component/ProductList/ProductsList'
 import GroceryList from '../ui/component/GroceryList/GroceryList'
 import { productRouter } from '@/lib/database/productRouter'
@@ -34,15 +33,12 @@ export default function Cashier() {
 
   return (
     <Suspense fallback={<Loading />}>
-      <main className='bg-gray-300'>
-        <Navbar />
-        <ProductsList
-          className='grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 justify-items-center gap-y-2 sm:gap-y-7'
-          products={products}
-          renderCard={(product) => <CashierProductCard productData={product} />}
-        />
-        <GroceryList />
-      </main>
+      <ProductsList
+        className='grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 justify-items-center gap-y-2 sm:gap-y-7 pt-3'
+        products={products}
+        renderCard={(product) => <CashierProductCard productData={product} />}
+      />
+      <GroceryList />
     </Suspense>
   )
 }
