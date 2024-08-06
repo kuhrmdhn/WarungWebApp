@@ -26,14 +26,14 @@ export default function Home() {
   return (
     <main className="w-full h-full bg-blue-100 text-slate-800 flex flex-col items-center mb-16">
       <Header />
-      <FadeInUp className="h-[100svh] w-full self-start pl-16 flex items-center">
+      <FadeInUp className="h-[100svh] w-full self-start pl-3 sm:pl-16 flex items-center">
         <section>
           <div className="flex flex-col gap-4">
-            <h1 className="text-7xl font-bold">
+            <h1 className="text-3xl sm:text-5xl lg:text-7xl font-bold">
               Start Your
               <br />Business Journey
             </h1>
-            <p className="text-lg font-thin">Create, Manage, and Edit your business product easily.
+            <p className="text-sm sm:text-lg font-thin">Create, Manage, and Edit your business product easily.
               <br />Provide anything for your business management.
               <br /> Authentication support.
             </p>
