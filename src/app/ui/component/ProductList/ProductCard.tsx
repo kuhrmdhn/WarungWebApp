@@ -11,6 +11,7 @@ import { Brush, RestartAlt, Warning } from '@mui/icons-material'
 import { UserStore } from '@/lib/store/userStore'
 import { groceryRouter } from '@/lib/database/groceryRouter'
 import { GroceryProduct } from '@/types/groceryInterface'
+import { productRouter } from '@/lib/database/productRouter'
 
 type productCardProps = {
     children: React.ReactNode
@@ -181,8 +182,8 @@ function OwnerCardFooter({ productData }: cardProps) {
     const router = useRouter()
     const pathname = usePathname()
     const query = new URLSearchParams(searchParams)
-    const { updateProduct } = ProductsStore()
     const { id } = productData
+    const { updateProductData } = productRouter
 
     const resetSoldProduct = () => {
         if (productData.sold === 0) {
@@ -196,7 +197,7 @@ function OwnerCardFooter({ productData }: cardProps) {
             return
         }
         const data = { ...productData, sold: 0 }
-        updateProduct(id, data)
+        updateProductData(id, data)
         toast({
             title: `Success Reset ${data.name} Sold Data!`,
             status: "success",
