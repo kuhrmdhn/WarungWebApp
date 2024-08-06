@@ -9,7 +9,8 @@ export const productRouter = {
             if (error) {
                 return error.message
             }
-            ProductsStore.getState().setProducts(products)
+            const sortedProduct = products.sort((a,b) => a.id - b.id)
+            ProductsStore.getState().setProducts(sortedProduct)
             return products
         } catch (error) {
             return error

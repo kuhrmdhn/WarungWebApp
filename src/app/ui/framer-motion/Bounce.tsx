@@ -2,9 +2,9 @@
 import React from 'react'
 import { motion } from "framer-motion"
 
-export default function Bounce({ delay, children }: { delay: number, children: React.ReactNode }) {
+export default function Bounce({ delay = 0.2, duration = 1, children }: { delay?: number, duration?: number, children: React.ReactNode }) {
     const transitionValues = {
-        duration: 1,
+        duration: duration,
         repeat: Infinity,
         ease: "easeOut"
     }

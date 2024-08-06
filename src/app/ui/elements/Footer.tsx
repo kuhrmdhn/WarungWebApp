@@ -2,6 +2,7 @@ import { NavigationItem } from '@/types/NavigationItemInterface'
 import React from 'react'
 import Image from 'next/image'
 import ScaleHover from '../framer-motion/ScaleHover'
+import Logo from '../component/Logo/Logo'
 
 const contactList: NavigationItem[] = [
     {
@@ -29,8 +30,8 @@ const contactList: NavigationItem[] = [
 
 export default function Footer() {
     return (
-        <footer className="w-full h-32 flex flex-col justify-center items-center gap-5 mt-7">
-            <h1>Get In Touch</h1>
+        <footer className="w-full h-32 flex flex-col justify-center items-center gap-5 bg-white">
+            <Logo />
             <div className="flex items-center gap-5">
                 {
                     contactList.map((contact: NavigationItem, index: number) => (

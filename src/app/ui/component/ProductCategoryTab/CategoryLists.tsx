@@ -19,7 +19,7 @@ export default function CategoryList({ categories }: { categories: string[] }) {
     }
 
     return (
-        <TabList>
+        <TabList className="flex gap-2">
             {
                 categories.map((category: string, index: number) => (
                     <Tab

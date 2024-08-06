@@ -61,7 +61,7 @@ export default function Sidebar() {
                 toggleMenu={handleSidebarToggle}
                 menuOpen={sidebarOpen}
             />
-            <LogoBlack />
+            <LogoBlack className="w-24" />
             <NavList sidebarOpen={sidebarOpen} navItems={navLink}>
                 <NavItem>
                     <LogOutButton />

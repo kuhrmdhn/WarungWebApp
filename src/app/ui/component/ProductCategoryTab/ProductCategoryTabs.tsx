@@ -26,7 +26,7 @@ export default function ProductCategoryTabs() {
     }, [getProductByCategory, getProductsByName, searchParams])
 
     return (
-        <Tabs variant='soft-rounded' defaultIndex={categories.findIndex(category => category.toLowerCase() === selectedCategory)}>
+        <Tabs variant='soft-rounded' colorScheme='blackAlpha' defaultIndex={categories.findIndex(category => category.toLowerCase() === selectedCategory)}>
             <CategoryList categories={categories} />
         </Tabs>
     )
