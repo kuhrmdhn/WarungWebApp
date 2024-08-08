@@ -2,14 +2,14 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Button, FormLabel, Input, InputGroup, useToast } from '@chakra-ui/react'
-import { ArrowForward, HourglassBottom } from '@mui/icons-material'
-import { useLogin } from '@/hooks/useLogin'
+import { ArrowForward, Error, HourglassBottom } from '@mui/icons-material'
+import { getSession, signIn } from 'next-auth/react'
+import { Session } from '@/types/token'
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({ username: "", password: "" })
   const [pending, setPending] = useState(false)
   const { push } = useRouter()
-  const login = useLogin()
   const toast = useToast()
 
   const inputData = [
@@ -29,13 +29,43 @@ export default function LoginPage() {
 
   async function handleLogin(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     e.preventDefault()
-    try {
-      await login(formData.username, formData.password);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setPending((state) => !state);
+    if (formData.username === "" || formData.password === "") {
+      toast({
+        title: "Input can't be empty",
+        colorScheme: "red",
+        icon: <Error />,
+        duration: 3000,
+        position: "top-right"
+      });
+      return;
     }
+    setPending(true)
+    const res = await signIn('credentials', {
+      redirect: false,
+      username: formData.username,
+      password: formData.password,
+    });
+
+    if (res && res.ok) {
+      const session: Session | null = await getSession() as Session | null
+      const userRole = session?.user.role
+      if (userRole === "OWNER") {
+        push("/owner")
+      } else if (userRole === "CASHIER") {
+        push("/cashier")
+      } else if (userRole === "CHEF") {
+        push("/chef")
+      }
+    } else if (res && res.error) {
+      toast({
+        title: "Failed Login",
+        colorScheme: "red",
+        icon: <Error />,
+        duration: 3000,
+        position: "top-right"
+      });
+    }
+    setPending(false)
   }
 
   function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
