@@ -5,8 +5,8 @@ import { Line, Pie } from "react-chartjs-2";
 import { ProductsStore } from "@/lib/store/productsStore";
 import { Product } from "@/types/productInterface";
 import { ListItem, Table, Tbody, Td, Tr, UnorderedList } from "@chakra-ui/react";
-import SubTitle from "@/app/ui/component/SectionTitle/Subtitle";
-import FadeInUp from "@/app/ui/framer-motion/FadeInUp";
+import SubTitle from "@/ui/component/SectionTitle/Subtitle";
+import FadeInUp from "@/ui/framer-motion/FadeInUp";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, ArcElement);
 

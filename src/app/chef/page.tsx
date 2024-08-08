@@ -2,8 +2,8 @@
 import React, { useEffect } from 'react'
 import { orderListRouter } from '@/lib/database/orderListRouter'
 import { OrderStore } from '@/lib/store/orderStore'
-import ChefOrderCard from '../ui/component/ProductList/ChefOrderCard'
-import Header from '@/app/ui/component/NavigationBar/Header'
+import ChefOrderCard from '../../ui/component/ProductList/ChefOrderCard'
+import Header from '@/ui/component/NavigationBar/Header'
 
 export default function ChefPage() {
   const { orderList } = OrderStore()

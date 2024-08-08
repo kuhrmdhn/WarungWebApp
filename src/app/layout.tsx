@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Open_Sans } from "next/font/google"
-import Footer from "./ui/elements/Footer";
+import Footer from "../ui/elements/Footer";
 import ProviderOfSession from "@/config/sessionProvider";
 import ProvidersOfChakra from "@/config/chakraProvider";
 

@@ -5,8 +5,8 @@ import { FormatRupiah } from '@arismun/format-rupiah'
 import React from 'react'
 import { RestaurantMenu, AttachMoney, Sell, Category } from '@mui/icons-material';
 import { SummaryItem } from '@/types/SummaryItemInterface'
-import SubTitle from '@/app/ui/component/SectionTitle/Subtitle'
-import SummaryCardList from '@/app/ui/component/SummaryCardList/SummaryCardList'
+import SubTitle from '@/ui/component/SectionTitle/Subtitle'
+import SummaryCardList from '@/ui/component/SummaryCardList/SummaryCardList'
 
 export default function Summary() {
     const { products } = ProductsStore()

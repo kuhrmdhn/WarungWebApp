@@ -4,7 +4,7 @@ import Summary from './dashboard/Summary'
 import SalesReport from './dashboard/SalesReport'
 import { ownerRouter } from '@/lib/database/ownerRouter'
 import { productRouter } from '@/lib/database/productRouter'
-import Title from '@/app/ui/component/SectionTitle/Title'
+import Title from '@/ui/component/SectionTitle/Title'
 
 export default function OwnerDashboard() {
   const { getOwnerData } = ownerRouter

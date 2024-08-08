@@ -1,8 +1,8 @@
 import { Suspense } from 'react'
 import Loading from '@/app/loading'
-import Title from '@/app/ui/component/SectionTitle/Title'
-import MovePageButton from '@/app/ui/elements/MovePageButton'
-import AddProduct from '@/app/ui/component/Form/AddProduct'
+import Title from '@/ui/component/SectionTitle/Title'
+import MovePageButton from '@/ui/elements/MovePageButton'
+import AddProduct from '@/ui/component/Form/AddProduct'
 
 export default function NewProduct() {
     return (

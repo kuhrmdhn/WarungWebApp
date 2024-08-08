@@ -1,10 +1,10 @@
 "use client"
 import React, { Suspense, useEffect } from 'react'
 import Loading from '@/app/loading'
-import SearchBar from '@/app/ui/elements/SearchBar'
-import ProductCategoryTabs from '@/app/ui/component/ProductCategoryTab/ProductCategoryTabs'
-import ProductsList from '@/app/ui/component/ProductList/ProductsList'
-import OwnerProductCard from '@/app/ui/component/ProductList/OwnerProductCard'
+import SearchBar from '@/ui/elements/SearchBar'
+import ProductCategoryTabs from '@/ui/component/ProductCategoryTab/ProductCategoryTabs'
+import ProductsList from '@/ui/component/ProductList/ProductsList'
+import OwnerProductCard from '@/ui/component/ProductList/OwnerProductCard'
 import { productRouter } from '@/lib/database/productRouter'
 import { ProductsStore } from '@/lib/store/productsStore'
 

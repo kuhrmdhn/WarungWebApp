@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import Navbar from '../ui/component/NavigationBar/CashierNavbar'
+import Navbar from '../../ui/component/NavigationBar/CashierNavbar'
 
 export const metadata: Metadata = {
     title: "Cashier App",

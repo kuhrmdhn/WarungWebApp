@@ -1,8 +1,8 @@
 "use client"
 import Loading from '@/app/loading'
-import EditProduct from '@/app/ui/component/Form/EditProduct'
-import Title from '@/app/ui/component/SectionTitle/Title'
-import MovePageButton from '@/app/ui/elements/MovePageButton'
+import EditProduct from '@/ui/component/Form/EditProduct'
+import Title from '@/ui/component/SectionTitle/Title'
+import MovePageButton from '@/ui/elements/MovePageButton'
 import React, { Suspense } from 'react'
 function EditProductFormContent() {
 

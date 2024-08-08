@@ -1,5 +1,5 @@
 "use client"
-import ScrollTopButton from '@/app/ui/elements/ScrollTopButton'
+import ScrollTopButton from '@/ui/elements/ScrollTopButton'
 import { Product } from '@/types/productInterface'
 import React, { ReactNode } from 'react'
 import FadeInUp from '../../framer-motion/FadeInUp'

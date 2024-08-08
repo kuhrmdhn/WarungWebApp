@@ -2,9 +2,9 @@
 import "./globals.css"
 import { Alert, AlertIcon, Button } from "@chakra-ui/react";
 import { useEffect } from "react";
-import PreviewAppList from "./ui/component/PreviewApps/PreviewAppList";
-import Header from "./ui/component/NavigationBar/HomeHeader";
-import FadeInUp from "./ui/framer-motion/FadeInUp";
+import PreviewAppList from "../ui/component/PreviewApps/PreviewAppList";
+import Header from "../ui/component/NavigationBar/HomeHeader";
+import FadeInUp from "../ui/framer-motion/FadeInUp";
 
 export default function Home() {
   useEffect(() => {

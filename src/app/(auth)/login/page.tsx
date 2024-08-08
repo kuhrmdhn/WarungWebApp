@@ -1,15 +1,15 @@
 "use client"
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { getSession, signIn } from 'next-auth/react'
 import { Button, FormLabel, Input, InputGroup, useToast } from '@chakra-ui/react'
-import { Session } from '@/types/token'
-import { ArrowForward, Error, HourglassBottom } from '@mui/icons-material'
+import { ArrowForward, HourglassBottom } from '@mui/icons-material'
+import { useLogin } from '@/hooks/useLogin'
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({ username: "", password: "" })
   const [pending, setPending] = useState(false)
   const { push } = useRouter()
+  const login = useLogin()
   const toast = useToast()
 
   const inputData = [
@@ -29,50 +29,12 @@ export default function LoginPage() {
 
   async function handleLogin(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     e.preventDefault()
-    if (formData.username === "" || formData.password === "") {
-      toast({
-        title: "Input can't empty",
-        colorScheme: "red",
-        icon: <Error />,
-        duration: 3000,
-        position: "top-right"
-      })
-      return
-    }
-    setPending(true)
-    const res = await signIn('credentials', {
-      redirect: false,
-      username: formData.username,
-      password: formData.password,
-    })
-
-    if (res && res.ok) {
-      const session: Session | null = await getSession() as Session | null
-      if (session?.user.role === "OWNER") {
-        push('/owner')
-      } else if (session?.user.role === "CASHIER") {
-        push('/cashier')
-      } else {
-        setPending(false)
-        toast({
-          title: "Failed Login, check out your username and password correct",
-          colorScheme: "red",
-          icon: <Error />,
-          duration: 3000,
-          position: "top-right"
-        })
-        return
-      }
-    } else if (res && res.error) {
-      setPending(false)
-      toast({
-        title: "Failed Login",
-        colorScheme: "red",
-        icon: <Error />,
-        duration: 3000,
-        position: "top-right"
-      })
-      return
+    try {
+      await login(formData.username, formData.password);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setPending((state) => !state);
     }
   }
 

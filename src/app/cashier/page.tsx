@@ -4,11 +4,11 @@ import { getSession } from 'next-auth/react'
 import { UserStore } from '@/lib/store/userStore'
 import { groceryRouter } from '@/lib/database/groceryRouter'
 import Loading from '../loading'
-import ProductsList from '../ui/component/ProductList/ProductsList'
-import GroceryList from '../ui/component/GroceryList/GroceryList'
+import ProductsList from '../../ui/component/ProductList/ProductsList'
+import GroceryList from '../../ui/component/GroceryList/GroceryList'
 import { productRouter } from '@/lib/database/productRouter'
 import { ProductsStore } from '@/lib/store/productsStore'
-import CashierProductCard from '../ui/component/ProductList/CashierProductCard'
+import CashierProductCard from '../../ui/component/ProductList/CashierProductCard'
 
 export default function Cashier() {
   const { setUsername } = UserStore()

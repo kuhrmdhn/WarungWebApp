@@ -3,6 +3,7 @@ import LogoBlack from '../Logo/LogoBlack'
 import { Button } from '@chakra-ui/react'
 import { signOut } from 'next-auth/react'
 import { useSession } from '@/hooks/useSession'
+import Link from 'next/link'
 
 export default async function Header() {
     const session = await useSession()
@@ -11,9 +12,9 @@ export default async function Header() {
             <LogoBlack />
             {
                 session ? <Button onClick={() => signOut()}>Logout</Button> :
-                    <a href="/login">
-                        <Button colorScheme='teal'>Login</Button>
-                    </a>
+                    <Link href={"/login"} passHref>
+                        <Button as={"a"} colorScheme='teal'>Login</Button>
+                    </Link>
             }
         </header>
     )
