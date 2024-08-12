@@ -2,7 +2,7 @@
 import ScrollTopButton from '@/ui/elements/ScrollTopButton'
 import { Product } from '@/types/productInterface'
 import React, { ReactNode } from 'react'
-import FadeInUp from '../../framer-motion/FadeInUp'
+import FadeInUp from '../../framer-motion/Animation/FadeInUp'
 
 type productListProps = {
     className?: string

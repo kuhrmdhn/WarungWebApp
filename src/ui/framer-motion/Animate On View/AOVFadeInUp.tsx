@@ -1,7 +1,7 @@
 "use client"
 import { useInView } from 'framer-motion'
 import React, { useRef } from 'react'
-import FadeInUp from '../FadeInUp'
+import FadeInUp from '../Animation/FadeInUp'
 
 export default function AOVFadeInUp({ children, delay = 0.1 }: { children: React.ReactNode, delay?: number }) {
     const AOVContainer = useRef(null)

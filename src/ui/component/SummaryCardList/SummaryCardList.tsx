@@ -1,5 +1,5 @@
 import React from 'react'
-import FadeInUp from '../../framer-motion/FadeInUp'
+import FadeInUp from '../../framer-motion/Animation/FadeInUp'
 import DashboardCard from './SummaryCard'
 import { SummaryItem } from '@/types/SummaryItemInterface'
 

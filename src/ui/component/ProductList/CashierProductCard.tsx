@@ -1,47 +1,20 @@
-import { groceryRouter } from "@/lib/database/groceryRouter"
-import { GroceryStore } from "@/lib/store/groceryStore"
-import { UserStore } from "@/lib/store/userStore"
-import { GroceryProduct } from "@/types/groceryInterface"
 import { Product } from "@/types/productInterface"
-import { Button, Card, CardBody, CardFooter, Stack, useToast } from "@chakra-ui/react"
-import { Check, Warning } from "@mui/icons-material"
+import { Button, Card, CardBody, CardFooter, Stack } from "@chakra-ui/react"
 import ProductCardImage from "./ProductCardImage"
 import { FormatRupiah } from "@arismun/format-rupiah"
+import { useProductToGrocery } from "@/hooks/useAddToGrocery"
+import { UserStore } from "@/lib/store/userStore"
+import Clicked from "@/ui/framer-motion/Animation/Clicked"
 
 export default function CashierProductCard({ productData }: { productData: Product }) {
     const { name, price, status, stock } = productData
     const invalidMenu = !status || stock === 0
-    const toast = useToast()
     const { username } = UserStore()
-    const { groceryList } = GroceryStore()
+    const addProductToGrocery = useProductToGrocery(productData, username)
 
-    const addProductToGrocery = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const addToGrocery = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
-        const groceryProductIndex = groceryList.findIndex((groceryItem: GroceryProduct) => groceryItem.id === productData.id)
-        if (groceryProductIndex === -1) {
-            groceryRouter.addNewUserGrocery(username, { ...productData, quantity: 1 })
-        } else {
-            if (groceryList[groceryProductIndex].quantity === productData.stock) {
-                toast({
-                    title: "Max quantity!",
-                    status: "warning",
-                    duration: 1500,
-                    icon: <Warning />,
-                    position: "top"
-                })
-                return
-            } else {
-                const productIndexItemData = { ...groceryList[groceryProductIndex], quantity: groceryList[groceryProductIndex].quantity + 1 }
-                groceryRouter.updateUserGroceryItem(username, productIndexItemData)
-            }
-        }
-        toast({
-            title: "Added to Order List!",
-            status: "success",
-            duration: 1500,
-            icon: <Check />,
-            position: "top"
-        })
+        addProductToGrocery()
     }
 
     return (
@@ -56,17 +29,19 @@ export default function CashierProductCard({ productData }: { productData: Produ
                 </Stack>
             </CardBody>
             <CardFooter className='w-full h-fit flex justify-center items-center'>
-                <Button
-                    disabled={invalidMenu}
-                    onClick={(e) => invalidMenu == false && addProductToGrocery(e)}
-                    aria-label={invalidMenu ? "Sold Out Product Button" : "Add To Grocery Button"}
-                    transitionDuration={"300ms"}
-                    fontSize={"0.8em"}
-                    colorScheme={invalidMenu ? "gray" : "green"}
-                    className={`w-2/3 sm:w-5/6 h-12 flex gap-5 text-sm ${invalidMenu ? "cursor-not-allowed" : "cursor-pointer"} rounded-md `}
-                >
-                    {invalidMenu ? "Sold Out" : "Order"}
-                </Button>
+                <Clicked className="w-2/3 sm:w-5/6 h-10" scale={0.95}>
+                    <Button
+                        disabled={invalidMenu}
+                        onClick={(e) => invalidMenu == false && addToGrocery(e)}
+                        aria-label={invalidMenu ? "Sold Out Product Button" : "Add To Grocery Button"}
+                        transitionDuration={"300ms"}
+                        fontSize={"0.8em"}
+                        colorScheme={invalidMenu ? "gray" : "green"}
+                        className={`w-full h-full flex gap-5 text-sm ${invalidMenu ? "cursor-not-allowed" : "cursor-pointer"} rounded-md `}
+                    >
+                        {invalidMenu ? "Sold Out" : "Order"}
+                    </Button>
+                </Clicked>
             </CardFooter>
         </Card>
     )

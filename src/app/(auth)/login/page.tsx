@@ -1,16 +1,12 @@
 "use client"
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { Button, FormLabel, Input, InputGroup, useToast } from '@chakra-ui/react'
-import { ArrowForward, Error, HourglassBottom } from '@mui/icons-material'
-import { getSession, signIn } from 'next-auth/react'
-import { Session } from '@/types/token'
+import { Button, FormLabel, Input, InputGroup } from '@chakra-ui/react'
+import { ArrowForward, HourglassBottom } from '@mui/icons-material'
+import { useLogin } from '@/hooks/useLogin'
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({ username: "", password: "" })
-  const [pending, setPending] = useState(false)
-  const { push } = useRouter()
-  const toast = useToast()
+  const { pending, handleLogin } = useLogin(formData.username, formData.password)
 
   const inputData = [
     {
@@ -26,47 +22,6 @@ export default function LoginPage() {
       value: formData.password
     },
   ]
-
-  async function handleLogin(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
-    e.preventDefault()
-    if (formData.username === "" || formData.password === "") {
-      toast({
-        title: "Input can't be empty",
-        colorScheme: "red",
-        icon: <Error />,
-        duration: 3000,
-        position: "top-right"
-      });
-      return;
-    }
-    setPending(true)
-    const res = await signIn('credentials', {
-      redirect: false,
-      username: formData.username,
-      password: formData.password,
-    });
-
-    if (res && res.ok) {
-      const session: Session | null = await getSession() as Session | null
-      const userRole = session?.user.role
-      if (userRole === "OWNER") {
-        push("/owner")
-      } else if (userRole === "CASHIER") {
-        push("/cashier")
-      } else if (userRole === "CHEF") {
-        push("/chef")
-      }
-    } else if (res && res.error) {
-      toast({
-        title: "Failed Login",
-        colorScheme: "red",
-        icon: <Error />,
-        duration: 3000,
-        position: "top-right"
-      });
-    }
-    setPending(false)
-  }
 
   function handleOnChange(e: React.ChangeEvent<HTMLInputElement>) {
     const name = e.target.name

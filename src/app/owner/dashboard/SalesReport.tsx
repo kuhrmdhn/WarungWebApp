@@ -6,7 +6,7 @@ import { ProductsStore } from "@/lib/store/productsStore";
 import { Product } from "@/types/productInterface";
 import { ListItem, Table, Tbody, Td, Tr, UnorderedList } from "@chakra-ui/react";
 import SubTitle from "@/ui/component/SectionTitle/Subtitle";
-import FadeInUp from "@/ui/framer-motion/FadeInUp";
+import FadeInUp from "@/ui/framer-motion/Animation/FadeInUp";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, ArcElement);
 

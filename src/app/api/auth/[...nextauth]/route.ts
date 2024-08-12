@@ -28,7 +28,7 @@ const authOptions: NextAuthOptions = {
         })
     ],
 callbacks: {
-        async jwt(params: JWTtypes): Promise < any > {
+        async jwt(params: JWTtypes): Promise <any> {
         const { token, user } = params;
         if(user) {
             token.id = user.id

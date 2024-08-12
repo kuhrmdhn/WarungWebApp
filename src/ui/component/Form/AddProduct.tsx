@@ -9,7 +9,6 @@ import { bucketRouter } from '@/lib/database/bucketRouter'
 export default function AddProduct() {
     const router = useRouter()
     const { addNewProduct } = productRouter
-
     const productDataByQuery: Product = {
         id: Date.now(),
         name: "",

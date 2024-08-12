@@ -2,7 +2,7 @@ import { orderListRouter } from '@/lib/database/orderListRouter'
 import { GroceryProduct } from '@/types/groceryInterface'
 import { Button } from '@chakra-ui/react'
 import React from 'react'
-import FadeInUp from '../../framer-motion/FadeInUp'
+import FadeInUp from '../../framer-motion/Animation/FadeInUp'
 
 export default function ChefOrderCard({ orderId, orderData }: { orderId: number, orderData: GroceryProduct[] }) {
   const { deleteOrderList } = orderListRouter

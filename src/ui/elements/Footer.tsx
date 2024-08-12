@@ -1,7 +1,7 @@
 import { NavigationItem } from '@/types/NavigationItemInterface'
 import React from 'react'
 import Image from 'next/image'
-import ScaleHover from '../framer-motion/ScaleHover'
+import ScaleHover from '../framer-motion/Animation/ScaleHover'
 import Logo from '../component/Logo/Logo'
 
 const contactList: NavigationItem[] = [
