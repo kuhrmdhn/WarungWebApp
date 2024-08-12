@@ -1,10 +1,11 @@
+import Navbar from '@/ui/component/NavigationBar/CashierNavbar'
 import { Metadata } from 'next'
-import Navbar from '../../ui/component/NavigationBar/CashierNavbar'
+import React from 'react'
 
 export const metadata: Metadata = {
-    title: "Cashier App",
-    description: "Warung Web Cashier Web App"
+    title: "Cashier"
 }
+
 
 type Props = {
     children: React.ReactNode
@@ -12,9 +13,9 @@ type Props = {
 
 export default function CashierLayout({ children }: Props) {
     return (
-        <main>
+        <>
             <Navbar />
             {children}
-        </main>
+        </>
     )
 }

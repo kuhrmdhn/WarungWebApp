@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react'
-import ScaleHover from '../../framer-motion/ScaleHover'
+import ScaleHover from '../../framer-motion/Animation/ScaleHover'
 
 type SummaryCardProps = {
     heading: string | ReactNode

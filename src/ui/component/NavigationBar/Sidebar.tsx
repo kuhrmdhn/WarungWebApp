@@ -1,9 +1,10 @@
+"use client"
 import React, { useCallback, useEffect, useState } from "react"
 import NavList from "./NavList"
 import NavItem from "./NavItem"
 import LogOutButton from "../../elements/LogOutButton"
 import ToggleButton from "./ToggleButton"
-import LogoBlack from "../Logo/LogoBlack"
+import Logo from "../Logo/Logo"
 
 const navLink = [
     {
@@ -61,7 +62,7 @@ export default function Sidebar() {
                 toggleMenu={handleSidebarToggle}
                 menuOpen={sidebarOpen}
             />
-            <LogoBlack className="w-24" />
+            <Logo />
             <NavList sidebarOpen={sidebarOpen} navItems={navLink}>
                 <NavItem>
                     <LogOutButton />

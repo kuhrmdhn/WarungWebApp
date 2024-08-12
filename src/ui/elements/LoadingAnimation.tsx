@@ -1,6 +1,6 @@
 "use client"
 import React from 'react'
-import Bounce from '../framer-motion/Bounce'
+import Bounce from '../framer-motion/Animation/Bounce'
 
 export default function LoadingAnimation() {
     const bounceItem = [...Array(3)]

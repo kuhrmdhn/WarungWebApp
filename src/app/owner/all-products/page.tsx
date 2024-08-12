@@ -1,12 +1,12 @@
 "use client"
 import React, { Suspense, useEffect } from 'react'
 import Loading from '@/app/loading'
-import SearchBar from '@/ui/elements/SearchBar'
 import ProductCategoryTabs from '@/ui/component/ProductCategoryTab/ProductCategoryTabs'
 import ProductsList from '@/ui/component/ProductList/ProductsList'
 import OwnerProductCard from '@/ui/component/ProductList/OwnerProductCard'
 import { productRouter } from '@/lib/database/productRouter'
 import { ProductsStore } from '@/lib/store/productsStore'
+import SearchProduct from '@/ui/component/SearchBar/SearchProduct'
 
 export default function AllProducts() {
   const { getProducts } = productRouter
@@ -20,7 +20,7 @@ export default function AllProducts() {
     <Suspense fallback={<Loading />}>
       <main id='allProduct' className='min-h-screen h-max w-full flex flex-col'>
         <section className="w-11/12 sm:w-1/3 h-max self-end mr-5">
-          <SearchBar />
+          <SearchProduct />
         </section>
         <ProductCategoryTabs />
         <section className='bg-body-gray mt-5'>

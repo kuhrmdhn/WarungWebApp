@@ -1,4 +1,4 @@
-import ScaleHover from "../../framer-motion/ScaleHover";
+import ScaleHover from "../../framer-motion/Animation/ScaleHover";
 
 export default function NavItem({ children, className }: { children: React.ReactNode, className?: string }) {
     return (
