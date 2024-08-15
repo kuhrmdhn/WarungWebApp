@@ -1,6 +1,6 @@
 import React from 'react'
-import Header from '@/ui/component/NavigationBar/Header'
 import { Metadata } from 'next'
+import ChefHeader from '@/ui/component/NavigationBar/ChefHeader'
 
 export const metadata: Metadata = {
     title: "Chef"
@@ -14,7 +14,7 @@ type Props = {
 export default function layout({ children }: Props) {
     return (
         <>
-            <Header />
+            <ChefHeader />
             {children}
         </>
     )

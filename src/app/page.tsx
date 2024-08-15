@@ -38,7 +38,7 @@ export default function Home() {
               <br /> Authentication support.
             </p>
             <a href="#demo-container">
-              <Button colorScheme="teal">Get Started</Button>
+              <Button colorScheme="blue">Get Started</Button>
             </a>
           </div>
         </section>

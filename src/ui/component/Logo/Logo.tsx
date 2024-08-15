@@ -11,7 +11,7 @@ type Props = {
 export default function Logo({ className }: Props) {
     return (
         <Link href={"/"}>
-            <h1 className={`${ubuntu.className} text-2xl ${className}`}>Warung<span className='text-primary-blue'>Web</span></h1>
+            <h1 className={`${ubuntu.className} text-sm lg:text-2xl ${className}`}>Warung<span className='text-primary-blue'>Web</span></h1>
         </Link>
     )
 }
