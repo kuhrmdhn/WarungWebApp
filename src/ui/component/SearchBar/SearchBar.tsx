@@ -32,7 +32,7 @@ export default function SearchBar({ defaultInputValue, handleInput }: Props) {
                 defaultValue={defaultInputValue}
                 className='text-sm'
             />
-            <InputRightElement className='text-sm hidden lg:flex mr-7'>
+            <InputRightElement className='text-sm hidden opacity-0 lg:opacity-100 lg:flex mr-7'>
                 <Kbd>Ctrl</Kbd> + <Kbd>K</Kbd>
             </InputRightElement>
         </InputGroup>

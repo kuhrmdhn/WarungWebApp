@@ -6,14 +6,12 @@ import { groceryRouter } from '@/lib/database/groceryRouter'
 import Loading from '../loading'
 import ProductsList from '../../ui/component/ProductList/ProductsList'
 import GroceryList from '../../ui/component/GroceryList/GroceryList'
-import { productRouter } from '@/lib/database/productRouter'
 import { ProductsStore } from '@/lib/store/productsStore'
 import CashierProductCard from '../../ui/component/ProductList/CashierProductCard'
+import { useSearchProduct } from '@/hooks/useSearchProduct'
 
 export default function Cashier() {
   const { setUsername } = UserStore()
-  const { getProducts } = productRouter
-  const { products } = ProductsStore();
 
   const fetchUserGroceryList = useCallback(async () => {
     const session = await getSession();
@@ -28,14 +26,12 @@ export default function Cashier() {
 
   useEffect(() => {
     fetchUserGroceryList();
-    getProducts()
-  }, [fetchUserGroceryList, getProducts]);
+  }, [fetchUserGroceryList]);
 
   return (
     <Suspense fallback={<Loading />}>
       <ProductsList
         className='grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 justify-items-center gap-y-2 sm:gap-y-7 pt-3'
-        products={products}
         renderCard={(product) => <CashierProductCard productData={product} />}
       />
       <GroceryList />

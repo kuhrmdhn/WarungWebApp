@@ -4,7 +4,7 @@ import { OrderStore } from "../store/orderStore"
 import { OrderProduct } from "@/types/orderInterface"
 
 export const orderListRouter = {
-    async getOrderList(): Promise<OrderProduct | any> {
+    async getOrderList(): Promise<OrderProduct[] | any> {
         try {
             const { data: orderList, error } = await supabase.from("order_list").select()
             if (error) {
@@ -15,6 +15,17 @@ export const orderListRouter = {
         } catch (error) {
             return error
         }
+    },
+    async filterOrderList(key: string) {
+        const orderList: OrderProduct[] = await orderListRouter.getOrderList()
+        const filterOrders = orderList.filter((orders) => {
+            return orders.orderData.some((order) => {
+                const keyword = key.trim().toLowerCase()
+                const orderName = order.name.trim().toLowerCase()
+                return orderName.includes(keyword)
+            })
+        })
+        OrderStore.setState({ orderList: filterOrders })
     },
     async deleteOrderList(id: number) {
         try {
@@ -30,7 +41,8 @@ export const orderListRouter = {
     },
     async addNewOrderList(orderData: GroceryProduct[]) {
         try {
-            const { status, error } = await supabase.from("order_list").insert({ orderData }).select()
+            const id = new Date()
+            const { status, error } = await supabase.from("order_list").insert({ id, ...orderData }).select()
             if (error) {
                 return error.message
             }

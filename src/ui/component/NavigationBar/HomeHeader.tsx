@@ -13,7 +13,7 @@ export default async function Header() {
             {
                 session ? <Button onClick={() => signOut()}>Logout</Button> :
                     <Link href={"/login"} passHref>
-                        <Button as={"a"} colorScheme='teal'>Login</Button>
+                        <Button as={"a"} colorScheme='blue'>Login</Button>
                     </Link>
             }
         </header>

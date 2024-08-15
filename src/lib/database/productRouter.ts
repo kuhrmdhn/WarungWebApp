@@ -1,6 +1,6 @@
 import { supabase } from "@/config/supabase"
 import { ProductsStore } from "../store/productsStore"
-import { Product, ProductCategory, UpdateProductType } from "@/types/productInterface"
+import { Product, UpdateProductType } from "@/types/productInterface"
 
 export const productRouter = {
     async getProducts(): Promise<Product[] | any> {
@@ -9,7 +9,7 @@ export const productRouter = {
             if (error) {
                 return error.message
             }
-            const sortedProductById = products.sort((a,b) => a.id - b.id)
+            const sortedProductById = products.sort((a, b) => a.id - b.id)
             ProductsStore.getState().setProducts(sortedProductById)
             return products
         } catch (error) {
@@ -33,7 +33,6 @@ export const productRouter = {
         }
     },
     async getProductsByName(productName: string) {
-        ProductsStore.setState({ products: [] })
         try {
             const { data: products, error } = await supabase.from("products").select()
             if (error) {
