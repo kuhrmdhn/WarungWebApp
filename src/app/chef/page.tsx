@@ -1,9 +1,9 @@
 "use client"
 import React, { useCallback, useEffect } from 'react'
 import { OrderStore } from '@/lib/store/orderStore'
-import ChefOrderCard from '../../ui/component/ProductList/ChefOrderCard'
 import { useSearchParams } from 'next/navigation'
 import { orderListRouter } from '@/lib/database/orderListRouter'
+import ChefOrderCard from '@/ui/component/ProductList/ChefOrderCard'
 
 export default function ChefPage() {
   const { orderList } = OrderStore()

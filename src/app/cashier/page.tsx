@@ -6,9 +6,7 @@ import { groceryRouter } from '@/lib/database/groceryRouter'
 import Loading from '../loading'
 import ProductsList from '../../ui/component/ProductList/ProductsList'
 import GroceryList from '../../ui/component/GroceryList/GroceryList'
-import { ProductsStore } from '@/lib/store/productsStore'
-import CashierProductCard from '../../ui/component/ProductList/CashierProductCard'
-import { useSearchProduct } from '@/hooks/useSearchProduct'
+import CashierProductCard from '@/ui/component/ProductList/CashierProductCard'
 
 export default function Cashier() {
   const { setUsername } = UserStore()

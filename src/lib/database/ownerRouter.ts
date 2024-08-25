@@ -14,10 +14,10 @@ export const ownerRouter = {
     async updateOwnerData(newOwnerData: UpdatedOwnerData) {
         const currentOwnerData = await this.getOwnerData()
         const updatedOwnerData = { ...currentOwnerData, ...newOwnerData }
-        const name = process.env.OWNER_NAME
+        const name = updatedOwnerData.name
         const { status, error } = await supabase.from("owner").update(updatedOwnerData).eq("name", name).select()
         if (error) {
-            return error.message
+        return error.message
         }
         this.getOwnerData()
         return status

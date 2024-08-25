@@ -115,5 +115,19 @@ export const groceryRouter = {
         } catch (error) {
             return { error }
         }
+    },
+    async clearUserGroceryList(username: string) {
+        const { error: updateError } = await supabase
+            .from('users')
+            .update({ grocery_list: [] }) // Assuming `grocery_list` is a JSON/Array column
+            .eq('username', username);
+
+        if (updateError) {
+            console.error('Failed to update grocery list:', updateError.message);
+            // Optionally, show a toast or notification to the user
+        } else {
+            console.log('Grocery list successfully cleared for user:', username);
+        }
+        this.getUserGrocery(username)
     }
 }

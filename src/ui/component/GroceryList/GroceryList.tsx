@@ -5,12 +5,10 @@ import { OwnerStore } from '@/lib/store/ownerStore'
 import { UserStore } from '@/lib/store/userStore'
 import { FormatRupiah } from '@arismun/format-rupiah'
 import { Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerFooter, DrawerHeader, DrawerOverlay, Input, useDisclosure, useToast } from '@chakra-ui/react'
-import React from 'react'
+import React, { useOptimistic } from 'react'
 import { groceryRouter } from '@/lib/database/groceryRouter'
 import { productRouter } from '@/lib/database/productRouter'
 import { ownerRouter } from '@/lib/database/ownerRouter'
-import { getSession } from 'next-auth/react'
-import { Session } from '@/types/token'
 import GroceryCard from './GroceryCard'
 import { orderListRouter } from '@/lib/database/orderListRouter'
 
@@ -37,19 +35,15 @@ export default function GroceryList() {
         sold: grocery.sold + grocery.quantity,
         category: grocery.category
       }
-      await groceryRouter.deleteUserGroceryItem(username, grocery.id)
+      await groceryRouter.clearUserGroceryList(username)
       await productRouter.updateProductData(grocery.id, newProductData)
     }
-    const session: Session | null = await getSession() as Session | null
-    const userRole = session?.user.role
-    if (userRole === "CASHIER" || userRole === "OWNER") {
-      const newOwnerData = {
-        income: ownerData.income + totalGroceryPrice,
-        sale: ownerData.sale + totalGroceryQuantity
-      }
-      ownerRouter.updateOwnerData(newOwnerData)
+    const newOwnerData = {
+      income: ownerData.income + totalGroceryPrice,
+      sale: ownerData.sale + totalGroceryQuantity
     }
-    orderListRouter.addNewOrderList(groceryList)
+    await ownerRouter.updateOwnerData(newOwnerData)
+    await orderListRouter.addNewOrderList(groceryList)
     toast({
       title: "Payment Success",
       duration: 1500,
