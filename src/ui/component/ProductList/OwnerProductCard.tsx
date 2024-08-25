@@ -2,11 +2,11 @@
 import { Product } from '@/types/productInterface'
 import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, Card, CardBody, CardFooter, Table, Tbody, Td, Tr, useDisclosure, useToast } from '@chakra-ui/react'
 import React, { useRef } from 'react'
-import ProductCardImage from './ProductCardImage'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { Check } from 'react-feather'
 import { Brush, Delete } from '@mui/icons-material'
 import { productRouter } from '@/lib/database/productRouter'
+import ProductCardImage from './ProductCardImage'
 
 export default function OwnerProductCard({ productData, isPreviewCard = false }: { productData: Product, isPreviewCard?: boolean }) {
     const { isOpen, onOpen, onClose } = useDisclosure()

@@ -7,7 +7,7 @@ export const productRouter = {
         try {
             const { data: products, error } = await supabase.from("products").select()
             if (error) {
-                return error.message
+                throw new Error(error.message)
             }
             const sortedProductById = products.sort((a, b) => a.id - b.id)
             ProductsStore.getState().setProducts(sortedProductById)

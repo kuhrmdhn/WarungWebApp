@@ -23,9 +23,19 @@ const navLink = [
         icon: "/product-icon.svg"
     },
     {
+        title: "Manage User",
+        href: "/owner/manage-user",
+        icon: "/user-manage.svg"
+    },
+    {
         title: "New Product",
         href: "/owner/new-product",
         icon: "/new-product-icon.svg"
+    },
+    {
+        title: "New User",
+        href: "/owner/new-user",
+        icon: "/new-user.svg"
     },
     {
         title: "Cashier App",
@@ -63,7 +73,7 @@ export default function Sidebar() {
                 menuOpen={sidebarOpen}
             />
             <Logo />
-            <NavList sidebarOpen={sidebarOpen} navItems={navLink}>
+            <NavList sidebarOpen={sidebarOpen} navItems={navLink} >
                 <NavItem>
                     <LogOutButton />
                 </NavItem>
