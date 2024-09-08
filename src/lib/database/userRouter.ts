@@ -62,19 +62,19 @@ export const userRouter = {
         try {
             const isSameUserData = await supabase.from("users").select().eq("username", userData.username).single()
             if (isSameUserData.data) {
-                return "Username not available"
+                throw "Username not available"
             }
             if (userData.password) {
                 const hash = await bcryptConfig.hashPassword(userData.password)
                 const insertData = { ...userData, password: hash }
-                const { error } = await supabase.from("users").insert(insertData).select()
+                const { error } = await supabase.from("users").insert(insertData)
                 if (error) {
-                    return error.message
+                    throw (error.message)
                 }
                 return userData
             }
         } catch (error) {
-            return "Internal server error"
+            throw error
         }
     }
 }
