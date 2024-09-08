@@ -15,36 +15,19 @@ export async function middleware(req: NextRequest) {
     }
 
     try {
+        const role = token.role as string
+        const rolePathname = role.toLowerCase()
+        url.pathname = `/${rolePathname}`
         if (pathname === "/login") {
-            if (token.role === "OWNER") {
-                url.pathname = "/owner"
-                return NextResponse.redirect(url)
-            } else if (token.role === "CASHIER") {
-                url.pathname = "/cashier"
-                return NextResponse.redirect(url)
-            }
-            else if (token.role === "CHEF") {
-                url.pathname = "/chef"
-                return NextResponse.redirect(url)
-            }
+            return NextResponse.redirect(url)
         }
-
-        if (token.role === "OWNER") {
-            if (pathname !== "/login") {
-                return NextResponse.next()
-            }
-        } else if (token.role === "CASHIER") {
-            if (pathname === "/owner" || pathname === "/chef") {
-                url.pathname = "/cashier"
-                return NextResponse.redirect(url)
-            }
+        if (role === "OWNER" && pathname !== "/login") {
             return NextResponse.next()
-        } else if (token.role === "CHEF") {
-            if (pathname === "/owner" || pathname === "/cashier") {
-                url.pathname = "/chef"
-                return NextResponse.redirect(url)
-            }
         }
+        if (role === "CASHIER" || role === "CHEF" && (pathname === "/owner" || pathname === "/chef")) {
+            return NextResponse.redirect(url)
+        }
+        return NextResponse.next()
     } catch (error) {
         console.error(error)
         url.pathname = "/login"
