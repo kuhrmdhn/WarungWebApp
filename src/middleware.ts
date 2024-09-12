@@ -17,8 +17,6 @@ export async function middleware(req: NextRequest) {
     try {
         const role = token.role as string
         const rolePathname = role.toLowerCase()
-        const isRolePath = pathname === `/${rolePathname}`
-
         if (pathname === "/login") {
             if (role === "OWNER") {
                 url.pathname = "/owner"
@@ -32,15 +30,14 @@ export async function middleware(req: NextRequest) {
             }
         }
 
-        if (role === "OWNER" && !isRolePath) {
-            return NextResponse.redirect(`/owner`)
+        if (role === "OWNER") {
+            return NextResponse.next()
         }
         if ((role === "CASHIER" && pathname !== "/cashier") ||
             (role === "CHEF" && pathname !== "/chef")) {
             url.pathname = `/${rolePathname}`
             return NextResponse.redirect(url)
         }
-
         return NextResponse.next()
     } catch (error) {
         console.error(error)
