@@ -1,26 +1,26 @@
 "use client"
-import React, { Suspense, useCallback, useEffect } from 'react'
-import { getSession } from 'next-auth/react'
-import { UserStore } from '@/lib/store/userStore'
 import { groceryRouter } from '@/lib/database/groceryRouter'
-import Loading from '../loading'
-import ProductsList from '../../ui/component/ProductList/ProductsList'
-import GroceryList from '../../ui/component/GroceryList/GroceryList'
+import { UserStore } from '@/lib/store/userStore'
 import CashierProductCard from '@/ui/component/ProductList/CashierProductCard'
+import { useSession } from 'next-auth/react'
+import { Suspense, useCallback, useEffect } from 'react'
+import GroceryList from '../../ui/component/GroceryList/GroceryList'
+import ProductsList from '../../ui/component/ProductList/ProductsList'
+import Loading from '../loading'
 
 export default function Cashier() {
   const { setUsername } = UserStore()
+  const { data } = useSession()
 
   const fetchUserGroceryList = useCallback(async () => {
-    const session = await getSession();
-    if (session) {
-      const username = session.user?.name;
+    if (data) {
+      const username = data.user.name;
       if (username) {
         groceryRouter.getUserGrocery(username);
         setUsername(username);
       }
     }
-  }, [setUsername]);
+  }, [data,setUsername]);
 
   useEffect(() => {
     fetchUserGroceryList();

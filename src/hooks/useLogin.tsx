@@ -1,14 +1,15 @@
-import { Session } from "@/types/token";
 import { useToast } from "@chakra-ui/react";
 import { Error, Verified } from "@mui/icons-material";
-import { getSession, signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 export function useLogin(username: string, password: string) {
     const toast = useToast()
     const [pending, setPending] = useState(false)
     const { push } = useRouter()
+    const searchParams = useSearchParams()
+    const callbackUrl = searchParams.get("callback") || "/"
 
     async function handleLogin(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         e.preventDefault()
@@ -37,15 +38,7 @@ export function useLogin(username: string, password: string) {
                     duration: 3000,
                     position: "top-right"
                 });
-                const session: Session | null = await getSession() as Session | null
-                const userRole = session?.user.role
-                if (userRole === "OWNER") {
-                    push("/owner")
-                } else if (userRole === "CASHIER") {
-                    push("/cashier")
-                } else if (userRole === "CHEF") {
-                    push("/chef")
-                }
+                push(callbackUrl || "/")
             } else if (loginResponse && loginResponse.error) {
                 toast({
                     title: "Failed Login",

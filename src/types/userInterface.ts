@@ -13,3 +13,9 @@ export interface User {
     role?: USER_ROLE,
     grocery_list?: GroceryProduct[]
 }
+
+export interface UserToken {
+    id: string;
+    username: string;
+    role: USER_ROLE;
+}

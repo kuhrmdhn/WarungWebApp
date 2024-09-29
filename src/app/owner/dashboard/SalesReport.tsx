@@ -3,7 +3,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, Tooltip, PointElement, Li
 import React from 'react'
 import { Line, Pie } from "react-chartjs-2";
 import { ProductsStore } from "@/lib/store/productsStore";
-import { Product } from "@/types/productInterface";
+import { Product, ProductCategory } from "@/types/productInterface";
 import { ListItem, Table, Tbody, Td, Tr, UnorderedList } from "@chakra-ui/react";
 import SubTitle from "@/ui/component/SectionTitle/Subtitle";
 import FadeInUp from "@/ui/framer-motion/Animation/FadeInUp";
@@ -15,9 +15,9 @@ export default function SalesReport() {
     const popularMenu = products.slice().sort((a: Product, b: Product) => b.sold - a.sold)[0]?.name
     const availableMenu = products.slice().filter((product: Product) => product.stock > 0).length
     const unavailableMenu = products.slice().filter((product: Product) => product.stock === 0).length
-    const foodMenuCategory = products.filter((product: Product) => product.category === "food").length
-    const drinkMenuCategory = products.filter((product: Product) => product.category === "drink").length
-    const snackMenuCategory = products.filter((product: Product) => product.category === "snack").length
+    const foodMenuCategory = products.filter((product: Product) => product.category === ProductCategory.FOOD).length    
+    const drinkMenuCategory = products.filter((product: Product) => product.category === ProductCategory.DRINK).length
+    const snackMenuCategory = products.filter((product: Product) => product.category === ProductCategory.SNACK).length
     const categoryList: string[] = ["Food", "Drink", "Snack"]
     const productData = {
         labels: products.map((product: Product) => product.name),
@@ -27,6 +27,7 @@ export default function SalesReport() {
             borderColor: "#56B9F1"
         }]
     }
+
     const categoryData = {
         labels: categoryList,
         datasets: [{
