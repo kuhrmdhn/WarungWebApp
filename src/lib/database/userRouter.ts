@@ -20,7 +20,7 @@ export const userRouter = {
     async deleteUser(userId: string) {
         try {
             const { error, status } = await supabase.from("users").delete().eq("id", userId)
-            if(error) {
+            if (error) {
                 throw new Error(error.message)
             }
             userRouter.getAllUser()
@@ -35,12 +35,12 @@ export const userRouter = {
             throw new Error("Password and Username is Required!")
         }
         try {
-            const { data, error } = await supabase.from("users").select().eq("username", username)
+            const { data, error } = await supabase.from("users").select().eq("username", username).single()
             if (error) {
                 throw new Error(error.message)
             }
 
-            const user = data[0]
+            const user = data
             if (!user) {
                 throw new Error("Invalid username")
             }
@@ -52,7 +52,8 @@ export const userRouter = {
 
             return user
         } catch (error) {
-            return "Internal server error"
+            console.log(error)
+            throw error
         }
     },
     async addNewUser(userData: User) {
