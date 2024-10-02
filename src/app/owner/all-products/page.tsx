@@ -1,12 +1,10 @@
 "use client"
-import React, { Suspense, useEffect } from 'react'
 import Loading from '@/app/loading'
 import ProductCategoryTabs from '@/ui/component/ProductCategoryTab/ProductCategoryTabs'
-import ProductsList from '@/ui/component/ProductList/ProductsList'
 import OwnerProductCard from '@/ui/component/ProductList/OwnerProductCard'
-import { ProductsStore } from '@/lib/store/productsStore'
+import ProductsList from '@/ui/component/ProductList/ProductsList'
 import SearchProduct from '@/ui/component/SearchBar/SearchProduct'
-import { useSearchProduct } from '@/hooks/useSearchProduct'
+import { Suspense } from 'react'
 
 export default function AllProducts() {
   return (
