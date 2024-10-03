@@ -49,7 +49,6 @@ export const userRouter = {
             if (!checkPassword) {
                 throw new Error("Invalid password")
             }
-
             return user
         } catch (error) {
             console.log(error)
@@ -77,5 +76,24 @@ export const userRouter = {
         } catch (error) {
             throw error
         }
-    }
+    },
+    async editUser(userData: User) {
+        if (!userData) {
+            throw new Error("User Data is empty")
+        }
+        try {
+            const { id } = userData
+            const { data: currentUserData, error: currentUserDataError } = await supabase.from("users").select().eq("id", id).single()
+            if (currentUserDataError) {
+                throw new Error(currentUserDataError.message)
+            }
+            const newUserData = { ...currentUserData, ...userData }
+            const { error: updateError } = await supabase.from("users").update(newUserData).eq("id", id)
+            if (updateError) {
+                throw new Error(updateError.message)
+            }
+        } catch (error) {
+            return error
+        }
+    },
 }
