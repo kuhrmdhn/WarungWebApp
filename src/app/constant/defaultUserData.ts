@@ -1,7 +1,8 @@
-import { USER_ROLE, UserToken } from "@/types/userInterface";
+import { User, USER_ROLE } from "@/types/userInterface";
 
-export const defaultUserData: UserToken = {
+export const defaultUserData: User = {
     id: "0",
     role: USER_ROLE.CASHIER,
-    username: ""
+    username: "",
+    password: ""
 }

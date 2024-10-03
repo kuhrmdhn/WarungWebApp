@@ -1,5 +1,5 @@
 import { userRouter } from "@/lib/database/userRouter";
-import { User, USER_ROLE, UserToken } from "@/types/userInterface";
+import { User, UserToken } from "@/types/userInterface";
 import { NextAuthOptions, Session } from "next-auth";
 import { AdapterUser } from "next-auth/adapters";
 import { JWT } from "next-auth/jwt";
@@ -42,7 +42,7 @@ const authOptions: NextAuthOptions = {
             if (user) {
                 token.user = {
                     id: user.id,
-                    username: (user as UserToken).username,  // Ensure user has username and role
+                    username: (user as UserToken).username,
                     role: (user as UserToken).role,
                 };
             }
