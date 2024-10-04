@@ -1,9 +1,9 @@
 import { defaultUserData } from "@/app/constant/defaultUserData";
-import { UserToken } from "@/types/userInterface";
+import { User } from "@/types/userInterface";
 import { create } from "zustand";
 
 type UserStore = {
-    userData: UserToken
+    userData: User
     setUserData: (param: any) => void
     username: string
     setUsername: (username: string) => void

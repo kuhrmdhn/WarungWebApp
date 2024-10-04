@@ -3,7 +3,7 @@ import { userRouter } from '@/lib/database/userRouter'
 import { userManageStore } from '@/lib/store/userManageStore'
 import { User } from '@/types/userInterface'
 import { Button } from '@chakra-ui/react'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 
 export default function UserList() {
     const { allUser } = userManageStore()
