@@ -2,6 +2,7 @@
 import { bcryptConfig } from '@/config/bcrypt';
 import { userRouter } from '@/lib/database/userRouter';
 import { User } from '@/types/userInterface';
+import MovePageButton from '@/ui/elements/MovePageButton';
 import { Button, FormControl, FormLabel, Input } from '@chakra-ui/react';
 import { signOut, useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
@@ -56,12 +57,10 @@ export default function ProfilePage() {
                         ...userData,
                         password
                     }
-                    console.log({ newUserData })
                     await editUser(newUserData);
                 }
             }
         } else {
-            console.log({ userData })
             await editUser(userData);
         }
         await signOut()
@@ -69,6 +68,9 @@ export default function ProfilePage() {
 
     return (
         <section className="w-full min-h-[75svh] flex justify-center items-center">
+            <span className="absolute top-3 left-3">
+                <MovePageButton />
+            </span>
             <form className="h-full w-1/2 flex flex-col gap-7" onSubmit={(e) => handleSubmit(e)}>
                 <FormControl className="flex gap-7 items-center">
                     <FormLabel htmlFor="username" className="w-32 lg:w-64 text-xs lg:text-base">
