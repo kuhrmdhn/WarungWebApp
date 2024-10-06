@@ -7,8 +7,10 @@ import { Suspense, useCallback, useEffect } from 'react'
 import GroceryList from '../../ui/component/GroceryList/GroceryList'
 import ProductsList from '../../ui/component/ProductList/ProductsList'
 import Loading from '../loading'
+import { ownerRouter } from '@/lib/database/ownerRouter'
 
 export default function Cashier() {
+  const { getOwnerData } = ownerRouter
   const { setUsername } = UserStore()
   const { data } = useSession()
 
@@ -20,11 +22,12 @@ export default function Cashier() {
         setUsername(username);
       }
     }
-  }, [data,setUsername]);
+  }, [data, setUsername]);
 
   useEffect(() => {
+    getOwnerData()
     fetchUserGroceryList();
-  }, [fetchUserGroceryList]);
+  }, [fetchUserGroceryList, getOwnerData]);
 
   return (
     <Suspense fallback={<Loading />}>

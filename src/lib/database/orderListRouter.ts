@@ -41,16 +41,13 @@ export const orderListRouter = {
     },
     async addNewOrderList(orderData: GroceryProduct[]) {
         try {
-            const id = new Date()
-            const { status, error } = await supabase.from("order_list").insert({ id, ...orderData }).select()
-            if (error) {
-                return error.message
-            }
+            const id = Date.now()
+            const { status, error } = await supabase.from("order_list").insert({ id, orderData })
             orderListRouter.getOrderList()
-            return status
+            return { status, error }
         } catch (error) {
             console.error(error)
-            return error
+            return { error }
         }
     }
 }

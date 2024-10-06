@@ -8,7 +8,7 @@ export async function middleware(req: NextRequest) {
     if (!token) {
         if (pathname !== "/login") {
             const callbackUrl = `/login?callback=${url.pathname}`
-            return NextResponse.redirect(new URL(callbackUrl,req.url))
+            return NextResponse.redirect(new URL(callbackUrl, req.url))
         }
         return NextResponse.next()
     }

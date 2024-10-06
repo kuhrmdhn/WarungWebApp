@@ -1,19 +1,9 @@
 import { create } from "zustand";
 import { Owner } from "../../types/ownerInterface";
 
-type EditOwnerData = {
-    id: number
-    name: string
-    password?: string
-    income?: number
-    sale?: number
-    username?: string
-    categories?: number
-}
-
 type OwnerStore = {
     ownerData: Owner
-    setOwnerData: (param: Owner) => void
+    setOwnerData: (data: Owner) => void
 }
 
 export const OwnerStore = create<OwnerStore>()((set) => ({
@@ -26,7 +16,7 @@ export const OwnerStore = create<OwnerStore>()((set) => ({
         username: "",
         categories: 0
     },
-    setOwnerData: (body: Owner) => {
-        set({ ownerData: body })
+    setOwnerData: (ownerData: Owner) => {
+        set({ ownerData })
     }
 }))
