@@ -6,7 +6,6 @@ export const metadata: Metadata = {
     title: "Cashier"
 }
 
-
 type Props = {
     children: React.ReactNode
 }
