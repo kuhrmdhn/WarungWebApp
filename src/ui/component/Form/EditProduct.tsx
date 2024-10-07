@@ -1,37 +1,26 @@
-import React, { useEffect, useState } from 'react'
-import ProductForm from './ProductForm'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { PageStore } from '@/lib/store/pageStore'
-import { ProductsStore } from '@/lib/store/productsStore'
-import { Product } from '@/types/productInterface'
-import { useToast } from '@chakra-ui/react'
-import { productRouter } from '@/lib/database/productRouter'
+"use client"
 import { bucketRouter } from '@/lib/database/bucketRouter'
+import { productRouter } from '@/lib/database/productRouter'
+import { Product } from '@/types/productInterface'
+import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, useDisclosure, useToast } from '@chakra-ui/react'
+import React, { useRef, useState } from 'react'
+import ProductForm from './ProductForm'
+import { Check } from 'react-feather'
+import { useRouter } from 'next/navigation'
 
-export default function EditProduct() {
-    const router = useRouter()
-    const searchParams = useSearchParams()
-    const { setPageTitle } = PageStore()
-    const { productById } = ProductsStore()
-    const [formState, setFormState] = useState<Product>(productById)
+type Props = {
+    productData: Product
+}
+
+export default function EditProduct({ productData }: Props) {
+    const { push } = useRouter()
+    const { deleteProduct } = productRouter
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const cancelRef = useRef(null)
+    const [isEdit, setIsEdit] = useState(false)
+    const [formState, setFormState] = useState<Product>(productData)
     const [productImageFile, setProductImageFile] = useState<File>()
-    const query = new URLSearchParams(searchParams)
-    const id = Number(query.get("productId")?.toString())
     const toast = useToast()
-
-    useEffect(() => {
-        if (!id) {
-            return router.replace("/owner/all-products")
-        }
-        productRouter.getProductById(id)
-    }, [id, router])
-
-    useEffect(() => {
-        if (id) {
-            setFormState(productById)
-            setPageTitle(`Edit Product | ${productById.name}`)
-        }
-    }, [productById, id, setPageTitle])
 
     const handleOnChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { value, name, type } = e.target
@@ -53,25 +42,39 @@ export default function EditProduct() {
 
     const submitForm = async (e: React.FormEvent<HTMLButtonElement> | React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        if (productImageFile) {
-            const publicUrl = await bucketRouter.uploadFile(productImageFile)
-            productRouter.updateProductData(formState.id, JSON.parse(JSON.stringify({ ...formState, image: publicUrl })))
-        } else {
-            productRouter.updateProductData(formState.id, JSON.parse(JSON.stringify(formState)))
+        try {
+            if (productImageFile) {
+                const publicUrl = await bucketRouter.uploadFile(productImageFile)
+                productRouter.updateProductData(formState.id, JSON.parse(JSON.stringify({ ...formState, image: publicUrl })))
+            } else {
+                productRouter.updateProductData(formState.id, JSON.parse(JSON.stringify(formState)))
+            }
+            toast({ title: "Update!" })
+        } catch (error) {
+            console.error(error);
+            toast({ title: "Failed" })
         }
-        toast({ title: "Update!" })
-        router.back()
+    }
+    const toggleEdit = () => {
+        if (isEdit) {
+            setFormState(productData)
+        }
+        setIsEdit((state) => !state)
+    }
+    const deleteSelectedProduct = async () => {
+        await deleteProduct(productData.id)
+        toast({
+            title: `Deleted ${productData.name}!`,
+            status: "success",
+            duration: 1500,
+            icon: <Check />,
+            position: "top"
+        })
+        onClose()
+        push("/owner/all-products")
     }
 
     const formData = [
-        {
-            label: "Id",
-            required: true,
-            name: "id",
-            value: formState.id,
-            type: "number",
-            isReadonly: true
-        },
         {
             label: "Name",
             required: true,
@@ -145,12 +148,42 @@ export default function EditProduct() {
     ]
 
     return (
-        <ProductForm
-            productData={formState}
-            onSubmit={(e) => submitForm(e)}
-            inputFormData={formData}
-            selectFormData={selectFormData}
-            handleChange={(e) => handleOnChange(e)}
-        />
+        <>
+            <ProductForm
+                productData={formState}
+                onSubmit={(e) => submitForm(e)}
+                inputFormData={formData}
+                selectFormData={selectFormData}
+                handleChange={(e) => handleOnChange(e)}
+                editable={isEdit}
+            >
+                <Button className="w-fit" type="button" colorScheme={isEdit ? "red" : "blue"} variant='ghost' onClick={toggleEdit}>{isEdit ? "Cancel" : "Edit"}</Button>
+                <Button className="w-fit" type="button" colorScheme="red" onClick={onOpen}>Delete</Button>
+            </ProductForm>
+            <AlertDialog
+                leastDestructiveRef={cancelRef}
+                isOpen={isOpen}
+                onClose={onClose}
+            >
+                <AlertDialogOverlay>
+                    <AlertDialogContent>
+                        <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+                            Delete {productData.name}?
+                        </AlertDialogHeader>
+                        <AlertDialogBody>
+                            Are you sure? You cant undo this action afterwards.
+                        </AlertDialogBody>
+                        <AlertDialogFooter>
+                            <Button onClick={onClose} ref={cancelRef}>
+                                Cancel
+                            </Button>
+                            <Button colorScheme='red' onClick={deleteSelectedProduct} ml={3}>
+                                Delete
+                            </Button>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialogOverlay>
+            </AlertDialog>
+        </>
     )
 }

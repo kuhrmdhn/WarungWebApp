@@ -16,8 +16,8 @@ export default function AllProducts() {
         <ProductCategoryTabs />
         <section className='bg-body-gray mt-5'>
           <ProductsList
-            className='grid-cols-2 lg:grid-cols-3 justify-items-center gap-y-3'
-            renderCard={(product) => <OwnerProductCard isPreviewCard={false} productData={product} />}
+            className='grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 justify-items-center gap-y-3'
+            renderCard={(product) => <OwnerProductCard productData={product} />}
           />
         </section>
       </main>
