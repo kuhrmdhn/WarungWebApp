@@ -17,19 +17,27 @@ export const productRouter = {
         }
     },
     async getProductById(id: number) {
-        if (!id) {
-            return "Product ID is required"
+        if (id === undefined || id === null) {
+            throw new Error("Product ID is required");
         }
         try {
-            const { data, error } = await supabase.from("products").select().eq("id", id).single()
-            if (error) {
-                return error.message
+            const { data, error } = await supabase
+                .from("products")
+                .select()
+                .eq("id", id)
+                .single();
+
+            if (error || !data) {
+                console.error("Supabase error:", error);
+                return null;
             }
-            const product: Product = data
-            ProductsStore.setState({ productById: product })
-            return product
+
+            const product: Product = data;
+            ProductsStore.setState({ productById: product });
+            return product;
         } catch (error) {
-            return error
+            console.error("Unexpected error:", error);
+            return null;
         }
     },
     async getProductsByName(productName: string) {

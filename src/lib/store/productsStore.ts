@@ -1,15 +1,17 @@
 import { create } from "zustand";
-import { Product, ProductCategory } from "../../types/productInterface";
+import { Product } from "../../types/productInterface";
 
 type ProductsStore = {
     products: Product[]
-    productById: Product
+    productById: Product | null
+    setProductById: (product: Product) => void
     setProducts: (products: Product[]) => void
 
 }
 
 export const ProductsStore = create<ProductsStore>((set) => ({
     products: [],
-    productById: { id: 0, name: "", category: ProductCategory.FOOD, image: "", price: 0, sold: 0, status: false, stock: 0 },
+    productById: null,
+    setProductById: (product) => set({ productById: product }),
     setProducts: (products) => set({ products }),
 }));

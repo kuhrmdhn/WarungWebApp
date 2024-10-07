@@ -11,7 +11,7 @@ export default function ProductCardImage({ productData }: { productData: Product
             height={900}
             src={cardImage}
             alt={name}
-            className={`w-full aspect-square rounded-lg ${!status && "grayscale"}`}
+            className={`h-full w-full aspect-square rounded-lg object-cover object-center ${!status && "grayscale"}`}
         />
     )
 }
