@@ -1,39 +1,43 @@
 "use client"
-import { InputGroup, Input, InputRightElement, Kbd } from '@chakra-ui/react'
-import React, { useEffect, useRef } from 'react'
+import { IconButton, Input, InputGroup, InputRightElement } from '@chakra-ui/react'
+import { useCallback, useEffect, useRef } from 'react'
+import { Search } from 'react-feather'
 
 type Props = {
     defaultInputValue?: string
-    handleInput: (e: string) => void
+    onSearch: (keyword: string) => void
 }
 
-export default function SearchBar({ defaultInputValue, handleInput }: Props) {
+export default function SearchBar({ defaultInputValue, onSearch }: Props) {
     const inputRef = useRef<HTMLInputElement>(null)
+    const handleSearch = useCallback(() => {
+        const inputElement = inputRef.current
+        if (inputElement) {
+            const value = inputElement.value
+            onSearch(value)
+        }
+    }, [onSearch])
     useEffect(() => {
-        const handleKeyDown = (e: KeyboardEvent) => {
-            if (e.ctrlKey && e.key === 'k') {
-                e.preventDefault()
-                inputRef.current?.focus()
+        window.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                handleSearch()
             }
-        }
-        window.addEventListener('keydown', handleKeyDown)
-        return () => {
-            window.removeEventListener('keydown', handleKeyDown)
-        }
-    }, [])
+        })
+    }, [handleSearch])
 
     return (
         <InputGroup className="mb-3">
             <Input
                 ref={inputRef}
-                onChange={(e) => handleInput(e.target.value)}
                 type="text"
                 placeholder="Search Product"
                 defaultValue={defaultInputValue}
                 className='text-sm'
             />
-            <InputRightElement className='text-sm hidden opacity-0 lg:opacity-100 lg:flex mr-7'>
-                <Kbd>Ctrl</Kbd> + <Kbd>K</Kbd>
+            <InputRightElement>
+                <IconButton onClick={handleSearch} aria-label='Search Button'>
+                    <Search />
+                </IconButton>
             </InputRightElement>
         </InputGroup>
     )

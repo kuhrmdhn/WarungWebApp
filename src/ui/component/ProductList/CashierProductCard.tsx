@@ -20,7 +20,9 @@ export default function CashierProductCard({ productData }: { productData: Produ
     return (
         <Card className={`h-80 sm:h-96 w-44 sm:w-60 bg-white text-black shadow-xl shadow-gray-200`}>
             <CardBody className="p-2 border-b">
+                <div className="h-3/4 w-full">
                 <ProductCardImage productData={productData} />
+                </div>
                 <Stack className='mt-3 ml-3'>
                     <h1 className='font-bold text-sm sm:text-lg'>{name}</h1>
                     <h2 className='text-xs sm:text-base'>

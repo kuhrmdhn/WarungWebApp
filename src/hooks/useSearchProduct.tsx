@@ -11,8 +11,8 @@ export function useSearchProduct() {
     const { getProducts, getProductsByName } = productRouter
     const productNameSearchParam = searchParams.get("name")?.toString()
 
-    async function handleInput(e: string) {
-        const key = e.toLowerCase()
+    async function onSearch(keyword: string) {
+        const key = keyword.toLowerCase()
         const query = new URLSearchParams(searchParams)
         if (key !== "") {
             getProductsByName(key)
@@ -26,5 +26,5 @@ export function useSearchProduct() {
         replace(`${pathname}?${query.toString()}`)
     }
 
-    return { productNameSearchParam, handleInput }
+    return { productNameSearchParam, onSearch }
 }

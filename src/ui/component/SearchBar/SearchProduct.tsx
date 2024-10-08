@@ -4,9 +4,9 @@ import SearchBar from './SearchBar'
 import { useSearchProduct } from '@/hooks/useSearchProduct'
 
 export default function SearchProduct() {
-    const { productNameSearchParam, handleInput } = useSearchProduct()
+    const { productNameSearchParam, onSearch } = useSearchProduct()
     return <SearchBar
         defaultInputValue={productNameSearchParam}
-        handleInput={handleInput}
+        onSearch={onSearch}
     />
 }
