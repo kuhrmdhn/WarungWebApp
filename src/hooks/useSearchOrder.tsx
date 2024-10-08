@@ -9,8 +9,8 @@ export function useSearchOrder() {
     const { filterOrderList, getOrderList } = orderListRouter
     const defaultInputValue = searchParams.get('order-name')?.toString()
 
-    async function handleInput(e: string) {
-        const key = e.toLowerCase()
+    async function onSearch(keyword: string) {
+        const key = keyword.toLowerCase()
         const query = new URLSearchParams(searchParams)
         if (key !== "") {
             await filterOrderList(key)
@@ -22,5 +22,5 @@ export function useSearchOrder() {
         replace(`${pathname}?${query.toString()}`)
     }
 
-    return { defaultInputValue, handleInput }
+    return { defaultInputValue, onSearch }
 }

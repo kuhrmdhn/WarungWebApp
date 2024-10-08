@@ -10,7 +10,6 @@ export const OwnerStore = create<OwnerStore>()((set) => ({
     ownerData: {
         id: 1,
         name: "",
-        password: "",
         income: 0,
         sale: 0,
         username: "",

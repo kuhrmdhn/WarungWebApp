@@ -4,9 +4,9 @@ import SearchBar from './SearchBar'
 import { useSearchOrder } from '@/hooks/useSearchOrder'
 
 export default function SearchOrder() {
-    const { handleInput, defaultInputValue } = useSearchOrder()
+    const { defaultInputValue, onSearch } = useSearchOrder()
     return <SearchBar
-        handleInput={handleInput}
+        onSearch={onSearch}
         defaultInputValue={defaultInputValue}
     />
 }
