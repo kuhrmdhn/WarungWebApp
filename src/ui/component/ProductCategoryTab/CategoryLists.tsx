@@ -1,6 +1,5 @@
-import React from 'react'
-import { Tab, TabList } from '@chakra-ui/react'
 import { productRouter } from '@/lib/database/productRouter'
+import { Tab, TabList } from '@chakra-ui/react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 export default function CategoryList({ categories }: { categories: string[] }) {

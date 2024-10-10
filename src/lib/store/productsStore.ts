@@ -6,7 +6,6 @@ type ProductsStore = {
     productById: Product | null
     setProductById: (product: Product) => void
     setProducts: (products: Product[]) => void
-
 }
 
 export const ProductsStore = create<ProductsStore>((set) => ({

@@ -15,7 +15,7 @@ type productListProps = {
 export default function ProductsList({ className, renderCard }: productListProps) {
     const { products } = ProductsStore()
     const searchParams = useSearchParams()
-    const { getProducts, getProductsByName, getProductByCategory } = productRouter
+    const { getProductsByName, getProductByCategory } = productRouter
     const productNameSearchParam = searchParams.get("name")?.toString()
     const productCategorySearchParam = searchParams.get("category")?.toString()
     const setInitialProducts = useCallback(async () => {
@@ -24,9 +24,9 @@ export default function ProductsList({ className, renderCard }: productListProps
         } else if (productNameSearchParam) {
             getProductsByName(productNameSearchParam)
         } else {
-            getProducts()
+            getProductByCategory("food");
         }
-    }, [getProductByCategory, getProductsByName, getProducts, productCategorySearchParam, productNameSearchParam])
+    }, [getProductByCategory, getProductsByName, productCategorySearchParam, productNameSearchParam])
 
     useEffect(() => {
         setInitialProducts()
