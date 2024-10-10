@@ -27,18 +27,18 @@ const appsData: PreviewCardProps[] = [
         icon: "/images/cashier-app.webp",
         name: "Cashier App",
         link: "/cashier",
-        description: "Manage selling products"
+        description: "Streamline orders, process payments, and connect effortlessly with the kitchen—all from the cashier's app!"
     },
     {
         icon: "/images/chef-app.webp",
         name: "Chef App",
         link: "/chef",
-        description: "Receive orders"
+        description: "Receive and manage orders in real time, track progress, and streamline your kitchen workflow effortlessly!"
     },
     {
         icon: "/images/owner-app.webp",
         name: "Owner App",
         link: "/owner",
-        description: "Manage all business"
+        description: "Oversee business performance, manage staff, and access key insights to grow your restaurant—all in one place!"
     }
 ]
