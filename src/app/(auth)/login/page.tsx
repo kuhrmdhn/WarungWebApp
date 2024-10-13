@@ -31,7 +31,7 @@ export default function LoginPage() {
   }
 
   return (
-    <section className="h-[100svh] w-full flex justify-center lg:justify-end items-center bg-[url('/login-bg.webp')] bg-cover bg-no-repeat bg-right">
+    <section className="h-[100svh] w-full flex justify-center lg:justify-end items-center bg-[url('/images/login-bg.webp')] bg-cover bg-no-repeat bg-right">
       <form className="w-full sm:w-2/3 lg:w-1/3 h-full rounded-md flex justify-center items-start flex-col gap-3 px-9 lg:px-4 lg:mr-7 text-white">
         <div className="h-1/5">
           <h1 className="text-4xl">Welcome Back!</h1>

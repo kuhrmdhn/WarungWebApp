@@ -5,43 +5,50 @@ import NavItem from "./NavItem"
 import LogOutButton from "../../elements/LogOutButton"
 import ToggleButton from "./ToggleButton"
 import Logo from "../Logo/Logo"
+import { User } from "react-feather"
+import { Dashboard, FolderShared, OutdoorGrill, PersonAdd, PointOfSale, PostAdd, ShoppingBag } from "@mui/icons-material"
 
 const navLink = [
     {
         title: "Profile",
         href: "/profile",
-        icon: "/user-icon.svg"
+        icon: <User/>
     },
     {
         title: "Dashboard",
         href: "/owner",
-        icon: "/dashboard-icon.svg"
+        icon: <Dashboard/>
     },
     {
         title: "All Products",
         href: "/owner/all-products",
-        icon: "/product-icon.svg"
+        icon: <ShoppingBag/>
     },
     {
         title: "Manage User",
         href: "/owner/manage-user",
-        icon: "/user-manage.svg"
+        icon: <FolderShared/>
     },
     {
         title: "New Product",
         href: "/owner/new-product",
-        icon: "/new-product-icon.svg"
+        icon: <PostAdd />
     },
     {
         title: "New User",
         href: "/owner/new-user",
-        icon: "/new-user.svg"
+        icon: <PersonAdd />
     },
     {
         title: "Cashier App",
         href: "/cashier",
-        icon: "/cashier-icon.svg"
-    }
+        icon: <PointOfSale />
+    },
+    {
+        title: "Chef App",
+        href: "/chef",
+        icon: <OutdoorGrill />
+    },
 ]
 
 export default function Sidebar() {

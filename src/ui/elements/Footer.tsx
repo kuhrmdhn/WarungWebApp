@@ -1,29 +1,31 @@
 import { NavigationItem } from '@/types/NavigationItemInterface'
 import React from 'react'
-import Image from 'next/image'
 import ScaleHover from '../framer-motion/Animation/ScaleHover'
 import Logo from '../component/Logo/Logo'
+import Link from 'next/link'
+import { GitHub, Instagram, LinkedIn } from '@mui/icons-material'
+import { User } from 'react-feather'
 
 const contactList: NavigationItem[] = [
     {
         title: "Github",
         href: "https://github.com/kuhrmdhn",
-        icon: "/github-icon.svg"
+        icon: <GitHub/>
     },
     {
         title: "LinkedIn",
         href: "https://www.linkedin.com/in/kukuh-ardi-ramadhan",
-        icon: "/linkedin-icon.svg"
+        icon: <LinkedIn/>
     },
     {
         title: "Instagram",
         href: "https://www.instagram.com/kuh.rmdhn",
-        icon: "/instagram-icon.svg"
+        icon: <Instagram/>
     },
     {
         title: "Personal Web",
         href: "https://kuhrmdhn.vercel.app",
-        icon: "/user-circle-icon.svg"
+        icon: <User/>
     }
 ]
 
@@ -36,9 +38,9 @@ export default function Footer() {
                 {
                     contactList.map((contact: NavigationItem, index: number) => (
                         <ScaleHover key={index} className="w-fit h-fit">
-                            <a href={contact.href} target='_blank'>
-                                <Image src={contact.icon} height={20} width={20} alt={contact.title} />
-                            </a>
+                            <Link href={contact.href} target='_blank'>
+                                {contact.icon}
+                            </Link>
                         </ScaleHover>
                     ))
                 }

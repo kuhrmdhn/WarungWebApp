@@ -1,5 +1,5 @@
 export interface NavigationItem {
     title: string,
     href: string,
-    icon: string
+    icon: string | React.ReactNode
 }

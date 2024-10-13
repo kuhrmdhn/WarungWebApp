@@ -4,7 +4,7 @@ import React from 'react'
 
 export default function ProductCardImage({ productData }: { productData: Product }) {
     const { status, name, image } = productData
-    const cardImage = image ? image : "/default-product-image.webp"
+    const cardImage = image ? image : "/images/default-product-image.webp"
     return (
         <Image
             width={300}
