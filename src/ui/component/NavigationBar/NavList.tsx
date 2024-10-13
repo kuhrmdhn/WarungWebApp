@@ -34,14 +34,14 @@ export default function NavList({ sidebarOpen, navItems, children }: NavListProp
             variants={variants}
             initial="closed"
             animate={sidebarOpen ? "open" : "closed"}
-            className='h-full fixed z-20 left-0 top-0 bg-white flex flex-col pt-20 px-4 gap-7 font-bold text-black shadow-2xl shadow-gray-400 overflow-auto overflow-scrollbar-small'
+            className='h-full fixed z-20 left-0 top-0 bg-white flex flex-col pt-20 px-4 gap-7 font-bold text-black shadow-2xl shadow-gray-400 overflow-auto overflow-scrollbar-hide'
         >
-            <ul className='h-5/6 flex flex-col items-center gap-2'>
+            <ul className='h-11/12 flex flex-col items-center gap-2'>
                 {
                     navItems.map((nav: NavigationItem, index: number) => (
                         <NavItem key={index}>
                             <a href={nav.href} className="flex px-5 items-center gap-3">
-                                <Image width={20} height={20} alt="User Account Icon" src={nav.icon} className="h-full" />
+                                {nav.icon}
                                 {nav.title}
                             </a>
                         </NavItem>

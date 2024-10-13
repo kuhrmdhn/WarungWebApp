@@ -6,12 +6,7 @@ const nextConfig = {
         protocol: "https",
         hostname: "uwyrzvjdygfrsildagru.supabase.co",
         port: "",
-      },
-      {
-        protocol: "https",
-        hostname: "i.pinimg.com",
-        port: "",
-      },
+      }
     ],
   },
 };
