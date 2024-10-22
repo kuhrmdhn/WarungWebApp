@@ -9,7 +9,7 @@ export default function AuthButton() {
   return (
     <div>
       {
-        status == "authenticated" ? <Link href={"/profile"}><AccountCircle/></Link> : <Button onClick={() => signIn()}>Sign In</Button>
+        status == "authenticated" ? <Link href={"/profile"}><AccountCircle/></Link> : <Button colorScheme="blue" onClick={() => signIn()}>Sign In</Button>
       }
     </div>
   )
