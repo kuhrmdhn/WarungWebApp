@@ -1,3 +1,4 @@
+"use client"
 import { NavigationItem } from '@/types/NavigationItemInterface'
 import React from 'react'
 import ScaleHover from '../framer-motion/Animation/ScaleHover'
@@ -5,32 +6,39 @@ import Logo from '../component/Logo/Logo'
 import Link from 'next/link'
 import { GitHub, Instagram, LinkedIn } from '@mui/icons-material'
 import { User } from 'react-feather'
+import { usePathname } from 'next/navigation'
 
 const contactList: NavigationItem[] = [
     {
         title: "Github",
         href: "https://github.com/kuhrmdhn",
-        icon: <GitHub/>
+        icon: <GitHub />
     },
     {
         title: "LinkedIn",
         href: "https://www.linkedin.com/in/kukuh-ardi-ramadhan",
-        icon: <LinkedIn/>
+        icon: <LinkedIn />
     },
     {
         title: "Instagram",
         href: "https://www.instagram.com/kuh.rmdhn",
-        icon: <Instagram/>
+        icon: <Instagram />
     },
     {
         title: "Personal Web",
         href: "https://kuhrmdhn.vercel.app",
-        icon: <User/>
+        icon: <User />
     }
 ]
 
 
 export default function Footer() {
+    const ignoreFooterPage = ["/login"]
+    const pathname = usePathname()
+
+    if(ignoreFooterPage.some((page) => pathname == page)) {
+        return null
+    }
     return (
         <footer className="w-full h-32 flex flex-col justify-center items-center gap-5 bg-white">
             <Logo />

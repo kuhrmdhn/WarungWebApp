@@ -9,9 +9,9 @@ export function useLogin(username: string, password: string) {
     const [pending, setPending] = useState(false)
     const { push } = useRouter()
     const searchParams = useSearchParams()
-    const callbackUrl = searchParams.get("callback") || "/"
-
+    
     async function handleLogin(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+        const callbackUrl = searchParams.get("callback") || "/"
         e.preventDefault()
         if (username === "" || password === "") {
             toast({
@@ -38,7 +38,7 @@ export function useLogin(username: string, password: string) {
                     duration: 3000,
                     position: "top-right"
                 });
-                push(callbackUrl || "/")
+                push(callbackUrl)
             } else if (loginResponse && loginResponse.error) {
                 toast({
                     title: "Failed Login",

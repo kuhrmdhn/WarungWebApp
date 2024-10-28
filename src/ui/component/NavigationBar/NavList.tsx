@@ -1,7 +1,6 @@
+import { NavigationItem } from '@/types/NavigationItemInterface'
 import { motion } from 'framer-motion'
 import NavItem from './NavItem'
-import Image from 'next/image'
-import { NavigationItem } from '@/types/NavigationItemInterface'
 
 type NavListProps = {
     sidebarOpen: boolean,

@@ -5,11 +5,14 @@ import { signIn, useSession } from 'next-auth/react'
 import Link from 'next/link'
 
 export default function AuthButton() {
-  const {status} = useSession()
+  const { status } = useSession()
   return (
     <div>
       {
-        status == "authenticated" ? <Link href={"/profile"}><AccountCircle/></Link> : <Button colorScheme="blue" onClick={() => signIn()}>Sign In</Button>
+        status == "authenticated" ?
+          <Link href={"/profile"}><AccountCircle /></Link>
+          :
+          <Button colorScheme="blue" onClick={() => signIn()}>Sign In</Button>
       }
     </div>
   )
