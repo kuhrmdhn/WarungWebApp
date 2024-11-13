@@ -9,7 +9,7 @@ export function useLogin(username: string, password: string) {
     const [pending, setPending] = useState(false)
     const { push } = useRouter()
     const searchParams = useSearchParams()
-    
+
     async function handleLogin(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         const callbackUrl = searchParams.get("callback") || "/"
         e.preventDefault()
@@ -38,7 +38,9 @@ export function useLogin(username: string, password: string) {
                     duration: 3000,
                     position: "top-right"
                 });
-                push(callbackUrl)
+                setTimeout(() => {
+                    push(callbackUrl)
+                }, 100);
             } else if (loginResponse && loginResponse.error) {
                 toast({
                     title: "Failed Login",
