@@ -15,8 +15,8 @@ type ProductFormProps = {
 
 export default function ProductForm({ children, productData, onSubmit, inputFormData, handleChange, selectFormData, editable = true }: ProductFormProps) {
     return (
-        <section className="flex flex-col-reverse justify-around gap-5 w-full h-full">
-            <form onSubmit={(e) => onSubmit(e)} className='h-full w-11/12 lg:w-2/5 px-5 pt-10 flex flex-col'>
+        <section className="p-5 flex flex-col-reverse items-center justify-around gap-5 w-full h-full">
+            <form onSubmit={(e) => onSubmit(e)} className='h-full w-11/12 px-5 pt-10 flex flex-col'>
                 {
                     inputFormData.map((data, index: number) => (
                         <InputGroup key={index} className='w-full flex gap-10 mb-3'>

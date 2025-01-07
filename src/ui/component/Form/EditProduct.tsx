@@ -148,7 +148,7 @@ export default function EditProduct({ productData }: Props) {
     ]
 
     return (
-        <>
+        <div className='w-1/2 h-max'>
             <ProductForm
                 productData={formState}
                 onSubmit={(e) => submitForm(e)}
@@ -184,6 +184,6 @@ export default function EditProduct({ productData }: Props) {
                     </AlertDialogContent>
                 </AlertDialogOverlay>
             </AlertDialog>
-        </>
+        </div>
     )
 }
