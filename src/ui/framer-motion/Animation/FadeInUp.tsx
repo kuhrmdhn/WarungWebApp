@@ -21,8 +21,10 @@ export default function FadeInUp({ children, delay = 0.1, className }: FadeInUpP
             initial="hidden"
             animate="visible"
             transition={{ duration: 0.5, delay }}
+            viewport={{ once: true, amount: 0.2 }}
         >
             {children}
         </motion.div>
+
     )
 }
