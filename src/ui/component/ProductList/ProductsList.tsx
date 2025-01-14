@@ -1,11 +1,11 @@
 "use client"
-import ScrollTopButton from '@/ui/elements/ScrollTopButton'
-import { Product } from '@/types/productInterface'
-import React, { ReactNode, useCallback, useEffect } from 'react'
-import { ProductsStore } from '@/lib/store/productsStore'
-import { useSearchParams } from 'next/navigation'
 import { productRouter } from '@/lib/database/productRouter'
+import { ProductsStore } from '@/lib/store/productsStore'
+import { Product } from '@/types/productInterface'
+import ScrollTopButton from '@/ui/elements/ScrollTopButton'
 import FadeInUp from '@/ui/framer-motion/Animation/FadeInUp'
+import { useSearchParams } from 'next/navigation'
+import { ReactNode, useCallback, useEffect } from 'react'
 
 type productListProps = {
     className?: string

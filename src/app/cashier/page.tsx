@@ -5,9 +5,9 @@ import CashierProductCard from '@/ui/component/ProductList/CashierProductCard'
 import { useSession } from 'next-auth/react'
 import { Suspense, useCallback, useEffect } from 'react'
 import GroceryList from '../../ui/component/GroceryList/GroceryList'
-import ProductsList from '../../ui/component/ProductList/ProductsList'
 import Loading from '../loading'
 import { ownerRouter } from '@/lib/database/ownerRouter'
+import ProductsList from '@/ui/component/ProductList/ProductsList'
 
 export default function Cashier() {
   const { getOwnerData } = ownerRouter

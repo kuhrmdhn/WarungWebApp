@@ -53,9 +53,9 @@ export const productRouter = {
         }
     },
     async getProductByCategory(productCategory: string) {
-        ProductsStore.setState({ products: [] })
         let category = productCategory;
         try {
+            ProductsStore.setState({ products: [] });
             const { data: products, error } = await supabase.from("products").select().eq("category", category)
             if (!products || error) {
                 return error.message
