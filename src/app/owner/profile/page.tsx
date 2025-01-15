@@ -2,14 +2,13 @@
 import { bcryptConfig } from '@/config/bcrypt';
 import { userRouter } from '@/lib/database/userRouter';
 import { User } from '@/types/userInterface';
-import MovePageButton from '@/ui/elements/MovePageButton';
 import { Button, FormControl, FormLabel, Input } from '@chakra-ui/react';
 import { signOut, useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
-import { defaultUserData } from '../constant/defaultUserData';
-import LogOutButton from '../../ui/elements/LogOutButton';
+import { defaultUserData } from '../../constant/defaultUserData';
 
 export default function ProfilePage() {
+    const [saveButtonDisabled, setSaveButtonDisabled] = useState(true)
     const [isChangePassword, setIsChangePassword] = useState(false)
     const [changePassword, setChangePassword] = useState({
         currentPassword: "",
@@ -36,6 +35,7 @@ export default function ProfilePage() {
         }
     }, [data, status])
     const handleOnChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        setSaveButtonDisabled(false)
         const { name, value } = e.target
         setUserData((state) => ({ ...state, [name]: value }))
     }
@@ -69,9 +69,6 @@ export default function ProfilePage() {
 
     return (
         <section className="w-full min-h-[75svh] flex flex-col justify-around items-center">
-            <span className="absolute top-3 left-3">
-                <MovePageButton />
-            </span>
             <form className="h-full w-5/6 sm:w-1/2 flex flex-col gap-7" onSubmit={(e) => handleSubmit(e)}>
                 <FormControl className="flex gap-7 items-center">
                     <FormLabel htmlFor="username" className="w-32 lg:w-64 text-xs lg:text-base">
@@ -88,12 +85,23 @@ export default function ProfilePage() {
                         </FormControl>
                     ))
                 }
-                <Button variant={"link"} colorScheme={isChangePassword ? "red" : "blue"} className="w-fit" onClick={() => setIsChangePassword((state) => !state)} >{isChangePassword ? "Cancel" : "Change password?"}</Button>
-                <Button className='w-fit self-end' colorScheme='blue' type="submit">Save</Button>
+                <Button
+                    variant={"link"}
+                    colorScheme={isChangePassword ? "red" : "blue"}
+                    className="w-fit"
+                    onClick={() => setIsChangePassword((state) => !state)}
+                >
+                    {isChangePassword ? "Cancel" : "Change password?"}
+                </Button>
+                <Button
+                    className='w-fit self-end'
+                    colorScheme='blue'
+                    type="submit"
+                    disabled={saveButtonDisabled}
+                >
+                    Save
+                </Button>
             </form>
-            <span className="self-start">
-            <LogOutButton/>
-            </span>
         </section>
     );
 }

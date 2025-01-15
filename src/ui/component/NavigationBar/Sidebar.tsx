@@ -10,8 +10,8 @@ import { Dashboard, FolderShared, OutdoorGrill, PersonAdd, PointOfSale, PostAdd,
 
 const navLink = [
     {
-        title: "Profile",
-        href: "/profile",
+        title: "Owner Profile",
+        href: "owner/profile",
         icon: <User/>
     },
     {
